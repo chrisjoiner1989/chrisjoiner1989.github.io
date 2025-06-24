@@ -2,29 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
     <title>Contact - Chris Joiner</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta name="description" content="Get in touch with Chris Joiner. Contact information for web development opportunities and collaborations." />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="images/Profilepic.png" />
   </head>
-  <body>
-    <!-- Header Section -->
+  <body class="contact-page">
+    
     <header>
-      <button class="hamburger-menu" id="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav id="nav-menu">
+      <h1>Chris Joiner</h1>
+      <nav>
         <a href="index.html">Resume</a>
         <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html" aria-current="page">Contact</a>
       </nav>
     </header>
 
     <div class="resume-wrapper">
       <div class="container">
-        <!-- Contact Section (Full Width) -->
-        <div class="experience" style="width: 100%; float: none;">
+       
+        <div class="experience">
           <div class="section-padding">
             <h3 class="experience-title">Get In Touch</h3>
             <div class="contact-message">
@@ -67,12 +74,6 @@
                 I typically respond to emails and LinkedIn messages within 24 hours. 
                 For urgent matters, please feel free to call or text.
               </p>
-            </div>
-            
-            <div class="company-wrapper clearfix">
-              <div class="experience-title">
-                <a href="index.html" style="color: var(--linkColor);">← Back to Resume</a>
-              </div>
             </div>
           </div>
         </div>

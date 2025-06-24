@@ -2,21 +2,42 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
     <title>Chris Joiner - Web Developer</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta name="description" content="Chris Joiner - Web Developer from Corbin, Kentucky. Specializing in HTML5, CSS3, JavaScript, and responsive web design." />
+    <meta name="keywords" content="web developer, frontend developer, HTML, CSS, JavaScript, responsive design" />
+    <meta name="author" content="Chris Joiner" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://chrisjoiner1989.github.io/" />
+    <meta property="og:title" content="Chris Joiner - Web Developer" />
+    <meta property="og:description" content="Web Developer specializing in HTML5, CSS3, JavaScript, and responsive web design." />
+    <meta property="og:image" content="https://chrisjoiner1989.github.io/images/Profilepic.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://chrisjoiner1989.github.io/" />
+    <meta property="twitter:title" content="Chris Joiner - Web Developer" />
+    <meta property="twitter:description" content="Web Developer specializing in HTML5, CSS3, JavaScript, and responsive web design." />
+    <meta property="twitter:image" content="https://chrisjoiner1989.github.io/images/Profilepic.png" />
   </head>
 
   <body>
     <!-- Header Section -->
     <header>
-      <button class="hamburger-menu" id="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav id="nav-menu">
-        <a href="index.html">Resume</a>
+      <h1>Chris Joiner</h1>
+      <nav>
+        <a href="index.html" aria-current="page">Resume</a>
         <a href="projects.html">Projects</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -24,29 +45,16 @@
 
     <div class="resume-wrapper">
       <div class="container">
-        <!-- Profile Section (Left Side) -->
+        
         <div class="profile">
-          <div class="picture-resume-wrapper">
-            <div class="picture-resume">
-              <img src="./images/Profilepic.png" alt="Chris Joiner" />
-            </div>
-            <div class="name-wrapper">
-              <h1>Chris Joiner</h1>
-            </div>
-          </div>
-          
-          <div class="contact-presentation">
+          <div class="contact-presentation t-bold" style="margin:10px 0 10px 0; padding:10px;">
             <p>
-              I'm Chris Joiner, a motivated web developer with a background in data
-              entry, customer service, and delivery. Originally from Knoxville,
-              Tennessee, I relocated to Corbin, Kentucky, in April 2021. I have a
-              strong passion for technology and am eager to grow in the tech
-              industry, continuously expanding my skills in web development.
+              I'm a passionate web developer transitioning from a diverse background in customer service, data entry, and operations. Based in Corbin, Kentucky, I bring strong problem-solving skills and attention to detail from my previous roles to create user-friendly, responsive web applications. Currently enrolled in code:you's intensive web development program, I'm actively building my portfolio and expanding my expertise in modern web technologies. I'm excited to contribute my technical skills and collaborative mindset to innovative web development projects.
             </p>
           </div>
         </div>
         
-        <!-- Experience Section (Right Side) -->
+        
         <div class="experience">
           <div class="section-padding">
             <h3 class="experience-title">Work Experience</h3>
@@ -152,6 +160,14 @@
             
             <h3 class="experience-title">Education</h3>
             <div class="company-wrapper clearfix">
+              <div class="experience-title">code:you - Web Development Program (HTML5, CSS3, JavaScript)</div>
+              <div class="time">Jan 2025 - Present</div>
+              <div class="company-description">
+                Intensive 6-month web development program focusing on modern web technologies and responsive design.
+              </div>
+            </div>
+            
+            <div class="company-wrapper clearfix">
               <div class="experience-title">Knoxville Halls High School</div>
               <div class="time">Graduated 2008</div>
             </div>
@@ -172,9 +188,18 @@
               </ul>
             </div>
             
-            <h3 class="experience-title">Projects</h3>
-            <div id="projects-container">
-              <div class="loading">Loading projects from GitHub...</div>
+            <h3 class="experience-title">Web Development Skills</h3>
+            <div class="skills">
+              <ul>
+                <li>Frontend Development</li>
+                <li>Responsive Web Design</li>
+                <li>CSS Flexbox & Grid</li>
+                <li>JavaScript ES6+</li>
+                <li>Git Version Control</li>
+                <li>GitHub Collaboration</li>
+                <li>Web Accessibility</li>
+                <li>Cross-browser Compatibility</li>
+              </ul>
             </div>
           </div>
         </div>
