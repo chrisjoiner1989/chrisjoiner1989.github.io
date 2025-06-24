@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-/* Base Reset */
+
 * {
   margin: 0;
   padding: 0;
@@ -34,7 +34,7 @@ a:hover {
   color: #000;
 }
 
-/* Typography */
+
 h1, h2, h3, h4, h5, h6 {
   color: #222;
   font-family: 'Roboto', sans-serif;
@@ -57,7 +57,7 @@ p { margin-bottom: 1.5em; }
 .m-20 { margin: 20px; }
 .m-30 { margin: 30px; }
 
-/* Scrollbar */
+
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.08);
   background-color: #F5F5F5;
@@ -104,7 +104,7 @@ p { margin-bottom: 1.5em; }
   flex: 1;
 }
 
-/* Projects/Contact single column */
+
 .projects-page .container,
 .contact-page .container {
   display: block;
@@ -162,7 +162,7 @@ header nav a:hover {
   color: #fff;
 }
 
-/* Skills List */
+
 .skills ul {
   display: flex;
   flex-wrap: wrap;
@@ -212,7 +212,7 @@ header nav a:hover {
   line-height: 1.7;
 }
 
-/* Contact Page Styles */
+
 .contact-message, .response-info {
   background: #f5f5f5;
   border-radius: 10px;
@@ -252,7 +252,6 @@ header nav a:hover {
   font-weight: 600;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .container {
     flex-direction: column;
