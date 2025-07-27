@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mount Builder - Sermon Builder App</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <img src="./assets/logo.png" alt="" class="logo" />
+    </header>
+    <main class="main-container">
+      <div class="container">
+        <form id="sermon-form">
+          <div class="input-group">
+            <label for="speaker">Sermon Speaker:</label>
+            <input
+              type="text"
+              name="speaker"
+              id="speaker"
+              placeholder="Senior Pastor"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="title">Sermon Title:</label>
+            <input type="text" id="title" placeholder="Sermon Title" required />
+          </div>
+
+          <div class="input-group">
+            <label for="reference">Verse Reference:</label>
+            <input type="text" id="reference" placeholder="e.g John 3:16" />
+            <small id="reference-help" class="help-text"></small>
+            <div id="verse-display" class="verse-display"></div>
+            <button class="input-btn search-btn">Search verse</button>
+          </div>
+
+          <div class="input-group">
+            <label for="date">Sermon Date:</label>
+            <input type="date" id="date" />
+          </div>
+
+          <div class="input-group">
+            <label for="series">Sermon series:</label>
+            <input type="text" id="series" placeholder="Sermon on the mount" />
+          </div>
+
+          <div class="input-group">
+            <label for="notes">Sermon notes:</label>
+            <textarea name="notes" id="notes" rows="8"></textarea>
+          </div>
+        </form>
+        <div class="button-group">
+          <button class="input-btn save-btn">Save Sermon</button>
+          <button class="input-btn clear-btn">Clear</button>
+          <button class="input-btn export-btn">Export Sermon</button>
+          <button class="input-btn addverse-btn">Add Verse</button>
+        </div>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
