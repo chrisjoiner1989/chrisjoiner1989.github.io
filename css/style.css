@@ -21,3 +21,22 @@ header {
   overflow: hidden;
   min-height: 200px;
 }
+
+header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #8b6914 0%, #b8860b 100%);
+  z-index: -1;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
