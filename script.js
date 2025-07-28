@@ -55,3 +55,27 @@ referenceInput.addEventListener("keypress", (e) => {
     searchForVerse();
   }
 });
+
+// Validation Function
+function validateVerseFormat() {
+  const input = referenceInput.value.trim();
+
+  // regex pattern for bible verses AI helped here source (claude code)
+  const pattern = /^([1-3]?\s?[A-Za-z]+)\s+(\d{1,3}):(\d{1,3})(-\d{1,3})?$/;
+
+  if (input === "enter") {
+    referenceHelp.textContent = "";
+    referenceHelp.style.color = "";
+    return true;
+  }
+
+  if (pattern.test(input)) {
+    referenceHelp.textContent = "✓ Valid format";
+    referenceHelp.style.color = "#5a7a5a";
+    return true;
+  } else {
+    referenceHelp.textContent = "Use format: Book Chapter:Verse";
+    referenceHelp.style.color = "#8b4513";
+    return false;
+  }
+}
