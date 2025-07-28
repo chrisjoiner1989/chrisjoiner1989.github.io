@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("Mount Builder starting up...");
 });
 
-// gets form and all input elemements
+// gets form and all input elements
 const sermonForm = document.getElementById("sermon-form");
 const speakerInput = document.getElementById("speaker");
 const titleInput = document.getElementById("title");
@@ -32,3 +32,26 @@ loadSermons();
 //sets today as default date
 const today = new Date();
 dateInput.value = today.toISOString().split("T")[0];
+
+// Event Listeners
+searchBtn.addEventListener("click", function (e) {
+  e.preventDefault;
+  searchForVerse();
+});
+
+saveBtn.addEventListener("click", saveSermon);
+clearBtn.addEventListener("click", clearForm);
+exportBtn.addEventListener("click", exportData);
+
+//Validates verse ref as user types it in
+referenceInput.addEventListener("input", function () {
+  validateVerseFormat();
+});
+
+// allows enter key to search
+referenceInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    searchForVerse();
+  }
+});
