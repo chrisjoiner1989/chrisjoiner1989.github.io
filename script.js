@@ -18,3 +18,17 @@ const searchBtn = document.querySelector(".search-btn");
 const saveBtn = document.querySelector(".save-btn");
 const clearBtn = document.querySelector(".clear-btn");
 const exportBtn = document.querySelector(".export-btn");
+
+// vars to store data
+let sermons = [];
+let currentVerseData = null;
+
+// free bible api
+const API_BASE = "https://bible-api.com/";
+
+// loads ext sermons on start up
+loadSermons();
+
+//sets today as default date
+const today = new Date();
+dateInput.value = today.toISOString().split("T")[0];
