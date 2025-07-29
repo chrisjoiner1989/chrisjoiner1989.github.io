@@ -43,6 +43,9 @@ saveBtn.addEventListener("click", saveSermon);
 clearBtn.addEventListener("click", clearForm);
 exportBtn.addEventListener("click", exportData);
 
+const addVerseBtn = document.querySelector(".addverse-btn");
+addVerseBtn.addEventListener("click", addVerseToNotes);
+
 //Validates verse ref as user types it in
 referenceInput.addEventListener("input", function () {
   validateVerseFormat();
@@ -140,6 +143,17 @@ function displayVerse() {
       </div>
     `;
 }
+
+function addVerseToNotes() {
+  if (!currentVerseData) {
+    alert("Please search for a verse first");
+    return;
+  }
+
+  const verseText = `\n\n${currentVerseData.reference}\n"${currentVerseData.text}"\n`;
+  notesInput.value += verseText;
+  notesInput.focus();
+}
 // SAVE SERMON FUNCTION
 function saveSermon(e) {
   e.preventDefault();
@@ -165,7 +179,7 @@ function saveSermon(e) {
     return;
   }
 
-  // create sermon object
+  // creates sermon object
   const newSermon = {
     id: Date.now(), // simple ID
     title: title,
@@ -178,10 +192,10 @@ function saveSermon(e) {
     savedAt: new Date().toISOString(),
   };
 
-  // add to array
+  // adds to array
   sermons.push(newSermon);
 
-  // save to localStorage
+  // saves to localStorage
   saveToStorage();
 
   // shows success
