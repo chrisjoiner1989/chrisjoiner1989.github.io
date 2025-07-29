@@ -271,9 +271,34 @@ function exportData() {
     return;
   }
 
-  let exportText = "MOUNT BUILDER - SERMON EXPORT\n";
-  exportText += "Generated: " + new Date().toLocaleDateString() + "\n";
-  exportText += "=====================================\n\n";
+  let exportHTML = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>Mount Builder - Sermon Export</title>
+    <style>
+      body {
+        font-family: 'Times New Roman', serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      h1 { color: #722f37; text-align: center; border-bottom: 2px solid #722f37; padding-bottom: 10px; }
+      .sermon { page-break-inside: avoid; margin-bottom: 30px; border: 1px solid #ddd; padding: 15px; }
+      .sermon-title { font-size: 1.3em; font-weight: bold; color: #722f37; margin-bottom: 10px; }
+      .scripture { background: #f9f9f9; border-left: 4px solid #808000; padding: 10px; margin: 10px 0; }
+      @media print {
+        body { margin: 0; padding: 15px; }
+        .sermon { page-break-after: always; border: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Mount Builder - Sermon Collection</h1>
+    <p style="text-align: center; margin-bottom: 30px;">Generated: ${new Date().toLocaleDateString()}</p>
+  `;
 
   // sorts by date newest first
   const sorted = [...sermons].sort(
@@ -281,35 +306,42 @@ function exportData() {
   );
 
   sorted.forEach((sermon, index) => {
-    exportText += `SERMON #${index + 1}\n`;
-    exportText += `---------\n`;
-    exportText += `Title: ${sermon.title}\n`;
-    exportText += `Speaker: ${sermon.speaker}\n`;
-    exportText += `Date: ${formatDate(sermon.date)} (${getDaysUntil(
-      sermon.date
-    )})\n`;
-    exportText += `Series: ${sermon.series}\n`;
+    exportHTML += `
+    <div class="sermon">
+      <div class="sermon-title">${sermon.title}</div>
+      <p><strong>Speaker:</strong> ${sermon.speaker} | <strong>Date:</strong> ${formatDate(sermon.date)} | <strong>Series:</strong> ${sermon.series}</p>`;
 
     if (sermon.verseReference) {
-      exportText += `\nScripture: ${sermon.verseReference}\n`;
+      exportHTML += `
+      <div class="scripture">
+        <strong>${sermon.verseReference}</strong><br>`;
       if (sermon.verseData && sermon.verseData.text) {
-        exportText += `"${sermon.verseData.text}"\n`;
+        exportHTML += `"${sermon.verseData.text}"<br><em>- ${sermon.verseData.translation}</em>`;
       }
+      exportHTML += `</div>`;
     }
 
     if (sermon.notes) {
-      exportText += `\nSermon Notes:\n${sermon.notes}\n`;
+      exportHTML += `
+      <div style="margin-top: 15px;">
+        <strong>Sermon Notes:</strong><br>
+        <div style="margin-top: 10px;">${sermon.notes.replace(/\n/g, '<br>')}</div>
+      </div>`;
     }
 
-    exportText += "\n=====================================\n\n";
+    exportHTML += `</div>`;
   });
 
+  exportHTML += `
+  </body>
+  </html>`;
+
   // downloads file
-  const blob = new Blob([exportText], { type: "text/plain" });
+  const blob = new Blob([exportHTML], { type: "text/html" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `mount-builder-sermons-${Date.now()}.txt`;
+  link.download = `mount-builder-sermons-${Date.now()}.html`;
   link.click();
   URL.revokeObjectURL(url);
 
