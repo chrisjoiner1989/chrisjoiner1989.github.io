@@ -13,7 +13,7 @@
   </head>
   <body>
     <header>
-      <h1>Mount Builder</h1>
+      <img src="./assets/mount-builder.png" alt="mount builder" class="logo" />
     </header>
     <main class="main-container">
       <div class="container">
@@ -62,9 +62,34 @@
           <button class="input-btn clear-btn">Clear</button>
           <button class="input-btn export-btn">Export Sermon</button>
           <button class="input-btn addverse-btn">Add Verse</button>
+          <button class="input-btn library-btn">View Library</button>
         </div>
       </div>
     </main>
+    <div id="library-section" class="library-section" style="display: none">
+      <div class="library-header">
+        <h2>Sermon Library</h2>
+        <button class="input-btn back-btn">Back to Form</button>
+      </div>
+
+      <div class="library-controls">
+        <input
+          type="text"
+          id="search-sermons"
+          placeholder="Search sermons..."
+        />
+        <select id="filter-speaker">
+          <option value="">All Speakers</option>
+        </select>
+        <select id="sort-sermons">
+          <option value="date-desc">Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="title">By Title</option>
+        </select>
+      </div>
+
+      <div id="sermons-list" class="sermons-list"></div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

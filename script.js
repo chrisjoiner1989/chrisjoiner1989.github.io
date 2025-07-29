@@ -22,7 +22,8 @@ const exportBtn = document.querySelector(".export-btn");
 // vars to store data
 let sermons = [];
 let currentVerseData = null;
-
+let currentView = "form";
+let filteredSermons;
 // free bible api
 const API_BASE = "https://bible-api.com/";
 
@@ -45,6 +46,19 @@ exportBtn.addEventListener("click", exportData);
 
 const addVerseBtn = document.querySelector(".addverse-btn");
 addVerseBtn.addEventListener("click", addVerseToNotes);
+
+// Library event listeners
+const libraryBtn = document.querySelector(".library-btn");
+const backBtn = document.querySelector(".back-btn");
+const searchSermonsInput = document.getElementById("search-sermons");
+const filterSpeakerSelect = document.getElementById("filter-speaker");
+const sortSermonsSelect = document.getElementById("sort-sermons");
+
+if (libraryBtn) libraryBtn.addEventListener("click", showLibrary);
+if (backBtn) backBtn.addEventListener("click", showForm);
+if (searchSermonsInput) searchSermonsInput.addEventListener("input", renderSermonList);
+if (filterSpeakerSelect) filterSpeakerSelect.addEventListener("change", renderSermonList);
+if (sortSermonsSelect) sortSermonsSelect.addEventListener("change", renderSermonList);
 
 //Validates verse ref as user types it in
 referenceInput.addEventListener("input", function () {
@@ -309,7 +323,11 @@ function exportData() {
     exportHTML += `
     <div class="sermon">
       <div class="sermon-title">${sermon.title}</div>
-      <p><strong>Speaker:</strong> ${sermon.speaker} | <strong>Date:</strong> ${formatDate(sermon.date)} | <strong>Series:</strong> ${sermon.series}</p>`;
+      <p><strong>Speaker:</strong> ${
+        sermon.speaker
+      } | <strong>Date:</strong> ${formatDate(
+      sermon.date
+    )} | <strong>Series:</strong> ${sermon.series}</p>`;
 
     if (sermon.verseReference) {
       exportHTML += `
@@ -325,7 +343,10 @@ function exportData() {
       exportHTML += `
       <div style="margin-top: 15px;">
         <strong>Sermon Notes:</strong><br>
-        <div style="margin-top: 10px;">${sermon.notes.replace(/\n/g, '<br>')}</div>
+        <div style="margin-top: 10px;">${sermon.notes.replace(
+          /\n/g,
+          "<br>"
+        )}</div>
       </div>`;
     }
 
@@ -388,3 +409,114 @@ function formatDate(dateStr) {
 window.viewSermons = () => {
   console.table(sermons);
 };
+
+function showLibrary() {
+    currentView = 'library';
+    document.querySelector('.main-container').style.display
+  = 'none';
+    document.getElementById('library-section').style.display
+   = 'block';
+    populateSpeakerFilter();
+    renderSermonList();
+  }
+
+  function showForm() {
+    currentView = 'form';
+    document.querySelector('.main-container').style.display
+  = 'block';
+    document.getElementById('library-section').style.display
+   = 'none';
+  }
+
+  function populateSpeakerFilter() {
+    const speakerSelect = document.getElementById('filter-speaker');
+    const speakers = [...new Set(sermons.map(s => s.speaker))];
+
+    speakerSelect.innerHTML = '<option value="">All Speakers</option>';
+    speakers.forEach(speaker => {
+      speakerSelect.innerHTML += `<option value="${speaker}">${speaker}</option>`;
+    });
+  }
+
+  function renderSermonList() {
+    const container = document.getElementById('sermons-list');
+    const searchTerm = document.getElementById('search-sermons').value.toLowerCase();
+    const speakerFilter = document.getElementById('filter-speaker').value;
+    const sortBy = document.getElementById('sort-sermons').value;
+
+    // Filter sermons
+    filteredSermons = sermons.filter(sermon => {
+      const matchesSearch = sermon.title.toLowerCase().includes(searchTerm) || sermon.speaker.toLowerCase().includes(searchTerm) || sermon.series.toLowerCase().includes(searchTerm);
+      const matchesSpeaker = !speakerFilter || sermon.speaker === speakerFilter;
+      return matchesSearch && matchesSpeaker;
+    });
+
+    // Sort sermons
+    filteredSermons.sort((a, b) => {
+      switch(sortBy) {
+        case 'date-desc': return new Date(b.date) - new Date(a.date);
+        case 'date-asc': return new Date(a.date) - new Date(b.date);
+        case 'title': return a.title.localeCompare(b.title);
+        default: return 0;
+      }
+    });
+
+    if (filteredSermons.length === 0) {
+      container.innerHTML = '<p>No sermons found.</p>';
+      return;
+    }
+
+    container.innerHTML = filteredSermons.map(sermon => `
+      <div class="sermon-card">
+        <h3>${sermon.title}</h3>
+        <div class="sermon-meta">
+          <strong>Speaker:</strong> ${sermon.speaker}<br>
+          <strong>Date:</strong> ${formatDate(sermon.date)}<br>
+          <strong>Series:</strong> ${sermon.series}
+          ${sermon.verseReference ? `<br><strong>Scripture:</strong> ${sermon.verseReference}` : ''}
+        </div>
+        <div class="sermon-actions">
+          <button onclick="viewSermon(${sermon.id})" class="input-btn">View</button>
+          <button onclick="editSermon(${sermon.id})" class="input-btn">Edit</button>
+          <button onclick="deleteSermon(${sermon.id})" class="input-btn">Delete</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function viewSermon(id) {
+    const sermon = sermons.find(s => s.id === id);
+    if (!sermon) return;
+
+    alert(`Title: ${sermon.title}\nSpeaker: ${sermon.speaker}\nDate: ${formatDate(sermon.date)}\nSeries: ${sermon.series}\n\nNotes:\n${sermon.notes}`);
+  }
+
+  function editSermon(id) {
+    const sermon = sermons.find(s => s.id === id);
+    if (!sermon) return;
+    
+    // Populate form with sermon data
+    titleInput.value = sermon.title;
+    speakerInput.value = sermon.speaker;
+    dateInput.value = sermon.date;
+    seriesInput.value = sermon.series;
+    notesInput.value = sermon.notes;
+    referenceInput.value = sermon.verseReference || '';
+    
+    // Remove the sermon from array (will be re-added when saved)
+    sermons = sermons.filter(s => s.id !== id);
+    saveToStorage();
+    
+    // Switch to form view
+    showForm();
+    alert('Sermon loaded for editing. Click Save when done.');
+  }
+
+  function deleteSermon(id) {
+    if (!confirm('Are you sure you want to delete this sermon?')) return;
+    
+    sermons = sermons.filter(s => s.id !== id);
+    saveToStorage();
+    renderSermonList();
+    alert('Sermon deleted successfully.');
+  }
