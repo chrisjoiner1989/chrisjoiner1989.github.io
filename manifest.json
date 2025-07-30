@@ -1,0 +1,21 @@
+{
+  "name": "Mount Builder - Sermon Builder",
+  "short_name": "Mount Builder",
+  "description": "Sermon preparation and organization tool",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffff0",
+  "theme_color": "#722f37",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
