@@ -91,6 +91,30 @@ textarea {
   box-sizing: border-box;
 }
 
+/* Mobile-specific date input styling */
+input[type="date"] {
+  min-width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: none;
+}
+
+@media (max-width: 767px) {
+  input[type="date"] {
+    padding: 0.875rem 0.75rem;
+    font-size: 16px;
+    min-height: 48px;
+    width: 100%;
+    background-color: white;
+  }
+  
+  /* Ensure date picker doesn't break layout */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    padding: 5px;
+    cursor: pointer;
+  }
+}
+
 input:focus,
 textarea:focus {
   border-color: #808000;

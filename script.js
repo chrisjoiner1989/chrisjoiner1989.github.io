@@ -30,9 +30,41 @@ const API_BASE = "https://bible-api.com/";
 // loads ext sermons on start up
 loadSermons();
 
-//sets today as default date
-const today = new Date();
-dateInput.value = today.toISOString().split("T")[0];
+//sets today as default date and handles mobile formatting
+function setDefaultDate() {
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0];
+  dateInput.value = formattedDate;
+  
+  // Store in localStorage for persistence
+  localStorage.setItem('sermonDate', formattedDate);
+}
+
+// Load saved date or set today's date
+function loadSavedDate() {
+  const savedDate = localStorage.getItem('sermonDate');
+  if (savedDate && isValidDate(savedDate)) {
+    dateInput.value = savedDate;
+  } else {
+    setDefaultDate();
+  }
+}
+
+// Validate date format (YYYY-MM-DD)
+function isValidDate(dateString) {
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!regex.test(dateString)) return false;
+  
+  const date = new Date(dateString);
+  const timestamp = date.getTime();
+  
+  if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) return false;
+  
+  return dateString === date.toISOString().split('T')[0];
+}
+
+// Initialize date on page load
+loadSavedDate();
 
 // Event Listeners
 searchBtn.addEventListener("click", function (e) {
@@ -70,6 +102,16 @@ referenceInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     searchForVerse();
+  }
+});
+
+// Date change event listener to save to localStorage and validate
+dateInput.addEventListener("change", function() {
+  if (isValidDate(dateInput.value)) {
+    localStorage.setItem('sermonDate', dateInput.value);
+  } else {
+    alert("Please enter a valid date");
+    loadSavedDate(); // Reset to saved or default date
   }
 });
 
@@ -274,8 +316,8 @@ function clearForm() {
   referenceHelp.textContent = "";
   currentVerseData = null;
 
-  // resest date to today
-  dateInput.value = new Date().toISOString().split("T")[0];
+  // reset date to today and save to localStorage
+  setDefaultDate();
 }
 
 // EXPORTs SERMONS
