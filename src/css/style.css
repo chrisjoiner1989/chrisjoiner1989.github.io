@@ -107,7 +107,7 @@ input[type="date"] {
     width: 100%;
     background-color: white;
   }
-  
+
   /* Ensure date picker doesn't break layout */
   input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 5px;
@@ -236,6 +236,104 @@ button:hover {
   transition: all 0.2s ease;
 }
 
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  border: 1px solid #ddd;
+}
+
+.calendar-day-header {
+  background-color: #722f37;
+  color: white;
+  padding: 10px 5px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.calendar-day {
+  min-height: 80px;
+  border: 1px solid #ddd;
+  padding: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  position: relative;
+}
+
+.calendar-day.empty {
+  background-color: #f8f8f8;
+  cursor: default;
+}
+
+.calendar-day:hover {
+  background-color: #f0f0f0;
+}
+
+.calendar-day.has-sermon {
+  background-color: #e8f5e8;
+  border-color: #5a7a5a;
+}
+
+.day-number {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.sermon-marker {
+  background-color: #722f37;
+  color: white;
+  padding: 2px 4px;
+  margin: 2px 0;
+  border-radius: 3px;
+  font-size: 0.7em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.calendar-controls button {
+  background-color: #722f37;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.calendar-controls button:hover {
+  background-color: #5e252c;
+}
+
+.planning-tools {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.planning-tools button {
+  flex: 1;
+  min-width: 120px;
+}
+
+.series-timeline {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+
 @media (min-width: 768px) {
   body {
     padding: 2rem;
@@ -262,7 +360,7 @@ button:hover {
   }
 
   .button-group {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 

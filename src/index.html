@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mount Builder - Sermon Builder App</title>
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -69,6 +69,7 @@
           <button class="input-btn export-btn">Export Sermon</button>
           <button class="input-btn addverse-btn">Add Verse</button>
           <button class="input-btn library-btn">View Library</button>
+          <button class="input-btn calendar-btn">Calendar</button>
         </div>
       </div>
     </main>
@@ -94,8 +95,29 @@
         </select>
       </div>
 
+      <div id="calendar-section" class="calendar-section" style="display: none">
+        <div class="calendar-header">
+          <h2>Sermon Calendar</h2>
+          <button class="input-btn back-btn">Back to Form</button>
+        </div>
+
+        <div class="calendar-controls">
+          <button id="prev-month">←</button>
+          <h3 id="current-month">January 2024</h3>
+          <button id="next-month">→</button>
+        </div>
+
+        <div id="calendar-grid" class="calendar-grid"></div>
+
+        <div class="planning-tools">
+          <button class="input-btn">Add Series</button>
+          <button class="input-btn">Schedule Sermon</button>
+          <button class="input-btn">View Timeline</button>
+        </div>
+      </div>
+
       <div id="sermons-list" class="sermons-list"></div>
     </div>
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
   </body>
 </html>

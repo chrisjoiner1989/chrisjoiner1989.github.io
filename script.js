@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Mount Builder starting up...");
-  
+
   // Add click event to logo to refresh page
-  const logo = document.querySelector('.logo');
+  const logo = document.querySelector(".logo");
   if (logo) {
-    logo.addEventListener('click', function() {
+    logo.addEventListener("click", function () {
       location.reload();
     });
-    
+
     // Add cursor pointer to indicate it's clickable
-    logo.style.cursor = 'pointer';
+    logo.style.cursor = "pointer";
   }
 });
 
@@ -46,14 +46,14 @@ function setDefaultDate() {
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
   dateInput.value = formattedDate;
-  
+
   // Store in localStorage for persistence
-  localStorage.setItem('sermonDate', formattedDate);
+  localStorage.setItem("sermonDate", formattedDate);
 }
 
 // Load saved date or set today's date
 function loadSavedDate() {
-  const savedDate = localStorage.getItem('sermonDate');
+  const savedDate = localStorage.getItem("sermonDate");
   if (savedDate && isValidDate(savedDate)) {
     dateInput.value = savedDate;
   } else {
@@ -65,13 +65,13 @@ function loadSavedDate() {
 function isValidDate(dateString) {
   const regex = /^\d{4}-\d{2}-\d{2}$/;
   if (!regex.test(dateString)) return false;
-  
+
   const date = new Date(dateString);
   const timestamp = date.getTime();
-  
-  if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) return false;
-  
-  return dateString === date.toISOString().split('T')[0];
+
+  if (typeof timestamp !== "number" || Number.isNaN(timestamp)) return false;
+
+  return dateString === date.toISOString().split("T")[0];
 }
 
 // Initialize date on page load
@@ -92,16 +92,35 @@ addVerseBtn.addEventListener("click", addVerseToNotes);
 
 // Library event listeners
 const libraryBtn = document.querySelector(".library-btn");
+const calendarBtn = document.querySelector(".calendar-btn");
 const backBtn = document.querySelector(".back-btn");
 const searchSermonsInput = document.getElementById("search-sermons");
 const filterSpeakerSelect = document.getElementById("filter-speaker");
 const sortSermonsSelect = document.getElementById("sort-sermons");
 
 if (libraryBtn) libraryBtn.addEventListener("click", showLibrary);
+if (calendarBtn) calendarBtn.addEventListener("click", showCalendar);
 if (backBtn) backBtn.addEventListener("click", showForm);
-if (searchSermonsInput) searchSermonsInput.addEventListener("input", renderSermonList);
-if (filterSpeakerSelect) filterSpeakerSelect.addEventListener("change", renderSermonList);
-if (sortSermonsSelect) sortSermonsSelect.addEventListener("change", renderSermonList);
+if (searchSermonsInput)
+  searchSermonsInput.addEventListener("input", renderSermonList);
+if (filterSpeakerSelect)
+  filterSpeakerSelect.addEventListener("change", renderSermonList);
+if (sortSermonsSelect)
+  sortSermonsSelect.addEventListener("change", renderSermonList);
+
+// Calendar navigation event listeners
+const prevMonthBtn = document.getElementById("prev-month");
+const nextMonthBtn = document.getElementById("next-month");
+
+if (prevMonthBtn) prevMonthBtn.addEventListener("click", () => {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  renderCalendar();
+});
+
+if (nextMonthBtn) nextMonthBtn.addEventListener("click", () => {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  renderCalendar();
+});
 
 //Validates verse ref as user types it in
 referenceInput.addEventListener("input", function () {
@@ -115,16 +134,16 @@ referenceInput.addEventListener("keypress", (e) => {
     searchForVerse();
   }
 });
-logo.addEventListener('click', function() {
-  if (confirm('Refresh the page?')) {
+logo.addEventListener("click", function () {
+  if (confirm("Refresh the page?")) {
     location.reload();
   }
 });
 
 // Date change event listener to save to localStorage and validate
-dateInput.addEventListener("change", function() {
+dateInput.addEventListener("change", function () {
   if (isValidDate(dateInput.value)) {
-    localStorage.setItem('sermonDate', dateInput.value);
+    localStorage.setItem("sermonDate", dateInput.value);
   } else {
     alert("Please enter a valid date");
     loadSavedDate(); // Reset to saved or default date
@@ -377,7 +396,7 @@ function exportData() {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
-  sorted.forEach((sermon, index) => {
+  sorted.forEach((sermon) => {
     exportHTML += `
     <div class="sermon">
       <div class="sermon-title">${sermon.title}</div>
@@ -469,121 +488,223 @@ window.viewSermons = () => {
 };
 
 function showLibrary() {
-    currentView = 'library';
-    document.querySelector('.main-container').style.display
-  = 'none';
-    document.getElementById('library-section').style.display
-   = 'block';
-    populateSpeakerFilter();
-    renderSermonList();
-  }
+  currentView = "library";
+  document.querySelector(".main-container").style.display = "none";
+  document.getElementById("library-section").style.display = "block";
+  populateSpeakerFilter();
+  renderSermonList();
+}
 
-  function showForm() {
-    currentView = 'form';
-    document.querySelector('.main-container').style.display
-  = 'block';
-    document.getElementById('library-section').style.display
-   = 'none';
-  }
+function showForm() {
+  currentView = "form";
+  document.querySelector(".main-container").style.display = "block";
+  document.getElementById("library-section").style.display = "none";
+  document.getElementById("calendar-section").style.display = "none";
+}
 
-  function populateSpeakerFilter() {
-    const speakerSelect = document.getElementById('filter-speaker');
-    const speakers = [...new Set(sermons.map(s => s.speaker))];
+function showCalendar() {
+  currentView = "calendar";
+  document.querySelector(".main-container").style.display = "none";
+  document.getElementById("library-section").style.display = "none";
+  document.getElementById("calendar-section").style.display = "block";
+  renderCalendar();
+}
 
-    speakerSelect.innerHTML = '<option value="">All Speakers</option>';
-    speakers.forEach(speaker => {
-      speakerSelect.innerHTML += `<option value="${speaker}">${speaker}</option>`;
-    });
-  }
+function populateSpeakerFilter() {
+  const speakerSelect = document.getElementById("filter-speaker");
+  const speakers = [...new Set(sermons.map((s) => s.speaker))];
 
-  function renderSermonList() {
-    const container = document.getElementById('sermons-list');
-    const searchTerm = document.getElementById('search-sermons').value.toLowerCase();
-    const speakerFilter = document.getElementById('filter-speaker').value;
-    const sortBy = document.getElementById('sort-sermons').value;
+  speakerSelect.innerHTML = '<option value="">All Speakers</option>';
+  speakers.forEach((speaker) => {
+    speakerSelect.innerHTML += `<option value="${speaker}">${speaker}</option>`;
+  });
+}
 
-    // Filter sermons
-    filteredSermons = sermons.filter(sermon => {
-      const matchesSearch = sermon.title.toLowerCase().includes(searchTerm) || sermon.speaker.toLowerCase().includes(searchTerm) || sermon.series.toLowerCase().includes(searchTerm);
-      const matchesSpeaker = !speakerFilter || sermon.speaker === speakerFilter;
-      return matchesSearch && matchesSpeaker;
-    });
+function renderSermonList() {
+  const container = document.getElementById("sermons-list");
+  const searchTerm = document
+    .getElementById("search-sermons")
+    .value.toLowerCase();
+  const speakerFilter = document.getElementById("filter-speaker").value;
+  const sortBy = document.getElementById("sort-sermons").value;
 
-    // Sort sermons
-    filteredSermons.sort((a, b) => {
-      switch(sortBy) {
-        case 'date-desc': return new Date(b.date) - new Date(a.date);
-        case 'date-asc': return new Date(a.date) - new Date(b.date);
-        case 'title': return a.title.localeCompare(b.title);
-        default: return 0;
-      }
-    });
+  // Filter sermons
+  filteredSermons = sermons.filter((sermon) => {
+    const matchesSearch =
+      sermon.title.toLowerCase().includes(searchTerm) ||
+      sermon.speaker.toLowerCase().includes(searchTerm) ||
+      sermon.series.toLowerCase().includes(searchTerm);
+    const matchesSpeaker = !speakerFilter || sermon.speaker === speakerFilter;
+    return matchesSearch && matchesSpeaker;
+  });
 
-    if (filteredSermons.length === 0) {
-      container.innerHTML = '<p>No sermons found.</p>';
-      return;
+  // Sort sermons
+  filteredSermons.sort((a, b) => {
+    switch (sortBy) {
+      case "date-desc":
+        return new Date(b.date) - new Date(a.date);
+      case "date-asc":
+        return new Date(a.date) - new Date(b.date);
+      case "title":
+        return a.title.localeCompare(b.title);
+      default:
+        return 0;
     }
+  });
 
-    container.innerHTML = filteredSermons.map(sermon => `
+  if (filteredSermons.length === 0) {
+    container.innerHTML = "<p>No sermons found.</p>";
+    return;
+  }
+
+  container.innerHTML = filteredSermons
+    .map(
+      (sermon) => `
       <div class="sermon-card">
         <h3>${sermon.title}</h3>
         <div class="sermon-meta">
           <strong>Speaker:</strong> ${sermon.speaker}<br>
           <strong>Date:</strong> ${formatDate(sermon.date)}<br>
           <strong>Series:</strong> ${sermon.series}
-          ${sermon.verseReference ? `<br><strong>Scripture:</strong> ${sermon.verseReference}` : ''}
+          ${
+            sermon.verseReference
+              ? `<br><strong>Scripture:</strong> ${sermon.verseReference}`
+              : ""
+          }
         </div>
         <div class="sermon-actions">
-          <button onclick="viewSermon(${sermon.id})" class="input-btn">View</button>
-          <button onclick="editSermon(${sermon.id})" class="input-btn">Edit</button>
-          <button onclick="deleteSermon(${sermon.id})" class="input-btn">Delete</button>
+          <button onclick="viewSermon(${
+            sermon.id
+          })" class="input-btn">View</button>
+          <button onclick="editSermon(${
+            sermon.id
+          })" class="input-btn">Edit</button>
+          <button onclick="deleteSermon(${
+            sermon.id
+          })" class="input-btn">Delete</button>
         </div>
       </div>
-    `).join('');
+    `
+    )
+    .join("");
+}
+
+function viewSermon(id) {
+  const sermon = sermons.find((s) => s.id === id);
+  if (!sermon) return;
+
+  alert(
+    `Title: ${sermon.title}\nSpeaker: ${sermon.speaker}\nDate: ${formatDate(
+      sermon.date
+    )}\nSeries: ${sermon.series}\n\nNotes:\n${sermon.notes}`
+  );
+}
+
+function editSermon(id) {
+  const sermon = sermons.find((s) => s.id === id);
+  if (!sermon) return;
+
+  // Populate form with sermon data
+  titleInput.value = sermon.title;
+  speakerInput.value = sermon.speaker;
+  dateInput.value = sermon.date;
+  seriesInput.value = sermon.series;
+  notesInput.value = sermon.notes;
+  referenceInput.value = sermon.verseReference || "";
+
+  // Remove the sermon from array (will be re-added when saved)
+  sermons = sermons.filter((s) => s.id !== id);
+  saveToStorage();
+
+  // Switch to form view
+  showForm();
+  alert("Sermon loaded for editing. Click Save when done.");
+}
+
+function deleteSermon(id) {
+  if (!confirm("Are you sure you want to delete this sermon?")) return;
+
+  sermons = sermons.filter((s) => s.id !== id);
+  saveToStorage();
+  renderSermonList();
+  alert("Sermon deleted successfully.");
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/sw.js")
+    .then(() => console.log("SW registered"))
+    .catch(() => console.log("SW registration failed"));
+}
+
+logo.title = "Click to refresh page";
+
+// Calendar State Management
+let currentDate = new Date();
+let selectDate = null;
+let scheduledSermons = [];
+
+// Calendar rendering
+function renderCalendar() {
+  const grid = document.getElementById("calendar-grid");
+  const month = currentDate.getMonth();
+  const year = currentDate.getFullYear();
+  
+  // Update month header
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+  document.getElementById("current-month").textContent = `${monthNames[month]} ${year}`;
+  
+  // Clear existing calendar
+  grid.innerHTML = "";
+  
+  // Add day headers
+  const dayHeaders = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  dayHeaders.forEach(day => {
+    const dayHeader = document.createElement("div");
+    dayHeader.className = "calendar-day-header";
+    dayHeader.textContent = day;
+    grid.appendChild(dayHeader);
+  });
+  
+  // Get first day of month and number of days
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  
+  // Add empty cells for days before month starts
+  for (let i = 0; i < firstDay; i++) {
+    const emptyDay = document.createElement("div");
+    emptyDay.className = "calendar-day empty";
+    grid.appendChild(emptyDay);
   }
-
-  function viewSermon(id) {
-    const sermon = sermons.find(s => s.id === id);
-    if (!sermon) return;
-
-    alert(`Title: ${sermon.title}\nSpeaker: ${sermon.speaker}\nDate: ${formatDate(sermon.date)}\nSeries: ${sermon.series}\n\nNotes:\n${sermon.notes}`);
-  }
-
-  function editSermon(id) {
-    const sermon = sermons.find(s => s.id === id);
-    if (!sermon) return;
+  
+  // Add days of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayElement = document.createElement("div");
+    dayElement.className = "calendar-day";
+    dayElement.innerHTML = `<div class="day-number">${day}</div>`;
     
-    // Populate form with sermon data
-    titleInput.value = sermon.title;
-    speakerInput.value = sermon.speaker;
-    dateInput.value = sermon.date;
-    seriesInput.value = sermon.series;
-    notesInput.value = sermon.notes;
-    referenceInput.value = sermon.verseReference || '';
+    // Check if there are sermons on this day
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const sermonsOnDay = sermons.filter(sermon => sermon.date === dateStr);
     
-    // Remove the sermon from array (will be re-added when saved)
-    sermons = sermons.filter(s => s.id !== id);
-    saveToStorage();
+    if (sermonsOnDay.length > 0) {
+      dayElement.classList.add("has-sermon");
+      sermonsOnDay.forEach(sermon => {
+        const sermonDiv = document.createElement("div");
+        sermonDiv.className = "sermon-marker";
+        sermonDiv.textContent = sermon.title.substring(0, 20) + (sermon.title.length > 20 ? "..." : "");
+        sermonDiv.title = `${sermon.title} - ${sermon.speaker}`;
+        dayElement.appendChild(sermonDiv);
+      });
+    }
     
-    // Switch to form view
-    showForm();
-    alert('Sermon loaded for editing. Click Save when done.');
+    grid.appendChild(dayElement);
   }
+}
 
-  function deleteSermon(id) {
-    if (!confirm('Are you sure you want to delete this sermon?')) return;
-    
-    sermons = sermons.filter(s => s.id !== id);
-    saveToStorage();
-    renderSermonList();
-    alert('Sermon deleted successfully.');
-  }
+// Drag and drop for sermon scheduling
+function enableDragAndDrop() {}
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => console.log('SW registered'))
-      .catch(error => console.log('SW registration failed'));
-  }
-
-
-  logo.title = 'Click to refresh page';
+// Series timeline visualization
+function renderSeriesTimeline() {}
