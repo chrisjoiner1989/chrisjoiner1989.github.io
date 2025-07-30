@@ -1,5 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Mount Builder starting up...");
+  
+  // Add click event to logo to refresh page
+  const logo = document.querySelector('.logo');
+  if (logo) {
+    logo.addEventListener('click', function() {
+      location.reload();
+    });
+    
+    // Add cursor pointer to indicate it's clickable
+    logo.style.cursor = 'pointer';
+  }
 });
 
 // gets form and all input elements
@@ -102,6 +113,11 @@ referenceInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     searchForVerse();
+  }
+});
+logo.addEventListener('click', function() {
+  if (confirm('Refresh the page?')) {
+    location.reload();
   }
 });
 
@@ -568,3 +584,6 @@ function showLibrary() {
       .then(registration => console.log('SW registered'))
       .catch(error => console.log('SW registration failed'));
   }
+
+
+  logo.title = 'Click to refresh page';
