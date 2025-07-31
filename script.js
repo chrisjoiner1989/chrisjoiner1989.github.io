@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Add cursor pointer to indicate it's clickable
     logo.style.cursor = "pointer";
+    logo.title = "Click to refresh page";
   }
 });
 
@@ -132,11 +133,6 @@ referenceInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     searchForVerse();
-  }
-});
-logo.addEventListener("click", function () {
-  if (confirm("Refresh the page?")) {
-    location.reload();
   }
 });
 
@@ -636,8 +632,6 @@ if ("serviceWorker" in navigator) {
     .then(() => console.log("SW registered"))
     .catch(() => console.log("SW registration failed"));
 }
-
-logo.title = "Click to refresh page";
 
 // Calendar State Management
 let currentDate = new Date();
