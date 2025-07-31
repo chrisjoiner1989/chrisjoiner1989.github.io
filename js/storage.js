@@ -331,3 +331,13 @@ function deleteSermon(id) {
   renderSermonList();
   alert("Sermon deleted successfully.");
 }
+
+function moveSermon(sermonId, newDate) {
+  const sermon = sermons.find(s => s.id == sermonId);
+  if (sermon) {
+    sermon.date = newDate;
+    saveToStorage();
+    renderCalendar(); // Refresh calendar view
+    alert(`Sermon "${sermon.title}" moved to ${formatDate(newDate)}`);
+  }
+}

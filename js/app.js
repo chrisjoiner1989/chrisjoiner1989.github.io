@@ -78,15 +78,17 @@ if (sortSermonsSelect)
 const prevMonthBtn = document.getElementById("prev-month");
 const nextMonthBtn = document.getElementById("next-month");
 
-if (prevMonthBtn) prevMonthBtn.addEventListener("click", () => {
-  currentDate.setMonth(currentDate.getMonth() - 1);
-  renderCalendar();
-});
+if (prevMonthBtn)
+  prevMonthBtn.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+  });
 
-if (nextMonthBtn) nextMonthBtn.addEventListener("click", () => {
-  currentDate.setMonth(currentDate.getMonth() + 1);
-  renderCalendar();
-});
+if (nextMonthBtn)
+  nextMonthBtn.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+  });
 
 // allows enter key to search
 referenceInput.addEventListener("keypress", (e) => {
@@ -179,57 +181,105 @@ function renderCalendar() {
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
   document.getElementById("current-month").textContent = `${monthNames[month]} ${year}`;
-  
+
   // Clear existing calendar
   grid.innerHTML = "";
-  
+
   // Add day headers
   const dayHeaders = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  dayHeaders.forEach(day => {
+  dayHeaders.forEach((day) => {
     const dayHeader = document.createElement("div");
     dayHeader.className = "calendar-day-header";
     dayHeader.textContent = day;
     grid.appendChild(dayHeader);
   });
-  
+
   // Get first day of month and number of days
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  
+
   // Add empty cells for days before month starts
   for (let i = 0; i < firstDay; i++) {
     const emptyDay = document.createElement("div");
     emptyDay.className = "calendar-day empty";
     grid.appendChild(emptyDay);
   }
-  
+
   // Add days of the month
   for (let day = 1; day <= daysInMonth; day++) {
     const dayElement = document.createElement("div");
     dayElement.className = "calendar-day";
     dayElement.innerHTML = `<div class="day-number">${day}</div>`;
-    
+
     // Check if there are sermons on this day
-    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    const sermonsOnDay = sermons.filter(sermon => sermon.date === dateStr);
-    
+    const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+      day
+    ).padStart(2, "0")}`;
+    const sermonsOnDay = sermons.filter((sermon) => sermon.date === dateStr);
+
+    // Make calendar days accept drops
+    dayElement.addEventListener('dragover', handleDragOver);
+    dayElement.addEventListener('drop', handleDrop);
+    dayElement.setAttribute('data-date', dateStr);
+
     if (sermonsOnDay.length > 0) {
       dayElement.classList.add("has-sermon");
-      sermonsOnDay.forEach(sermon => {
+      sermonsOnDay.forEach((sermon) => {
         const sermonDiv = document.createElement("div");
         sermonDiv.className = "sermon-marker";
-        sermonDiv.textContent = sermon.title.substring(0, 20) + (sermon.title.length > 20 ? "..." : "");
+        sermonDiv.textContent =
+          sermon.title.substring(0, 20) +
+          (sermon.title.length > 20 ? "..." : "");
         sermonDiv.title = `${sermon.title} - ${sermon.speaker}`;
+        
+        // Make sermon cards draggable
+        sermonDiv.draggable = true;
+        sermonDiv.setAttribute('data-sermon-id', sermon.id);
+        sermonDiv.addEventListener('dragstart', handleDragStart);
+        
         dayElement.appendChild(sermonDiv);
       });
     }
-    
+
     grid.appendChild(dayElement);
   }
 }
 
-// Drag and drop for sermon scheduling
-function enableDragAndDrop() {}
+// Drag and drop variables
+let draggedSermonId = null;
+
+// Drag event handlers
+function handleDragStart(e) {
+  draggedSermonId = e.target.getAttribute('data-sermon-id');
+  e.target.style.opacity = '0.5';
+}
+
+function handleDragOver(e) {
+  e.preventDefault(); // Allow drop
+  e.currentTarget.style.backgroundColor = '#f0f0f0'; // Visual feedback
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  e.currentTarget.style.backgroundColor = ''; // Reset background
+  
+  const newDate = e.currentTarget.getAttribute('data-date');
+  if (draggedSermonId && newDate) {
+    // Confirm move if significant date change
+    const sermon = sermons.find(s => s.id == draggedSermonId);
+    const oldDate = new Date(sermon.date);
+    const targetDate = new Date(newDate);
+    const daysDiff = Math.abs((targetDate - oldDate) / (1000 * 60 * 60 * 24));
+    
+    if (daysDiff > 7) {
+      if (confirm(`Move "${sermon.title}" to ${formatDate(newDate)}?`)) {
+        moveSermon(draggedSermonId, newDate);
+      }
+    } else {
+      moveSermon(draggedSermonId, newDate);
+    }
+  }
+}
 
 // Series timeline visualization
 function renderSeriesTimeline() {}
