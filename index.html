@@ -36,14 +36,27 @@
 
           <div class="input-group">
             <label for="title">Sermon Title:</label>
-            <input type="text" id="title" name="title" placeholder="Sermon Title" required />
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Sermon Title"
+              required
+            />
           </div>
 
           <div class="input-group">
             <label for="reference">Verse Reference:</label>
             <div class="input-with-button">
-              <input type="text" id="reference" name="reference" placeholder="e.g John 3:16" />
-              <button type="button" class="input-btn search-btn">Search verse</button>
+              <input
+                type="text"
+                id="reference"
+                name="reference"
+                placeholder="e.g John 3:16"
+              />
+              <button type="button" class="input-btn search-btn">
+                Search verse
+              </button>
             </div>
             <small id="reference-help" class="help-text"></small>
             <div id="verse-display" class="verse-display"></div>
@@ -55,7 +68,12 @@
 
           <div class="input-group">
             <label for="series">Sermon series:</label>
-            <input type="text" id="series" name="series" placeholder="Sermon on the mount" />
+            <input
+              type="text"
+              id="series"
+              name="series"
+              placeholder="Sermon on the mount"
+            />
           </div>
 
           <div class="input-group">
@@ -66,9 +84,16 @@
         <div class="button-group">
           <button type="button" class="input-btn save-btn">Save Sermon</button>
           <button type="button" class="input-btn clear-btn">Clear</button>
-          <button type="button" class="input-btn export-btn">Export Sermon</button>
-          <button type="button" class="input-btn addverse-btn">Add Verse</button>
-          <button type="button" class="input-btn library-btn">View Library</button>
+          <button type="button" class="input-btn export-btn">
+            Export Sermon
+          </button>
+          <button type="button" class="input-btn addverse-btn">
+            Add Verse
+          </button>
+          <button type="button" class="input-btn bible-btn">Bible</button>
+          <button type="button" class="input-btn library-btn">
+            View Library
+          </button>
           <button type="button" class="input-btn calendar-btn">Calendar</button>
         </div>
       </div>
@@ -118,9 +143,46 @@
 
       <div id="sermons-list" class="sermons-list"></div>
     </div>
+
+    <div id="bible-section" class="bible-section" style="display: none">
+      <div class="bible-header">
+        <h2>Bible Reader</h2>
+        <button type="button" class="input-btn bible-back-btn">
+          Back to Form
+        </button>
+      </div>
+
+      <div class="bible-navigation">
+        <select id="bible-book">
+          <option value="">Select Book</option>
+        </select>
+        <select id="bible-chapter">
+          <option value="">Select Chapter</option>
+        </select>
+        <button type="button" class="input-btn" id="load-chapter">
+          Load Chapter
+        </button>
+      </div>
+
+      <div class="bible-controls">
+        <button type="button" class="input-btn" id="prev-chapter">
+          ← Previous
+        </button>
+        <span id="current-reference">Select a book and chapter</span>
+        <button type="button" class="input-btn" id="next-chapter">
+          Next →
+        </button>
+      </div>
+
+      <div id="bible-content" class="bible-content">
+        <p>Select a book and chapter to start reading.</p>
+      </div>
+    </div>
+
     <script src="js/validation.js"></script>
     <script src="js/api.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
+`

@@ -176,11 +176,25 @@ function renderCalendar() {
   const grid = document.getElementById("calendar-grid");
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
-  
+
   // Update month header
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-  document.getElementById("current-month").textContent = `${monthNames[month]} ${year}`;
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  document.getElementById(
+    "current-month"
+  ).textContent = `${monthNames[month]} ${year}`;
 
   // Clear existing calendar
   grid.innerHTML = "";
@@ -218,9 +232,9 @@ function renderCalendar() {
     const sermonsOnDay = sermons.filter((sermon) => sermon.date === dateStr);
 
     // Make calendar days accept drops
-    dayElement.addEventListener('dragover', handleDragOver);
-    dayElement.addEventListener('drop', handleDrop);
-    dayElement.setAttribute('data-date', dateStr);
+    dayElement.addEventListener("dragover", handleDragOver);
+    dayElement.addEventListener("drop", handleDrop);
+    dayElement.setAttribute("data-date", dateStr);
 
     if (sermonsOnDay.length > 0) {
       dayElement.classList.add("has-sermon");
@@ -231,12 +245,12 @@ function renderCalendar() {
           sermon.title.substring(0, 20) +
           (sermon.title.length > 20 ? "..." : "");
         sermonDiv.title = `${sermon.title} - ${sermon.speaker}`;
-        
+
         // Make sermon cards draggable
         sermonDiv.draggable = true;
-        sermonDiv.setAttribute('data-sermon-id', sermon.id);
-        sermonDiv.addEventListener('dragstart', handleDragStart);
-        
+        sermonDiv.setAttribute("data-sermon-id", sermon.id);
+        sermonDiv.addEventListener("dragstart", handleDragStart);
+
         dayElement.appendChild(sermonDiv);
       });
     }
@@ -250,27 +264,27 @@ let draggedSermonId = null;
 
 // Drag event handlers
 function handleDragStart(e) {
-  draggedSermonId = e.target.getAttribute('data-sermon-id');
-  e.target.style.opacity = '0.5';
+  draggedSermonId = e.target.getAttribute("data-sermon-id");
+  e.target.style.opacity = "0.5";
 }
 
 function handleDragOver(e) {
   e.preventDefault(); // Allow drop
-  e.currentTarget.style.backgroundColor = '#f0f0f0'; // Visual feedback
+  e.currentTarget.style.backgroundColor = "#f0f0f0"; // Visual feedback
 }
 
 function handleDrop(e) {
   e.preventDefault();
-  e.currentTarget.style.backgroundColor = ''; // Reset background
-  
-  const newDate = e.currentTarget.getAttribute('data-date');
+  e.currentTarget.style.backgroundColor = ""; // Reset background
+
+  const newDate = e.currentTarget.getAttribute("data-date");
   if (draggedSermonId && newDate) {
     // Confirm move if significant date change
-    const sermon = sermons.find(s => s.id == draggedSermonId);
+    const sermon = sermons.find((s) => s.id == draggedSermonId);
     const oldDate = new Date(sermon.date);
     const targetDate = new Date(newDate);
     const daysDiff = Math.abs((targetDate - oldDate) / (1000 * 60 * 60 * 24));
-    
+
     if (daysDiff > 7) {
       if (confirm(`Move "${sermon.title}" to ${formatDate(newDate)}?`)) {
         moveSermon(draggedSermonId, newDate);
@@ -283,3 +297,28 @@ function handleDrop(e) {
 
 // Series timeline visualization
 function renderSeriesTimeline() {}
+
+const bibleBtn = document.querySelector(".bible-btn");
+const bibleBackBtn = document.querySelector(".bible-back-btn");
+
+if (bibleBtn) bibleBtn.addEventListener("click", showBible);
+if (bibleBackBtn) bibleBackBtn.addEventListener("click", showForm);
+
+function showBible() {
+  currentView = "bible";
+  document.querySelector(".main-container").style.display = "none";
+  document.getElementById("library-section").style.display = "none";
+  document.getElementById("calendar-section").style.display = "none";
+  document.getElementById("bible-section").style.display = "block";
+  initializeBibleReader();
+}
+
+const bibleBookSelect = document.getElementById("bible-book");
+if (bibleBookSelect) {
+  bibleBookSelect.addEventListener("change", updateChapterSelect);
+}
+
+const loadChapterBtn = document.getElementById("load-chapter");
+if (loadChapterBtn) {
+  loadChapterBtn.addEventListener("click", loadBibleChapter);
+}
