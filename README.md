@@ -73,3 +73,5 @@ forgetting.
 
 This would be really useful since right now you save sermons but can't easily go back and reference old ones
 or reuse content from previous series.
+
+5. A fully functional back-end with unit tests files has been started but not done

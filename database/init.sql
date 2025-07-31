@@ -1,0 +1,1 @@
+-- SQL script to initialize Mount Builder database
