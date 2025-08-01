@@ -456,31 +456,138 @@ body:has(.bible-section[style*="block"]) header {
   margin-bottom: 1rem;
 }
 
-/* Responsive Bible Reader */
+/* Mobile Bible Reader Fixes */
 @media (max-width: 768px) {
-  .bible-navigation {
+  .bible-header {
+    position: static;
+    background: #f8f8f8;
+    border-bottom: 1px solid #eee;
+    padding: 1rem;
+    display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
   }
 
-  .bible-navigation select {
+  .bible-header .bible-back-btn {
+    position: static;
     width: 100%;
-    min-width: auto;
+    height: 44px;
+    background-color: #722f37;
+    color: white;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin: 0;
   }
 
-  .bible-controls {
-    flex-direction: column;
+  .bible-header .bible-back-btn:hover {
+    background-color: #5e252c;
+    transform: none;
+  }
+
+  .bible-nav-controls {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 0.5rem;
-    text-align: center;
+    width: 100%;
+  }
+
+  .bible-nav-controls select {
+    background-color: white;
+    color: #333;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 16px;
+    min-width: auto;
+    width: 100%;
+  }
+
+  .bible-nav-controls select:hover,
+  .bible-nav-controls select:focus {
+    background-color: white;
+    border-color: #808000;
+    transform: none;
+  }
+
+  .bible-nav-controls button {
+    width: 100%;
+    height: 44px;
+    background-color: #722f37;
+    color: white;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .bible-nav-controls button:hover {
+    background-color: #5e252c;
+    transform: none;
   }
 
   .bible-content {
-    max-height: 50vh;
-    font-size: 1em;
+    height: calc(100vh - 200px);
+    padding-top: 0;
+  }
+
+  .chapter-header {
+    padding: 0 1rem;
+    margin: 1rem 0;
+  }
+
+  .chapter-header h3 {
+    font-size: 1.8rem;
   }
 
   .chapter-text {
-    font-size: 1em;
+    padding: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  /* Make sure mobile nav is touchable */
+  .bible-nav-controls select,
+  .bible-nav-controls button {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Fix grid layout for smaller screens */
+  .bible-nav-controls {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+  
+  /* Better mobile text spacing */
+  .chapter-text {
+    word-spacing: 0.1em;
+    text-align: justify;
+  }
+  
+  /* Make sure error messages look good on mobile */
+  .bible-content .error {
+    padding: 2rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .bible-nav-controls {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+  
+  .chapter-header h3 {
+    font-size: 1.5rem;
+  }
+  
+  .chapter-text {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .bible-header {
+    padding: 0.75rem;
   }
 }
 
