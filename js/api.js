@@ -1,5 +1,40 @@
-// free bible api
-const API_BASE = "https://bible-api.com/";
+// Bible APIs setup - using multiple APIs for better translation coverage
+const BIBLE_APIS = {
+  // bible-api.com for public domain translations
+  primary: {
+    base: "https://bible-api.com/",
+    supportedTranslations: ["WEB", "KJV", "ASV", "BBE"],
+    formatUrl: (book, chapter, translation) => {
+      const query = `${book.replace(/\s+/g, "+")}+${chapter}`;
+      if (translation === "WEB") {
+        return `${BIBLE_APIS.primary.base}${query}`;
+      } else {
+        return `${BIBLE_APIS.primary.base}${query}?translation=${translation.toLowerCase()}`;
+      }
+    }
+  },
+  
+  // bolls.life for modern translations like NKJV, ESV, NLT
+  bolls: {
+    base: "https://bolls.life/",
+    supportedTranslations: ["NKJV", "ESV", "NLT"],
+    formatUrl: (book, chapter, translation) => {
+      // bolls API needs book number instead of name
+      const bookNumber = getBookNumber(book);
+      return `${BIBLE_APIS.bolls.base}get-text/${translation}/${bookNumber}/${chapter}/`;
+    }
+  }
+};
+
+// helper function to get book number for bolls API
+function getBookNumber(bookName) {
+  console.log('Looking for book:', bookName);
+  const bookIndex = BIBLE_BOOKS.findIndex(book => book.name === bookName);
+  console.log('Book index found:', bookIndex);
+  const bookNumber = bookIndex + 1; // bolls uses 1-based indexing
+  console.log('Book number for API:', bookNumber);
+  return bookNumber;
+}
 
 // searches for verse api call
 async function searchForVerse() {
@@ -22,9 +57,9 @@ async function searchForVerse() {
   verseDisplay.innerHTML = '<p class="loading">Looking up verse...</p>';
 
   try {
-    // formats for API (replaces empty spaces with +)
+    // use primary API for verse search (WEB translation)
     const query = reference.replace(/\s+/g, "+");
-    const response = await fetch(API_BASE + query);
+    const response = await fetch(BIBLE_APIS.primary.base + query);
 
     if (!response.ok) {
       throw new Error("Verse not found");
@@ -143,6 +178,112 @@ const BIBLE_BOOKS = [
 ];
 let currentBook = null;
 let currentChapter = null;
+
+// function to pick which API to use based on translation
+function selectBestAPI(translation) {
+  console.log('Selecting API for translation:', translation);
+  
+  // check bolls first for modern translations
+  if (BIBLE_APIS.bolls.supportedTranslations.includes(translation)) {
+    console.log('Using Bolls API for', translation);
+    return { name: 'bolls', config: BIBLE_APIS.bolls };
+  }
+  
+  // check primary API for public domain translations
+  if (BIBLE_APIS.primary.supportedTranslations.includes(translation)) {
+    console.log('Using primary API for', translation);
+    return { name: 'primary', config: BIBLE_APIS.primary };
+  }
+  
+  // fallback to primary API with WEB
+  console.log('Translation not found, using WEB fallback');
+  return { name: 'primary', config: BIBLE_APIS.primary, fallbackTranslation: 'WEB' };
+}
+
+// function to parse different API response formats
+function parseAPIResponse(data, apiName, requestedTranslation, bookName, chapterNum) {
+  console.log("API Response:", data);
+  console.log("API Name:", apiName);
+  console.log("Requested translation:", requestedTranslation);
+  console.log("Book name from user selection:", bookName);
+  console.log("Chapter from user selection:", chapterNum);
+
+  switch (apiName) {
+    case 'primary':
+      // bible-api.com format
+      let translationName = requestedTranslation || "WEB";
+      if (data.translation_name) {
+        translationName = data.translation_name;
+      } else if (data.translation_id) {
+        translationName = data.translation_id;
+      } else if (data.translation) {
+        translationName = data.translation;
+      }
+
+      if (data.verses && Array.isArray(data.verses)) {
+        const text = data.verses.map((v) => `${v.verse}. ${v.text}`).join(" ");
+        return {
+          reference: data.reference,
+          text: text,
+          translation: translationName,
+        };
+      } else if (data.text) {
+        return {
+          reference: data.reference,
+          text: data.text,
+          translation: translationName,
+        };
+      }
+      break;
+      
+    case 'bolls':
+      // bolls.life format - returns array of verse objects
+      console.log('Bolls API data type:', Array.isArray(data) ? 'array' : typeof data);
+      console.log('Bolls API data length:', data?.length);
+      if (data && data.length > 0) {
+        console.log('First verse data:', data[0]);
+        console.log('Available fields in first verse:', Object.keys(data[0]));
+      }
+      
+      if (Array.isArray(data) && data.length > 0) {
+        const text = data.map(verse => `${verse.verse}. ${verse.text}`).join(' ');
+        const firstVerse = data[0];
+        
+        // debug the book and chapter fields
+        console.log('Book field:', firstVerse.book);
+        console.log('Chapter field:', firstVerse.chapter);
+        console.log('Book index would be:', firstVerse.book - 1);
+        
+        // use the book and chapter we already know from user selection
+        // this is more reliable than trying to parse it from API response
+        const finalBookName = bookName || "Unknown Book";
+        const finalChapterNum = chapterNum || "?";
+        
+        console.log('Using book from user selection:', finalBookName);
+        console.log('Using chapter from user selection:', finalChapterNum);
+        
+        return {
+          reference: `${finalBookName} ${finalChapterNum}`,
+          text: text,
+          translation: requestedTranslation
+        };
+      }
+      
+      // maybe its not an array - try object format
+      if (data && data.text) {
+        console.log('Bolls API returned single object format');
+        return {
+          reference: `${bookName || "Unknown"} ${chapterNum || "?"}`,
+          text: data.text,
+          translation: requestedTranslation
+        };
+      }
+      break;
+  }
+
+  console.log("Could not parse API response");
+  return null;
+}
 function initializeBibleReader() {
   const bookSelect = document.getElementById("bible-book");
 
@@ -157,49 +298,69 @@ function initializeBibleReader() {
 async function loadBibleChapter() {
   const bookSelect = document.getElementById("bible-book");
   const chapterSelect = document.getElementById("bible-chapter");
+  const translationSelect = document.getElementById("bible-translation");
   const contentDiv = document.getElementById("bible-content");
   const loadBtn = document.getElementById("load-chapter");
 
   const book = bookSelect.value;
   const chapter = chapterSelect.value;
+  const translation = translationSelect.value || "WEB";
 
-  // Validation
+  // validation
   if (!book || !chapter) {
     alert("Please select both a book and chapter");
     return;
   }
 
-  // Shows loading state
+  // show loading
   loadBtn.disabled = true;
   loadBtn.textContent = "Loading...";
   contentDiv.innerHTML = "<p>Loading chapter...</p>";
 
   try {
-    // Formats for API (same as the verse search)
-    const query = `${book}+${chapter}`;
-    const response = await fetch(API_BASE + query);
+    // select the best API for this translation
+    const apiInfo = selectBestAPI(translation);
+    const finalTranslation = apiInfo.fallbackTranslation || translation;
+    
+    // build the API URL using the selected API
+    const url = apiInfo.config.formatUrl(book, chapter, finalTranslation);
+    console.log(`Using ${apiInfo.name} API:`, url);
+
+    const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error("Chapter not found");
+      throw new Error(`API returned ${response.status} - chapter not found`);
     }
 
     const data = await response.json();
 
-    // Displays the chapter
-    displayBibleChapter(data);
+    // parse the response based on which API we used
+    const parsedData = parseAPIResponse(data, apiInfo.name, finalTranslation, book, chapter);
+
+    if (!parsedData || !parsedData.text) {
+      throw new Error("No chapter text found in API response");
+    }
+
+    // show the chapter
+    displayBibleChapter(parsedData);
   } catch (error) {
-    console.error("Bible API Error:", error);
-    contentDiv.innerHTML = `<p class="error">Could not load chapter. Please try again.</p>`;
+    console.error("Bible loading error:", error);
+    contentDiv.innerHTML = `
+      <div class="error" style="text-align: center; padding: 2rem; color: #dc143c;">
+        <p>Could not load chapter.</p>
+        <p><small>Book: ${book}, Chapter: ${chapter}, Translation: ${translation}</small></p>
+        <p><small>${error.message}</small></p>
+        <p><small>Try selecting a different translation</small></p>
+      </div>`;
   } finally {
-    // Reset button
+    // reset button
     loadBtn.disabled = false;
-    loadBtn.textContent = "Load Chapter";
+    loadBtn.textContent = "Go";
   }
 }
 
 function displayBibleChapter(data) {
   const contentDiv = document.getElementById("bible-content");
-  const referenceSpan = document.getElementById("current-reference");
   const bookSelect = document.getElementById("bible-book");
   const chapterSelect = document.getElementById("bible-chapter");
 
@@ -207,17 +368,14 @@ function displayBibleChapter(data) {
   currentBook = bookSelect.value;
   currentChapter = parseInt(chapterSelect.value);
 
-  // Updates the current reference display
-  referenceSpan.textContent = data.reference || "Bible Chapter";
-
-  // Displays the chapter content
+  // Displays just the chapter content - clean and minimal
   contentDiv.innerHTML = `
     <div class="chapter-header">
       <h3>${data.reference}</h3>
-      <small>${data.translation_name || "WEB"}</small>
+      <small>${data.translation || data.translation_name || "WEB"}</small>
     </div>
     <div class="chapter-text">
-      ${data.text.replace(/\n/g, '<br><br>')}
+      ${data.text.replace(/\n/g, "<br><br>")}
     </div>
   `;
 }
@@ -241,19 +399,67 @@ function updateChapterSelect() {
   }
 }
 
-function displayBibleChapter(data) {
-  const contentDiv = document.getElementById("bible-content");
-  const referenceSpan = document.getElementById("current-reference");
+// Navigate to previous chapter
+function previousChapter() {
+  if (!currentBook || !currentChapter) {
+    alert("Please load a chapter first");
+    return;
+  }
 
-  referenceSpan.textContent = data.reference || "Bible Chapter";
+  const bookIndex = BIBLE_BOOKS.findIndex((book) => book.name === currentBook);
+  let newChapter = currentChapter - 1;
+  let newBook = currentBook;
 
-  contentDiv.innerHTML = `
-      <div class="chapter-header">
-        <h3>${data.reference}</h3>
-        <small>${data.translation_name || "WEB"}</small>
-      </div>
-      <div class="chapter-text">
-        ${data.text.replace(/\n/g, "<br><br>")}
-      </div>
-    `;
+  if (newChapter < 1) {
+    // Go to previous book's last chapter
+    if (bookIndex > 0) {
+      newBook = BIBLE_BOOKS[bookIndex - 1].name;
+      newChapter = BIBLE_BOOKS[bookIndex - 1].chapters;
+    } else {
+      alert("You're at the beginning of the Bible");
+      return;
+    }
+  }
+
+  navigateToChapter(newBook, newChapter);
+}
+
+// Navigate to next chapter
+function nextChapter() {
+  if (!currentBook || !currentChapter) {
+    alert("Please load a chapter first");
+    return;
+  }
+
+  const bookIndex = BIBLE_BOOKS.findIndex((book) => book.name === currentBook);
+  const currentBookData = BIBLE_BOOKS[bookIndex];
+  let newChapter = currentChapter + 1;
+  let newBook = currentBook;
+
+  if (newChapter > currentBookData.chapters) {
+    // Go to next book's first chapter
+    if (bookIndex < BIBLE_BOOKS.length - 1) {
+      newBook = BIBLE_BOOKS[bookIndex + 1].name;
+      newChapter = 1;
+    } else {
+      alert("You're at the end of the Bible");
+      return;
+    }
+  }
+
+  navigateToChapter(newBook, newChapter);
+}
+
+// Navigate to specific chapter
+function navigateToChapter(book, chapter) {
+  const bookSelect = document.getElementById("bible-book");
+  const chapterSelect = document.getElementById("bible-chapter");
+
+  // Update dropdowns
+  bookSelect.value = book;
+  updateChapterSelect();
+  chapterSelect.value = chapter;
+
+  // Loads the chapter
+  loadBibleChapter();
 }

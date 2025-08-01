@@ -98,6 +98,11 @@ referenceInput.addEventListener("keypress", (e) => {
   }
 });
 
+// Validates verse ref as user types it in
+referenceInput.addEventListener("input", function () {
+  validateVerseFormat();
+});
+
 // Date change event listener to save to localStorage and validate
 dateInput.addEventListener("change", function () {
   if (isValidDate(dateInput.value)) {
@@ -149,6 +154,12 @@ function showForm() {
   document.querySelector(".main-container").style.display = "block";
   document.getElementById("library-section").style.display = "none";
   document.getElementById("calendar-section").style.display = "none";
+  document.getElementById("bible-section").style.display = "none";
+  
+  // Restore logo and original background
+  const header = document.querySelector("header");
+  if (header) header.style.display = "block";
+  document.body.style.backgroundColor = "#fffff0";
 }
 
 function showCalendar() {
@@ -159,12 +170,13 @@ function showCalendar() {
   renderCalendar();
 }
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("/sw.js")
-    .then(() => console.log("SW registered"))
-    .catch(() => console.log("SW registration failed"));
-}
+// Service worker registration disabled - no sw.js file exists
+// if ("serviceWorker" in navigator) {
+//   navigator.serviceWorker
+//     .register("/sw.js")
+//     .then(() => console.log("SW registered"))
+//     .catch(() => console.log("SW registration failed"));
+// }
 
 // Calendar State Management
 let currentDate = new Date();
@@ -310,6 +322,12 @@ function showBible() {
   document.getElementById("library-section").style.display = "none";
   document.getElementById("calendar-section").style.display = "none";
   document.getElementById("bible-section").style.display = "block";
+  
+  // Hide logo and change background
+  const header = document.querySelector("header");
+  if (header) header.style.display = "none";
+  document.body.style.backgroundColor = "#ffffff";
+  
   initializeBibleReader();
 }
 
@@ -321,4 +339,15 @@ if (bibleBookSelect) {
 const loadChapterBtn = document.getElementById("load-chapter");
 if (loadChapterBtn) {
   loadChapterBtn.addEventListener("click", loadBibleChapter);
+}
+
+const prevChapterBtn = document.getElementById("prev-chapter");
+const nextChapterBtn = document.getElementById("next-chapter");
+
+if (prevChapterBtn) {
+  prevChapterBtn.addEventListener("click", previousChapter);
+}
+
+if (nextChapterBtn) {
+  nextChapterBtn.addEventListener("click", nextChapter);
 }

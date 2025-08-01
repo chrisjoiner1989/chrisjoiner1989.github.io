@@ -1,8 +1,3 @@
-//Validates verse ref as user types it in
-referenceInput.addEventListener("input", function () {
-  validateVerseFormat();
-});
-
 //sets today as default date and handles mobile formatting
 function setDefaultDate() {
   const today = new Date();

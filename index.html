@@ -13,6 +13,7 @@
     />
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#722f37" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
@@ -146,36 +147,31 @@
 
     <div id="bible-section" class="bible-section" style="display: none">
       <div class="bible-header">
-        <h2>Bible Reader</h2>
-        <button type="button" class="input-btn bible-back-btn">
-          Back to Form
-        </button>
-      </div>
-
-      <div class="bible-navigation">
-        <select id="bible-book">
-          <option value="">Select Book</option>
-        </select>
-        <select id="bible-chapter">
-          <option value="">Select Chapter</option>
-        </select>
-        <button type="button" class="input-btn" id="load-chapter">
-          Load Chapter
-        </button>
-      </div>
-
-      <div class="bible-controls">
-        <button type="button" class="input-btn" id="prev-chapter">
-          ← Previous
-        </button>
-        <span id="current-reference">Select a book and chapter</span>
-        <button type="button" class="input-btn" id="next-chapter">
-          Next →
-        </button>
+        <button type="button" class="bible-back-btn">←</button>
+        <div class="bible-nav-controls">
+          <select id="bible-translation">
+            <option value="WEB">WEB (World English Bible)</option>
+            <option value="KJV">KJV (King James Version)</option>
+            <option value="NKJV">NKJV (New King James Version)</option>
+            <option value="ESV">ESV (English Standard Version)</option>
+            <option value="NLT">NLT (New Living Translation)</option>
+            <option value="ASV">ASV (American Standard)</option>
+            <option value="BBE">BBE (Bible in Basic English)</option>
+          </select>
+          <select id="bible-book">
+            <option value="">Book</option>
+          </select>
+          <select id="bible-chapter">
+            <option value="">Ch</option>
+          </select>
+          <button type="button" id="load-chapter">Go</button>
+        </div>
       </div>
 
       <div id="bible-content" class="bible-content">
-        <p>Select a book and chapter to start reading.</p>
+        <div style="display: flex; align-items: center; justify-content: center; height: 100vh; color: #666; font-family: 'Cormorant Garamond', serif;">
+          <p>Select a book and chapter to start reading.</p>
+        </div>
       </div>
     </div>
 
