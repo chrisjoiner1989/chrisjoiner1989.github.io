@@ -436,7 +436,7 @@ body:has(.bible-section[style*="block"]) header {
 
 .chapter-text {
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   line-height: 1.8;
   color: #333;
   text-align: left;
@@ -560,8 +560,8 @@ body:has(.bible-section[style*="block"]) header {
 
   .chapter-text {
     font-family: "Cormorant Garamond", serif;
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 20px;
+    line-height: 1.7;
     color: #333;
     text-align: left;
     margin: 0;
@@ -617,8 +617,9 @@ body:has(.bible-section[style*="block"]) header {
   }
   
   .chapter-text {
-    font-size: 16px;
+    font-size: 18px;
     padding: 16px 12px;
+    line-height: 1.6;
   }
 }
 
