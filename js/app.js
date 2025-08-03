@@ -329,6 +329,12 @@ function showBible() {
   document.body.style.backgroundColor = "#ffffff";
   
   initializeBibleReader();
+  
+  // Add scroll listener for auto-hide header
+  const bibleContent = document.getElementById("bible-content");
+  if (bibleContent) {
+    bibleContent.addEventListener("scroll", handleBibleScroll);
+  }
 }
 
 const bibleBookSelect = document.getElementById("bible-book");
@@ -351,3 +357,39 @@ if (prevChapterBtn) {
 if (nextChapterBtn) {
   nextChapterBtn.addEventListener("click", nextChapter);
 }
+
+// Auto-hide header on scroll for mobile Bible reader
+let lastScrollTop = 0;
+let scrollTimeout;
+
+function handleBibleScroll() {
+  const bibleContent = document.getElementById("bible-content");
+  const bibleHeader = document.querySelector(".bible-header");
+  
+  if (!bibleContent || !bibleHeader) return;
+  
+  const scrollTop = bibleContent.scrollTop;
+  const scrollDirection = scrollTop > lastScrollTop ? 'down' : 'up';
+  
+  // Clear existing timeout
+  clearTimeout(scrollTimeout);
+  
+  // Only hide/show if we've scrolled a meaningful amount
+  if (Math.abs(scrollTop - lastScrollTop) > 5) {
+    if (scrollDirection === 'down' && scrollTop > 100) {
+      // Scrolling down and past initial area - hide header
+      bibleHeader.classList.add('hidden');
+    } else if (scrollDirection === 'up') {
+      // Scrolling up - show header
+      bibleHeader.classList.remove('hidden');
+    }
+  }
+  
+  // Show header after user stops scrolling for a bit
+  scrollTimeout = setTimeout(() => {
+    bibleHeader.classList.remove('hidden');
+  }, 3000);
+  
+  lastScrollTop = scrollTop;
+}
+

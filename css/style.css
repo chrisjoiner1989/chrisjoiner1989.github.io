@@ -456,7 +456,6 @@ body:has(.bible-section[style*="block"]) header {
   margin-bottom: 1rem;
 }
 
-/* Mobile Bible Reader - YouVersion Style */
 @media (max-width: 768px) {
   .bible-section {
     position: fixed;
@@ -475,27 +474,35 @@ body:has(.bible-section[style*="block"]) header {
   .bible-header {
     background: white;
     border-bottom: 1px solid #e0e0e0;
-    padding: 8px 12px;
+    padding: 6px 10px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    min-height: 56px;
+    min-height: 44px;
     width: 100%;
     box-sizing: border-box;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 10;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+  }
+
+  .bible-header.hidden {
+    transform: translateY(-100%);
   }
 
   .bible-header .bible-back-btn {
     position: static;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     background: #f0f0f0;
     color: #333;
     border: none;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -508,10 +515,10 @@ body:has(.bible-section[style*="block"]) header {
     position: static;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex: 1;
     justify-content: center;
-    margin: 0 12px;
+    margin: 0 8px;
     overflow: visible;
   }
 
@@ -519,29 +526,29 @@ body:has(.bible-section[style*="block"]) header {
     background: #f8f8f8;
     border: 1px solid #ddd;
     color: #333;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
-    padding: 8px 12px;
-    border-radius: 20px;
+    padding: 6px 8px;
+    border-radius: 16px;
     cursor: pointer;
     outline: none;
-    min-width: 80px;
+    min-width: 60px;
     text-align: center;
   }
 
   .bible-nav-controls select:focus {
-    border-color: #007AFF;
+    border-color: #007aff;
     background: #f0f8ff;
   }
 
   .bible-nav-controls button {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     background: #f0f0f0;
     color: #333;
     border: none;
     border-radius: 50%;
-    font-size: 14px;
+    font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -556,13 +563,33 @@ body:has(.bible-section[style*="block"]) header {
     padding: 0;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .chapter-text {
-    padding: 24px 20px;
+    padding: 0 20px 24px 20px; /* No top padding - chapter header handles it */
   }
 
   .chapter-header {
-    display: none; /* Hide chapter header - info is in nav bar */
+    display: block;
+    text-align: center;
+    padding: 60px 20px 20px 20px; /* Space for smaller header + normal padding */
+    margin: 0;
+    background: white;
+  }
+
+  .chapter-header h3 {
+    font-size: 1.4rem;
+    margin: 0;
+    color: #333;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 400;
+  }
+
+  .chapter-header small {
+    font-size: 0.9rem;
+    color: #666;
+    font-family: "Cormorant Garamond", serif;
+    display: block;
+    margin-top: 0.5rem;
   }
 
   .chapter-text {
@@ -596,32 +623,32 @@ body:has(.bible-section[style*="block"]) header {
     flex-wrap: wrap;
     gap: 8px;
   }
-  
+
   .bible-nav-controls {
     gap: 4px;
     margin: 0 4px;
     flex-wrap: wrap;
     justify-content: space-around;
   }
-  
+
   .bible-nav-controls select {
     font-size: 12px;
     padding: 6px 8px;
     min-width: 70px;
   }
-  
+
   .bible-nav-controls button {
     width: 36px;
     height: 36px;
     font-size: 12px;
   }
-  
+
   .bible-header .bible-back-btn {
     width: 36px;
     height: 36px;
     font-size: 16px;
   }
-  
+
   .chapter-text {
     font-size: 18px;
     padding: 16px 12px;
@@ -726,7 +753,6 @@ body:has(.bible-section[style*="block"]) header {
   overflow-x: auto;
   padding: 20px 0;
 }
-
 
 /*Responsive Design*/
 @media (min-width: 768px) {
