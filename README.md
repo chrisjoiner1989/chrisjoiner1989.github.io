@@ -5,8 +5,11 @@ docs and handwritten notes and seemed like it would be a good project to address
 
 ## What it does
 
-- Search for Bible verses using an API
+- Search for Bible verses using multiple APIs (7 different translations)
 - Save sermon details (speaker, title, date, notes, etc.)
+- Full Bible reader with chapter browsing and mobile-optimized reading
+- Calendar view for scheduling and planning sermon series
+- Library to search/filter through saved sermons
 - Export everything as a clean printable document
 - Stores everything in your browser so nothing gets lost
 
@@ -23,9 +26,10 @@ Just open `index.html` in your browser. No installation needed.
 ## stack used
 
 - Plain HTML/CSS/JavaScript (no frameworks)
-- Uses the Bible API for verse lookup
+- Multiple Bible APIs: bible-api.com and bolls.life for translation coverage
 - LocalStorage keeps your data saved
-- Mobile-friendly design
+- Mobile-first responsive design with touch optimization
+- PWA manifest for app-like mobile experience
 
 ## Features I'm proud of
 
@@ -33,12 +37,16 @@ Just open `index.html` in your browser. No installation needed.
 - Export creates professional-looking documents
 - Mobile layout doesn't completely break (took forever to fix)
 - Real-time validation for Bible references
+- Multiple Bible translations working (NKJV, ESV, NLT, etc.) with smart API switching
+- Full Bible reader with mobile-optimized interface that auto-hides navigation
+- Sermon library with search/filter functionality
+- Everything saves locally so no accounts or cloud stuff needed
 
 ## Known issues
 
-- Only works with one Bible translation
 - Export is HTML not actual PDF (good enough though)
 - Verse search sometimes fails if the API is down
+- Mobile Bible reader header sometimes gets in the way (mostly fixed with auto-hide)
 
 ## Running it
 
@@ -48,30 +56,27 @@ Just open `index.html` in your browser. No installation needed.
 
 No fancy setup required. Just works
 
-## Future features
-
-1. Sermon Calendar View
+## Future features (some done, some still todo)
 
 Add a calendar interface where you can see all your sermons by date, drag and drop to reschedule, and get
-visual overview of your sermon series timeline. Would make planning way easier.
+visual overview of your sermon series timeline. Would make planning way easier.~~
 
-2. Multiple Bible Translations
+Actually implemented this and it works pretty well. Drag and drop between dates, monthly view, shows sermon titles on calendar days.
 
 Let users pick different Bible versions (NIV, ESV, NASB, etc.) when searching verses. The API supports this,
 just need to add a dropdown and update the search function.
+
+Got 7 translations working: WEB, KJV, NKJV, ESV, NLT, ASV, BBE. Had to use two different APIs because free ones don't have everything but it auto-switches based on what you pick.
 
 3. Sermon Templates
 
 Create pre-made templates for different sermon types (expository, topical, series kickoff) with suggested
 sections and prompts. Users could start from a template instead of blank forms.
 
-4. Past Sermons
-
-Add a page that shows all your saved sermons in a searchable list. Filter by speaker, series, or date range.
-Click any sermon to view/edit it. Basically turn it into a proper sermon library instead of just saving and
-forgetting.
-
-This would be really useful since right now you save sermons but can't easily go back and reference old ones
-or reuse content from previous series.
+Built a whole library section with search, filter by speaker, sort options, and edit/delete functions. Works better than expected.
 
 5. A fully functional back-end with unit tests files has been started but not done
+
+6. Offline reading mode for Bible chapters (maybe cache frequently used books)
+
+7. Series planning tools (outline multiple sermons in a series at once)
