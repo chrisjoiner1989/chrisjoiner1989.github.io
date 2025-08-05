@@ -3,6 +3,39 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* Top Navigation Styles */
+.top-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #fffff0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.nav-btn {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.7rem;
+  border: 1px solid #722f37;
+  border-radius: 15px;
+  background-color: transparent;
+  color: #722f37;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  min-width: 60px;
+}
+
+.nav-btn:hover {
+  background-color: #722f37;
+  color: white;
+  transform: translateY(-2px);
+}
 .logo {
   display: block;
   width: 100%;
@@ -261,6 +294,10 @@ body:has(.bible-section[style*="block"]) header {
   display: none !important;
 }
 
+body:has(.bible-section[style*="block"]) .top-nav {
+  display: none !important;
+}
+
 .bible-header {
   position: fixed;
   top: 0;
@@ -436,13 +473,15 @@ body:has(.bible-section[style*="block"]) header {
 
 .chapter-text {
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.4rem;
-  line-height: 1.8;
-  color: #333;
+  font-size: 1.5rem;
+  line-height: 1.9;
+  color: #2c2c2c;
   text-align: left;
-  max-width: 100%;
-  margin: 0;
-  padding: 1rem 2rem 4rem 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem 2rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .bible-content .error {
@@ -567,11 +606,13 @@ body:has(.bible-section[style*="block"]) header {
 
   .chapter-text {
     font-family: "Cormorant Garamond", serif;
-    font-size: 20px;
-    line-height: 1.7;
-    color: #333;
+    font-size: 21px;
+    line-height: 1.8;
+    color: #2c2c2c;
     text-align: left;
     margin: 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 
   /* Remove all extra spacing and make fullscreen */
@@ -733,6 +774,20 @@ body:has(.bible-section[style*="block"]) header {
   display: flex;
   overflow-x: auto;
   padding: 20px 0;
+}
+
+/* Mobile Navigation Styles */
+@media (max-width: 767px) {
+  .top-nav {
+    padding: 0.5rem;
+    gap: 0.4rem;
+  }
+  
+  .nav-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.65rem;
+    min-width: 50px;
+  }
 }
 
 /*Responsive Design*/
