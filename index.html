@@ -61,6 +61,13 @@
             </div>
             <small id="reference-help" class="help-text"></small>
             <div id="verse-display" class="verse-display"></div>
+            <button
+              type="button"
+              class="input-btn addverse-btn"
+              style="display: none"
+            >
+              Add Verse
+            </button>
           </div>
           <div class="input-group">
             <label for="date">Sermon Date:</label>
@@ -87,9 +94,6 @@
           <button type="button" class="input-btn clear-btn">Clear</button>
           <button type="button" class="input-btn export-btn">
             Export Sermon
-          </button>
-          <button type="button" class="input-btn addverse-btn">
-            Add Verse
           </button>
           <button type="button" class="input-btn bible-btn">Bible</button>
           <button type="button" class="input-btn library-btn">
@@ -169,7 +173,16 @@
       </div>
 
       <div id="bible-content" class="bible-content">
-        <div style="display: flex; align-items: center; justify-content: center; height: 100vh; color: #666; font-family: 'Cormorant Garamond', serif;">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #666;
+            font-family: 'Cormorant Garamond', serif;
+          "
+        >
           <p>Select a book and chapter to start reading.</p>
         </div>
       </div>
@@ -181,4 +194,3 @@
     <script src="js/app.js"></script>
   </body>
 </html>
-`

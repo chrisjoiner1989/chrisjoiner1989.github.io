@@ -1,19 +1,27 @@
 {
-    "name": "mount-builder",
-    "version": "1.0.0",
-    "scripts": {
-        "test": "jest",
-        "test:watch": "jest --watch",
-        "test:coverage": "jest --coverage"
-    },
-    "devDependencies": {
-        "jest": "^29.0.0",
-        "jest-environment-jsdom": "^29.0.0"
-    },
-    "dependencies": {
-        "body-parser": "^2.2.0",
-        "cors": "^2.8.5",
-        "express": "^5.1.0",
-        "sqlite3": "^5.1.7"
-    }
+  "name": "mount-builder",
+  "version": "1.0.0",
+  "description": "sermon prep app for pastors",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  },
+  "keywords": [
+    "sermon",
+    "bible",
+    "church"
+  ],
+  "author": "me"
 }

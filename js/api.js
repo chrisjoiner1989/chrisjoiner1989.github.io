@@ -1,4 +1,4 @@
-// Bible APIs setup - using multiple APIs for better translation coverage
+// Bible APIs - using multiple APIs because free ones don't have everything
 const BIBLE_APIS = {
   // bible-api.com for public domain translations
   primary: {
@@ -9,30 +9,32 @@ const BIBLE_APIS = {
       if (translation === "WEB") {
         return `${BIBLE_APIS.primary.base}${query}`;
       } else {
-        return `${BIBLE_APIS.primary.base}${query}?translation=${translation.toLowerCase()}`;
+        return `${
+          BIBLE_APIS.primary.base
+        }${query}?translation=${translation.toLowerCase()}`;
       }
-    }
+    },
   },
-  
+
   // bolls.life for modern translations like NKJV, ESV, NLT
   bolls: {
     base: "https://bolls.life/",
     supportedTranslations: ["NKJV", "ESV", "NLT"],
     formatUrl: (book, chapter, translation) => {
-      // bolls API needs book number instead of name
+      // bolls API needs book number instead of name - annoying but whatever
       const bookNumber = getBookNumber(book);
       return `${BIBLE_APIS.bolls.base}get-text/${translation}/${bookNumber}/${chapter}/`;
-    }
-  }
+    },
+  },
 };
 
 // helper function to get book number for bolls API
 function getBookNumber(bookName) {
-  console.log('Looking for book:', bookName);
-  const bookIndex = BIBLE_BOOKS.findIndex(book => book.name === bookName);
-  console.log('Book index found:', bookIndex);
+  console.log("Looking for book:", bookName);
+  const bookIndex = BIBLE_BOOKS.findIndex((book) => book.name === bookName);
+  console.log("Book index found:", bookIndex);
   const bookNumber = bookIndex + 1; // bolls uses 1-based indexing
-  console.log('Book number for API:', bookNumber);
+  console.log("Book number for API:", bookNumber);
   return bookNumber;
 }
 
@@ -78,6 +80,9 @@ async function searchForVerse() {
     console.error("API Error:", error);
     verseDisplay.innerHTML = `<p class="error">Could not find verse. Please try again.</p>`;
     currentVerseData = null;
+
+    const addVerseBtn = document.querySelector(".addverse-btn");
+    addVerseBtn.classList.remove("show");
   } finally {
     // reset button
     searchBtn.disabled = false;
@@ -95,6 +100,9 @@ function displayVerse() {
         <small>- ${currentVerseData.translation}</small>
       </div>
     `;
+
+  const addVerseBtn = document.querySelector(".addverse-btn");
+  addVerseBtn.style.display = "block";
 }
 
 function addVerseToNotes() {
@@ -181,27 +189,37 @@ let currentChapter = null;
 
 // function to pick which API to use based on translation
 function selectBestAPI(translation) {
-  console.log('Selecting API for translation:', translation);
-  
+  console.log("Selecting API for translation:", translation);
+
   // check bolls first for modern translations
   if (BIBLE_APIS.bolls.supportedTranslations.includes(translation)) {
-    console.log('Using Bolls API for', translation);
-    return { name: 'bolls', config: BIBLE_APIS.bolls };
+    console.log("Using Bolls API for", translation);
+    return { name: "bolls", config: BIBLE_APIS.bolls };
   }
-  
+
   // check primary API for public domain translations
   if (BIBLE_APIS.primary.supportedTranslations.includes(translation)) {
-    console.log('Using primary API for', translation);
-    return { name: 'primary', config: BIBLE_APIS.primary };
+    console.log("Using primary API for", translation);
+    return { name: "primary", config: BIBLE_APIS.primary };
   }
-  
+
   // fallback to primary API with WEB
-  console.log('Translation not found, using WEB fallback');
-  return { name: 'primary', config: BIBLE_APIS.primary, fallbackTranslation: 'WEB' };
+  console.log("Translation not found, using WEB fallback");
+  return {
+    name: "primary",
+    config: BIBLE_APIS.primary,
+    fallbackTranslation: "WEB",
+  };
 }
 
 // function to parse different API response formats
-function parseAPIResponse(data, apiName, requestedTranslation, bookName, chapterNum) {
+function parseAPIResponse(
+  data,
+  apiName,
+  requestedTranslation,
+  bookName,
+  chapterNum
+) {
   console.log("API Response:", data);
   console.log("API Name:", apiName);
   console.log("Requested translation:", requestedTranslation);
@@ -209,7 +227,7 @@ function parseAPIResponse(data, apiName, requestedTranslation, bookName, chapter
   console.log("Chapter from user selection:", chapterNum);
 
   switch (apiName) {
-    case 'primary':
+    case "primary":
       // bible-api.com format
       let translationName = requestedTranslation || "WEB";
       if (data.translation_name) {
@@ -235,47 +253,52 @@ function parseAPIResponse(data, apiName, requestedTranslation, bookName, chapter
         };
       }
       break;
-      
-    case 'bolls':
+
+    case "bolls":
       // bolls.life format - returns array of verse objects
-      console.log('Bolls API data type:', Array.isArray(data) ? 'array' : typeof data);
-      console.log('Bolls API data length:', data?.length);
+      console.log(
+        "Bolls API data type:",
+        Array.isArray(data) ? "array" : typeof data
+      );
+      console.log("Bolls API data length:", data?.length);
       if (data && data.length > 0) {
-        console.log('First verse data:', data[0]);
-        console.log('Available fields in first verse:', Object.keys(data[0]));
+        console.log("First verse data:", data[0]);
+        console.log("Available fields in first verse:", Object.keys(data[0]));
       }
-      
+
       if (Array.isArray(data) && data.length > 0) {
-        const text = data.map(verse => `${verse.verse}. ${verse.text}`).join(' ');
+        const text = data
+          .map((verse) => `${verse.verse}. ${verse.text}`)
+          .join(" ");
         const firstVerse = data[0];
-        
+
         // debug the book and chapter fields
-        console.log('Book field:', firstVerse.book);
-        console.log('Chapter field:', firstVerse.chapter);
-        console.log('Book index would be:', firstVerse.book - 1);
-        
+        console.log("Book field:", firstVerse.book);
+        console.log("Chapter field:", firstVerse.chapter);
+        console.log("Book index would be:", firstVerse.book - 1);
+
         // use the book and chapter we already know from user selection
         // this is more reliable than trying to parse it from API response
         const finalBookName = bookName || "Unknown Book";
         const finalChapterNum = chapterNum || "?";
-        
-        console.log('Using book from user selection:', finalBookName);
-        console.log('Using chapter from user selection:', finalChapterNum);
-        
+
+        console.log("Using book from user selection:", finalBookName);
+        console.log("Using chapter from user selection:", finalChapterNum);
+
         return {
           reference: `${finalBookName} ${finalChapterNum}`,
           text: text,
-          translation: requestedTranslation
+          translation: requestedTranslation,
         };
       }
-      
+
       // maybe its not an array - try object format
       if (data && data.text) {
-        console.log('Bolls API returned single object format');
+        console.log("Bolls API returned single object format");
         return {
           reference: `${bookName || "Unknown"} ${chapterNum || "?"}`,
           text: data.text,
-          translation: requestedTranslation
+          translation: requestedTranslation,
         };
       }
       break;
@@ -321,7 +344,7 @@ async function loadBibleChapter() {
     // select the best API for this translation
     const apiInfo = selectBestAPI(translation);
     const finalTranslation = apiInfo.fallbackTranslation || translation;
-    
+
     // build the API URL using the selected API
     const url = apiInfo.config.formatUrl(book, chapter, finalTranslation);
     console.log(`Using ${apiInfo.name} API:`, url);
@@ -335,7 +358,13 @@ async function loadBibleChapter() {
     const data = await response.json();
 
     // parse the response based on which API we used
-    const parsedData = parseAPIResponse(data, apiInfo.name, finalTranslation, book, chapter);
+    const parsedData = parseAPIResponse(
+      data,
+      apiInfo.name,
+      finalTranslation,
+      book,
+      chapter
+    );
 
     if (!parsedData || !parsedData.text) {
       throw new Error("No chapter text found in API response");

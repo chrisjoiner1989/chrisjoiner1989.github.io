@@ -31,11 +31,11 @@ function isValidDate(dateString) {
   return dateString === date.toISOString().split("T")[0];
 }
 
-// Validation Function
+// Validation Function - checks if verse format is correct
 function validateVerseFormat() {
   const input = referenceInput.value.trim();
 
-  // regex pattern for bible verses AI helped here source (claude code)
+  // regex pattern for bible verses - got help from claude for this
   const pattern = /^([1-3]?\s?[A-Za-z]+)\s+(\d{1,3}):(\d{1,3})(-\d{1,3})?$/;
 
   if (input === "enter") {
