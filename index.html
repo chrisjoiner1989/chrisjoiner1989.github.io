@@ -19,13 +19,13 @@
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
   </head>
   <body>
-    <nav class="top-nav">
-      <button type="button" class="nav-btn library-btn">Library</button>
-      <button type="button" class="nav-btn bible-btn">Bible</button>
-      <button type="button" class="nav-btn calendar-btn">Calendar</button>
-    </nav>
-    <header>
+    <header class="main-header">
       <img src="./assets/mount-builder.png" alt="mount builder" class="logo" />
+      <nav class="header-nav">
+        <button type="button" class="nav-btn library-btn">Library</button>
+        <button type="button" class="nav-btn bible-btn">Bible</button>
+        <button type="button" class="nav-btn calendar-btn">Calendar</button>
+      </nav>
     </header>
     <main class="main-container">
       <div class="container">
@@ -106,7 +106,10 @@
     <div id="library-section" class="library-section" style="display: none">
       <div class="library-header">
         <h2>Sermon Library</h2>
-        <button type="button" class="input-btn back-btn">Back to Form</button>
+        <div class="library-header-buttons">
+          <button type="button" class="nav-btn add-new-btn">Add New</button>
+          <button type="button" class="input-btn back-btn">Back to Form</button>
+        </div>
       </div>
 
       <div class="library-controls">
@@ -125,28 +128,28 @@
         </select>
       </div>
 
-      <div id="calendar-section" class="calendar-section" style="display: none">
-        <div class="calendar-header">
-          <h2>Sermon Calendar</h2>
-          <button type="button" class="input-btn back-btn">Back to Form</button>
-        </div>
+      <div id="sermons-list" class="sermons-list"></div>
+    </div>
 
-        <div class="calendar-controls">
-          <button type="button" id="prev-month">←</button>
-          <h3 id="current-month">January 2024</h3>
-          <button type="button" id="next-month">→</button>
-        </div>
-
-        <div id="calendar-grid" class="calendar-grid"></div>
-
-        <div class="planning-tools">
-          <button type="button" class="input-btn">Add Series</button>
-          <button type="button" class="input-btn">Schedule Sermon</button>
-          <button type="button" class="input-btn">View Timeline</button>
-        </div>
+    <div id="calendar-section" class="calendar-section" style="display: none">
+      <div class="calendar-header">
+        <h2>Sermon Calendar</h2>
+        <button type="button" class="input-btn back-btn">Back to Form</button>
       </div>
 
-      <div id="sermons-list" class="sermons-list"></div>
+      <div class="calendar-controls">
+        <button type="button" id="prev-month">←</button>
+        <h3 id="current-month">January 2024</h3>
+        <button type="button" id="next-month">→</button>
+      </div>
+
+      <div id="calendar-grid" class="calendar-grid"></div>
+
+      <div class="planning-tools">
+        <button type="button" class="input-btn">Add Series</button>
+        <button type="button" class="input-btn">Schedule Sermon</button>
+        <button type="button" class="input-btn">View Timeline</button>
+      </div>
     </div>
 
     <div id="bible-section" class="bible-section" style="display: none">
