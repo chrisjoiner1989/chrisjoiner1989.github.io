@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mount Builder - Sermon Builder App</title>
+    <title>Mogiunt Builder - Sermon Builder App</title>
     <link rel="stylesheet" href="css/style.css?v=2024080612" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -138,9 +138,11 @@
       </div>
 
       <div class="calendar-controls">
-        <button type="button" id="prev-month">←</button>
+        <div class="nav-buttons">
+          <button type="button" id="prev-month">←</button>
+          <button type="button" id="next-month">→</button>
+        </div>
         <h3 id="current-month">January 2024</h3>
-        <button type="button" id="next-month">→</button>
       </div>
 
       <div id="calendar-grid" class="calendar-grid"></div>
@@ -169,7 +171,7 @@
             <option value="ASV">American Standard</option>
             <option value="BBE">Bible in Basic English</option>
           </select>
-          
+
           <div class="bible-navigation">
             <select id="bible-book" class="bible-select">
               <option value="">Select Book</option>
@@ -177,7 +179,9 @@
             <select id="bible-chapter" class="bible-select">
               <option value="">Chapter</option>
             </select>
-            <button type="button" id="load-chapter" class="load-btn">Read</button>
+            <button type="button" id="load-chapter" class="load-btn">
+              Read
+            </button>
           </div>
         </div>
       </div>

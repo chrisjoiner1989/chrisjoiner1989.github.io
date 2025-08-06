@@ -9,7 +9,7 @@
   background-color: #fffff0;
   padding: 1rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
 }
 
 .logo {
@@ -35,8 +35,8 @@
   cursor: pointer;
   font-family: "Anton", sans-serif;
   font-weight: normal;
-  transition: background-color 0.3s ease;
-  border-right: 1px solid rgba(255,255,255,0.2);
+  transition: background-color 0.2s;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .nav-btn:first-child {
@@ -66,13 +66,13 @@
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
   font-family: inherit;
 }
 
 .filter-controls {
   display: flex;
-  gap: 1rem;
+  gap: 15px;
 }
 
 .filter-select {
@@ -92,7 +92,6 @@ body {
   margin: 0;
 }
 
-
 h1 {
   font-size: 1.8rem;
 }
@@ -103,7 +102,6 @@ h1 {
   margin: 0 auto;
   padding: 0.75rem;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   color: #b22222;
   box-sizing: border-box;
@@ -112,7 +110,7 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 15px;
 }
 
 .input-group {
@@ -122,14 +120,14 @@ form {
 
 .input-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
   font-weight: bold;
   font-size: 0.9rem;
 }
 
 .input-with-button {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
   width: 100%;
 }
 
@@ -146,12 +144,11 @@ form {
 
 input,
 textarea {
-  padding: 0.75rem;
-  font-size: 16px;
+  padding: 12px;
+  font-size: 1rem;
   border: 2px solid #ccc;
-  border-radius: 6px;
+  border-radius: 5px;
   font-family: inherit;
-  transition: border-color 0.3s ease;
   outline: none;
   width: 100%;
   max-width: 100%;
@@ -200,14 +197,14 @@ textarea {
 }
 
 button {
-  padding: 0.75rem 0.5rem;
+  padding: 12px 8px;
   font-size: 0.85rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   background-color: #8b4513;
   color: white;
   cursor: pointer;
-  min-height: 44px;
+  min-height: 45px;
   font-family: inherit;
   box-sizing: border-box;
   width: 100%;
@@ -220,8 +217,8 @@ button:hover {
 .button-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 .verse-display {
@@ -250,7 +247,7 @@ button:hover {
 
 .library-header-buttons {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
   align-items: center;
 }
 
@@ -306,7 +303,6 @@ button:hover {
 .logo:hover {
   opacity: 0.8;
   transform: scale(1.05);
-  transition: all 0.2s ease;
 }
 
 /* Modern Unified Bible Reader Styles */
@@ -330,7 +326,7 @@ body:has(.bible-section[style*="block"]) header {
   padding: 1.5rem 2rem 1rem 2rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 15px;
 }
 
 .bible-back-btn {
@@ -342,7 +338,6 @@ body:has(.bible-section[style*="block"]) header {
   color: #495057;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -379,8 +374,7 @@ body:has(.bible-section[style*="block"]) header {
   font-family: inherit;
   background: #ffffff;
   color: #495057;
-  margin-bottom: 1rem;
-  transition: border-color 0.2s ease;
+  margin-bottom: 15px;
 }
 
 .bible-select:focus {
@@ -392,7 +386,7 @@ body:has(.bible-section[style*="block"]) header {
 .bible-navigation {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
-  gap: 1rem;
+  gap: 15px;
   align-items: end;
 }
 
@@ -405,7 +399,6 @@ body:has(.bible-section[style*="block"]) header {
   font-size: 1rem;
   font-family: "Anton", sans-serif;
   cursor: pointer;
-  transition: background-color 0.2s ease;
   height: fit-content;
 }
 
@@ -429,14 +422,14 @@ body:has(.bible-section[style*="block"]) header {
 
 .welcome-icon {
   font-size: 4rem;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
 }
 
 .bible-welcome h3 {
   font-family: "Anton", sans-serif;
   font-size: 1.8rem;
   color: #495057;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
 }
 
 .bible-welcome p {
@@ -507,37 +500,37 @@ body:has(.bible-section[style*="block"]) header {
   .bible-header {
     padding: 1rem;
   }
-  
+
   .bible-title {
     font-size: 1.2rem;
   }
-  
+
   .bible-controls {
     padding: 0 1rem 1.5rem 1rem;
   }
-  
+
   .bible-navigation {
     grid-template-columns: 1fr;
     gap: 0.75rem;
   }
-  
+
   .bible-content {
     padding: 1.5rem 1rem;
   }
-  
+
   .bible-welcome {
     padding: 2rem 1rem;
   }
-  
+
   .welcome-icon {
     font-size: 3rem;
   }
-  
+
   .chapter-text {
     font-size: 1.2rem;
     line-height: 1.9;
   }
-  
+
   .chapter-text p {
     margin-bottom: 1.3rem;
     text-indent: 1.2rem;
@@ -552,85 +545,118 @@ body:has(.bible-section[style*="block"]) header {
   display: block;
 }
 
-
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-  border: 1px solid #ddd;
+  gap: 1px;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .calendar-day-header {
-  background-color: #722f37;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
   color: white;
-  padding: 10px 5px;
+  padding: 12px 8px;
   text-align: center;
   font-weight: bold;
-  font-size: 0.9em;
+  font-size: 0.95rem;
+  font-family: "Anton", sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .calendar-day {
-  min-height: 80px;
-  border: 1px solid #ddd;
-  padding: 5px;
+  min-height: 100px;
+  border: 1px solid #e0e0e0;
+  padding: 8px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: #ffffff;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .calendar-day.empty {
-  background-color: #f8f8f8;
+  background-color: #f8f9fa;
   cursor: default;
+  opacity: 0.6;
 }
 
-.calendar-day:hover {
-  background-color: #f0f0f0;
+.calendar-day:hover:not(.empty) {
+  background-color: #f8f9fa;
+  border-color: #8b4513;
 }
 
 .calendar-day.has-sermon {
-  background-color: #e8f5e8;
-  border-color: #5a7a5a;
+  background: linear-gradient(135deg, #fff8e7, #f9f4e8);
+  border-color: #8b4513;
+  border-width: 2px;
 }
 
 .day-number {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  color: #2c2c2c;
+  font-family: "Anton", sans-serif;
 }
 
 .sermon-marker {
-  background-color: #722f37;
+  background: #8b4513;
   color: white;
-  padding: 2px 4px;
+  padding: 4px 6px;
   margin: 2px 0;
-  border-radius: 3px;
-  font-size: 0.7em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.sermon-marker:hover {
+  transform: scale(1.02);
+  cursor: grab;
+}
+
+.sermon-marker:active {
+  cursor: grabbing;
 }
 
 .calendar-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #fffff0, #f8f9fa);
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .calendar-controls button {
-  background-color: #8b4513;
+  background: #8b4513;
   color: white;
   border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 1.2em;
+  font-size: 0.9rem;
+  font-family: "Anton", sans-serif;
 }
 
 .calendar-controls button:hover {
-  background-color: #a0522d;
+  background: #a0522d;
+}
+
+.calendar-controls h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #2c2c2c;
+  font-family: "Anton", sans-serif;
+  text-align: center;
+  flex: 1;
 }
 
 .planning-tools {
@@ -638,11 +664,30 @@ body:has(.bible-section[style*="block"]) header {
   gap: 10px;
   margin-top: 20px;
   flex-wrap: wrap;
+  padding: 15px;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
 
 .planning-tools button {
   flex: 1;
-  min-width: 120px;
+  min-width: 20px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: "Anton", sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(139, 69, 19, 0.2);
+}
+
+.planning-tools button:hover {
+  background: linear-gradient(135deg, #a0522d, #b8651f);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
 }
 
 .series-timeline {
@@ -651,17 +696,75 @@ body:has(.bible-section[style*="block"]) header {
   padding: 20px 0;
 }
 
+/* Calendar Mobile Responsiveness */
+@media (max-width: 768px) {
+  .calendar-grid {
+    gap: 0.5px;
+    border-radius: 6px;
+  }
+
+  .calendar-day {
+    min-height: 80px;
+    padding: 6px;
+  }
+
+  .calendar-day-header {
+    padding: 10px 4px;
+    font-size: 0.85rem;
+  }
+
+  .day-number {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+
+  .sermon-marker {
+    font-size: 0.7rem;
+    padding: 3px 5px;
+    margin: 1px 0;
+  }
+
+  .calendar-controls {
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .calendar-controls h3 {
+    font-size: 1.3rem;
+    order: -1;
+  }
+
+  .calendar-controls .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .planning-tools {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .planning-tools button {
+    min-width: 90px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+}
+
 /* Mobile Header Styles */
 @media (max-width: 767px) {
   .main-header {
     padding: 0.75rem;
   }
-  
+
   .logo {
     width: 120px;
     margin-bottom: 0.75rem;
   }
-  
+
   .nav-btn {
     padding: 0.5rem 0.8rem;
     font-size: 0.8rem;
@@ -696,7 +799,7 @@ body:has(.bible-section[style*="block"]) header {
 
   .button-group {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 15px;
   }
 
   #notes {
