@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mount Builder - Sermon Builder App</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css?v=2024080612" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -155,38 +155,38 @@
     <div id="bible-section" class="bible-section" style="display: none">
       <div class="bible-header">
         <button type="button" class="bible-back-btn">←</button>
-        <div class="bible-nav-controls">
-          <select id="bible-translation">
-            <option value="WEB">WEB (World English Bible)</option>
-            <option value="KJV">KJV (King James Version)</option>
-            <option value="NKJV">NKJV (New King James Version)</option>
-            <option value="ESV">ESV (English Standard Version)</option>
-            <option value="NLT">NLT (New Living Translation)</option>
-            <option value="ASV">ASV (American Standard)</option>
-            <option value="BBE">BBE (Bible in Basic English)</option>
+        <div class="bible-title">Bible Reader</div>
+      </div>
+
+      <div class="bible-controls">
+        <div class="bible-selector">
+          <select id="bible-translation" class="bible-select">
+            <option value="WEB">World English Bible</option>
+            <option value="KJV">King James Version</option>
+            <option value="NKJV">New King James Version</option>
+            <option value="ESV">English Standard Version</option>
+            <option value="NLT">New Living Translation</option>
+            <option value="ASV">American Standard</option>
+            <option value="BBE">Bible in Basic English</option>
           </select>
-          <select id="bible-book">
-            <option value="">Book</option>
-          </select>
-          <select id="bible-chapter">
-            <option value="">Ch</option>
-          </select>
-          <button type="button" id="load-chapter">Go</button>
+          
+          <div class="bible-navigation">
+            <select id="bible-book" class="bible-select">
+              <option value="">Select Book</option>
+            </select>
+            <select id="bible-chapter" class="bible-select">
+              <option value="">Chapter</option>
+            </select>
+            <button type="button" id="load-chapter" class="load-btn">Read</button>
+          </div>
         </div>
       </div>
 
       <div id="bible-content" class="bible-content">
-        <div
-          style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: #666;
-            font-family: 'Cormorant Garamond', serif;
-          "
-        >
-          <p>Select a book and chapter to start reading.</p>
+        <div class="bible-welcome">
+          <div class="welcome-icon">📖</div>
+          <h3>Welcome to Bible Reader</h3>
+          <p>Select a translation, book, and chapter to begin reading</p>
         </div>
       </div>
     </div>

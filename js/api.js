@@ -397,6 +397,9 @@ function displayBibleChapter(data) {
   currentBook = bookSelect.value;
   currentChapter = parseInt(chapterSelect.value);
 
+  // Process text for display
+  let processedText = data.text.replace(/\n/g, "<br><br>");
+
   // Displays just the chapter content - clean and minimal
   contentDiv.innerHTML = `
     <div class="chapter-header">
@@ -404,10 +407,11 @@ function displayBibleChapter(data) {
       <small>${data.translation || data.translation_name || "WEB"}</small>
     </div>
     <div class="chapter-text">
-      ${data.text.replace(/\n/g, "<br><br>")}
+      ${processedText}
     </div>
   `;
 }
+
 
 function updateChapterSelect() {
   const bookSelect = document.getElementById("bible-book");
