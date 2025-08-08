@@ -148,6 +148,8 @@ function showLibrary() {
   currentView = "library";
   document.querySelector(".main-container").style.display = "none";
   document.getElementById("library-section").style.display = "block";
+  document.getElementById("calendar-section").style.display = "none";
+  document.getElementById("bible-section").style.display = "none";
   populateSpeakerFilter();
   renderSermonList();
 }
@@ -315,9 +317,13 @@ function renderSeriesTimeline() {}
 
 const bibleBtn = document.querySelector(".bible-btn");
 const bibleBackBtn = document.querySelector(".bible-back-btn");
+const biblePrevBtn = document.querySelector(".bible-prev-btn");
+const bibleNextBtn = document.querySelector(".bible-next-btn");
 
 if (bibleBtn) bibleBtn.addEventListener("click", showBible);
 if (bibleBackBtn) bibleBackBtn.addEventListener("click", showForm);
+if (biblePrevBtn) biblePrevBtn.addEventListener("click", previousChapter);
+if (bibleNextBtn) bibleNextBtn.addEventListener("click", nextChapter);
 
 function showBible() {
   currentView = "bible";
