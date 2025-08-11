@@ -17,14 +17,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
+    <link rel="icon" type="image/png" href="assets/mount-builder.png" />
   </head>
   <body>
     <header class="main-header">
       <img src="./assets/mount-builder.png" alt="mount builder" class="logo" />
       <nav class="header-nav">
-        <button type="button" class="nav-btn library-btn">Library</button>
-        <button type="button" class="nav-btn bible-btn">Bible</button>
-        <button type="button" class="nav-btn calendar-btn">Calendar</button>
+        <a href="library.html" class="nav-btn library-btn">Library</a>
+        <a href="bible.html" class="nav-btn bible-btn">Bible</a>
+        <a href="calendar.html" class="nav-btn calendar-btn">Calendar</a>
       </nav>
     </header>
     <main class="main-container">
@@ -94,6 +95,7 @@
             <textarea name="notes" id="notes" rows="8"></textarea>
           </div>
         </form>
+        <!-- main action buttons -->
         <div class="button-group">
           <button type="button" class="input-btn save-btn">Save Sermon</button>
           <button type="button" class="input-btn clear-btn">Clear</button>
@@ -103,98 +105,8 @@
         </div>
       </div>
     </main>
-    <div id="library-section" class="library-section" style="display: none">
-      <div class="library-header">
-        <h2>Sermon Library</h2>
-        <div class="library-header-buttons">
-          <button type="button" class="nav-btn add-new-btn">Add New</button>
-          <button type="button" class="input-btn back-btn">Back to Form</button>
-        </div>
-      </div>
 
-      <div class="library-controls">
-        <input
-          type="text"
-          id="search-sermons"
-          placeholder="Search sermons..."
-        />
-        <select id="filter-speaker">
-          <option value="">All Speakers</option>
-        </select>
-        <select id="sort-sermons">
-          <option value="date-desc">Newest First</option>
-          <option value="date-asc">Oldest First</option>
-          <option value="title">By Title</option>
-        </select>
-      </div>
-
-      <div id="sermons-list" class="sermons-list"></div>
-    </div>
-
-    <div id="calendar-section" class="calendar-section" style="display: none">
-      <div class="calendar-header">
-        <h2>Sermon Calendar</h2>
-        <button type="button" class="input-btn back-btn">Back to Form</button>
-      </div>
-
-      <div class="calendar-controls">
-        <div class="nav-buttons">
-          <button type="button" id="prev-month">←</button>
-          <button type="button" id="next-month">→</button>
-        </div>
-        <h3 id="current-month">January 2024</h3>
-      </div>
-
-      <div id="calendar-grid" class="calendar-grid"></div>
-
-      <div class="planning-tools">
-        <button type="button" class="input-btn">Add Series</button>
-        <button type="button" class="input-btn">Schedule Sermon</button>
-        <button type="button" class="input-btn">View Timeline</button>
-      </div>
-    </div>
-
-    <div id="bible-section" class="bible-section" style="display: none">
-      <div class="bible-header">
-        <button type="button" class="bible-back-btn">←</button>
-        <div class="bible-title">Bible Reader</div>
-      </div>
-
-      <div class="bible-controls">
-        <div class="bible-selector">
-          <select id="bible-translation" class="bible-select">
-            <option value="WEB">World English Bible</option>
-            <option value="KJV">King James Version</option>
-            <option value="NKJV">New King James Version</option>
-            <option value="ESV">English Standard Version</option>
-            <option value="NLT">New Living Translation</option>
-            <option value="ASV">American Standard</option>
-            <option value="BBE">Bible in Basic English</option>
-          </select>
-
-          <div class="bible-navigation">
-            <select id="bible-book" class="bible-select">
-              <option value="">Select Book</option>
-            </select>
-            <select id="bible-chapter" class="bible-select">
-              <option value="">Chapter</option>
-            </select>
-            <button type="button" id="load-chapter" class="load-btn">
-              Read
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div id="bible-content" class="bible-content">
-        <div class="bible-welcome">
-          <div class="welcome-icon">📖</div>
-          <h3>Welcome to Bible Reader</h3>
-          <p>Select a translation, book, and chapter to begin reading</p>
-        </div>
-      </div>
-    </div>
-
+    <!-- js files - order matters for dependencies -->
     <script src="js/validation.js"></script>
     <script src="js/api.js"></script>
     <script src="js/storage.js"></script>

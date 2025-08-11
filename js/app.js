@@ -1,3 +1,4 @@
+// main app initialization - waits for DOM to load before setting up events
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Mount Builder starting up...");
 
@@ -14,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// gets form and all input elements
+// get all the form elements - some might not exist on every page
 const sermonForm = document.getElementById("sermon-form");
 const speakerInput = document.getElementById("speaker");
 const titleInput = document.getElementById("title");
@@ -31,7 +32,7 @@ const saveBtn = document.querySelector(".save-btn");
 const clearBtn = document.querySelector(".clear-btn");
 const exportBtn = document.querySelector(".export-btn");
 
-// vars to store data
+// global vars for app state - probably should refactor this later
 let sermons = [];
 let currentVerseData = null;
 let currentView = "form";
@@ -43,30 +44,46 @@ loadSermons();
 // Initialize date on page load
 loadSavedDate();
 
-// Event Listeners
-searchBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  searchForVerse();
-});
+// Check if we're editing a sermon
+const editingSermon = localStorage.getItem("editingSermon");
+if (editingSermon && titleInput) {
+  try {
+    const sermon = JSON.parse(editingSermon);
+    titleInput.value = sermon.title;
+    speakerInput.value = sermon.speaker;
+    dateInput.value = sermon.date;
+    seriesInput.value = sermon.series;
+    notesInput.value = sermon.notes;
+    referenceInput.value = sermon.verseReference || "";
 
-saveBtn.addEventListener("click", saveSermon);
-clearBtn.addEventListener("click", clearForm);
-exportBtn.addEventListener("click", exportData);
+    localStorage.removeItem("editingSermon");
+    alert("Sermon loaded for editing. Click Save when done.");
+  } catch (e) {
+    console.error("Error loading editing sermon:", e);
+    localStorage.removeItem("editingSermon");
+  }
+}
+
+// Event Listeners
+if (searchBtn) {
+  searchBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    searchForVerse();
+  });
+}
+
+if (saveBtn) saveBtn.addEventListener("click", saveSermon);
+if (clearBtn) clearBtn.addEventListener("click", clearForm);
+if (exportBtn) exportBtn.addEventListener("click", exportData);
 
 const addVerseBtn = document.querySelector(".addverse-btn");
-addVerseBtn.addEventListener("click", addVerseToNotes);
+if (addVerseBtn) addVerseBtn.addEventListener("click", addVerseToNotes);
 
 // Library event listeners
-const libraryBtn = document.querySelector(".library-btn");
-const calendarBtn = document.querySelector(".calendar-btn");
-const backBtn = document.querySelector(".back-btn");
 const searchSermonsInput = document.getElementById("search-sermons");
 const filterSpeakerSelect = document.getElementById("filter-speaker");
 const sortSermonsSelect = document.getElementById("sort-sermons");
 
-if (libraryBtn) libraryBtn.addEventListener("click", showLibrary);
-if (calendarBtn) calendarBtn.addEventListener("click", showCalendar);
-if (backBtn) backBtn.addEventListener("click", showForm);
 if (searchSermonsInput)
   searchSermonsInput.addEventListener("input", renderSermonList);
 if (filterSpeakerSelect)
@@ -91,43 +108,52 @@ if (nextMonthBtn)
   });
 
 // allows enter key to search
-referenceInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    searchForVerse();
-  }
-});
+if (referenceInput) {
+  referenceInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchForVerse();
+    }
+  });
+}
 
 // Validates verse ref as user types it in
-referenceInput.addEventListener("input", function () {
-  validateVerseFormat();
-});
+if (referenceInput) {
+  referenceInput.addEventListener("input", function () {
+    validateVerseFormat();
+  });
+}
 
 // Date change event listener to save to localStorage and validate
-dateInput.addEventListener("change", function () {
-  if (isValidDate(dateInput.value)) {
-    localStorage.setItem("sermonDate", dateInput.value);
-  } else {
-    alert("Please enter a valid date");
-    loadSavedDate(); // Reset to saved or default date
-  }
-});
+if (dateInput) {
+  dateInput.addEventListener("change", function () {
+    if (isValidDate(dateInput.value)) {
+      localStorage.setItem("sermonDate", dateInput.value);
+    } else {
+      alert("Please enter a valid date");
+      loadSavedDate(); // Reset to saved or default date
+    }
+  });
+}
 
-// CLEARs FORM
+// clears form and resets everything to defaults
 function clearForm() {
+  // Skip if we're not on the form page
+  if (!sermonForm) return;
+
   sermonForm.reset();
-  verseDisplay.innerHTML = "";
-  referenceHelp.textContent = "";
+  if (verseDisplay) verseDisplay.innerHTML = "";
+  if (referenceHelp) referenceHelp.textContent = "";
   currentVerseData = null;
 
   const addVerseBtn = document.querySelector(".addverse-btn");
-  addVerseBtn.style.display = "none";
+  if (addVerseBtn) addVerseBtn.style.display = "none";
 
   // reset date to today and save to localStorage
   setDefaultDate();
 }
 
-// HELPER FUNCTION
+// formats dates nicely - used all over the app
 function formatDate(dateStr) {
   const date = new Date(dateStr);
   const options = {
@@ -144,36 +170,7 @@ window.viewSermons = () => {
   console.table(sermons);
 };
 
-function showLibrary() {
-  currentView = "library";
-  document.querySelector(".main-container").style.display = "none";
-  document.getElementById("library-section").style.display = "block";
-  document.getElementById("calendar-section").style.display = "none";
-  document.getElementById("bible-section").style.display = "none";
-  populateSpeakerFilter();
-  renderSermonList();
-}
-
-function showForm() {
-  currentView = "form";
-  document.querySelector(".main-container").style.display = "block";
-  document.getElementById("library-section").style.display = "none";
-  document.getElementById("calendar-section").style.display = "none";
-  document.getElementById("bible-section").style.display = "none";
-
-  // Restore logo and original background
-  const header = document.querySelector("header");
-  if (header) header.style.display = "block";
-  document.body.style.backgroundColor = "#fffff0";
-}
-
-function showCalendar() {
-  currentView = "calendar";
-  document.querySelector(".main-container").style.display = "none";
-  document.getElementById("library-section").style.display = "none";
-  document.getElementById("calendar-section").style.display = "block";
-  renderCalendar();
-}
+// View switching functions removed - now using separate HTML pages
 
 // Service worker registration disabled - no sw.js file exists
 // if ("serviceWorker" in navigator) {
@@ -188,7 +185,7 @@ let currentDate = new Date();
 let selectDate = null;
 let scheduledSermons = [];
 
-// Calendar rendering
+// builds the calendar grid - most complex function in the app
 function renderCalendar() {
   const grid = document.getElementById("calendar-grid");
   const month = currentDate.getMonth();
@@ -315,36 +312,19 @@ function handleDrop(e) {
 // Series timeline visualization
 function renderSeriesTimeline() {}
 
-const bibleBtn = document.querySelector(".bible-btn");
 const bibleBackBtn = document.querySelector(".bible-back-btn");
 const biblePrevBtn = document.querySelector(".bible-prev-btn");
 const bibleNextBtn = document.querySelector(".bible-next-btn");
 
-if (bibleBtn) bibleBtn.addEventListener("click", showBible);
-if (bibleBackBtn) bibleBackBtn.addEventListener("click", showForm);
+if (bibleBackBtn)
+  bibleBackBtn.addEventListener(
+    "click",
+    () => (window.location.href = "index.html")
+  );
 if (biblePrevBtn) biblePrevBtn.addEventListener("click", previousChapter);
 if (bibleNextBtn) bibleNextBtn.addEventListener("click", nextChapter);
 
-function showBible() {
-  currentView = "bible";
-  document.querySelector(".main-container").style.display = "none";
-  document.getElementById("library-section").style.display = "none";
-  document.getElementById("calendar-section").style.display = "none";
-  document.getElementById("bible-section").style.display = "block";
-
-  // Hide logo and change background
-  const header = document.querySelector("header");
-  if (header) header.style.display = "none";
-  document.body.style.backgroundColor = "#ffffff";
-
-  initializeBibleReader();
-
-  // Add scroll listener for auto-hide header
-  const bibleContent = document.getElementById("bible-content");
-  if (bibleContent) {
-    bibleContent.addEventListener("scroll", handleBibleScroll);
-  }
-}
+// Bible view function removed
 
 const bibleBookSelect = document.getElementById("bible-book");
 if (bibleBookSelect) {
@@ -359,13 +339,8 @@ if (loadChapterBtn) {
 const prevChapterBtn = document.getElementById("prev-chapter");
 const nextChapterBtn = document.getElementById("next-chapter");
 
-if (prevChapterBtn) {
-  prevChapterBtn.addEventListener("click", previousChapter);
-}
-
-if (nextChapterBtn) {
-  nextChapterBtn.addEventListener("click", nextChapter);
-}
+if (prevChapterBtn) prevChapterBtn.addEventListener("click", previousChapter);
+if (nextChapterBtn) nextChapterBtn.addEventListener("click", nextChapter);
 
 // Auto-hide header on scroll for mobile Bible reader
 let lastScrollTop = 0;

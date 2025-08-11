@@ -1,8 +1,8 @@
-// SAVE SERMON FUNCTION
+// main save function - validates form and stores to localStorage
 function saveSermon(e) {
   e.preventDefault();
 
-  // get all values
+  // get all values from form inputs
   const title = titleInput.value.trim();
   const speaker = speakerInput.value.trim() || "Guest Speaker";
   const date = dateInput.value;
@@ -51,22 +51,24 @@ function saveSermon(e) {
   // clears the  form
   clearForm();
 }
-// ANALYZE SERMONS - shows stats in console
+// shows stats in console - wanted to track sermon patterns
 function analyzeSermons() {
   if (sermons.length === 0) return;
 
-  // calculate various stats
+  // calculate various usage statistics
   const totalSermons = sermons.length;
   const sermonsWithVerses = sermons.filter((s) => s.verseReference).length;
   const avgNotesLength = Math.round(
     sermons.reduce((sum, s) => sum + s.notes.length, 0) / totalSermons
-  ); // count by speaker
+  );
+  
+  // count sermons by speaker
   const speakers = {};
   sermons.forEach((sermon) => {
     speakers[sermon.speaker] = (speakers[sermon.speaker] || 0) + 1;
   });
 
-  // find upcoming sermons
+  // find upcoming sermons for planning
   const today = new Date();
   const upcoming = sermons.filter((s) => new Date(s.date) >= today).length;
 
@@ -97,7 +99,7 @@ function getDaysUntil(dateStr) {
   return `${Math.abs(days)} days ago`;
 }
 
-// EXPORTs SERMONS
+// exports sermons as HTML file - easier than building a PDF generator
 function exportData() {
   if (sermons.length === 0) {
     alert("No sermons to export yet!");
@@ -188,7 +190,7 @@ function exportData() {
   alert("Sermons exported!");
 }
 
-// LOCALSTORAGE FUNCTIONS
+// saves data to localStorage with error handling
 function saveToStorage() {
   try {
     localStorage.setItem("mountBuilderSermons", JSON.stringify(sermons));
@@ -198,6 +200,7 @@ function saveToStorage() {
   }
 }
 
+// loads saved sermons on startup - handles corrupted data
 function loadSermons() {
   try {
     const saved = localStorage.getItem("mountBuilderSermons");
@@ -306,21 +309,15 @@ function editSermon(id) {
   const sermon = sermons.find((s) => s.id === id);
   if (!sermon) return;
 
-  // Populate form with sermon data
-  titleInput.value = sermon.title;
-  speakerInput.value = sermon.speaker;
-  dateInput.value = sermon.date;
-  seriesInput.value = sermon.series;
-  notesInput.value = sermon.notes;
-  referenceInput.value = sermon.verseReference || "";
+  // Store sermon data in localStorage for editing
+  localStorage.setItem("editingSermon", JSON.stringify(sermon));
 
   // Remove the sermon from array (will be re-added when saved)
   sermons = sermons.filter((s) => s.id !== id);
   saveToStorage();
 
-  // Switch to form view
-  showForm();
-  alert("Sermon loaded for editing. Click Save when done.");
+  // Redirect to form page
+  window.location.href = "index.html";
 }
 
 function deleteSermon(id) {
@@ -333,7 +330,7 @@ function deleteSermon(id) {
 }
 
 function moveSermon(sermonId, newDate) {
-  const sermon = sermons.find(s => s.id == sermonId);
+  const sermon = sermons.find((s) => s.id == sermonId);
   if (sermon) {
     sermon.date = newDate;
     saveToStorage();
