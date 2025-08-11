@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mount Builder - Bible Reader</title>
+    <link rel="stylesheet" href="css/style.css?v=2024080612" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#722f37" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="apple-touch-icon" href="assets/mount-builder.png" />
+    <link rel="icon" type="image/png" href="assets/mount-builder.png" />
+  </head>
+  <body style="background-color: #ffffff; margin: 0; padding: 0">
+    <div class="bible-section" style="display: block">
+      <!-- bible header with back button and nav -->
+      <div class="bible-header">
+        <a href="index.html" class="bible-back-btn">←</a>
+        <div class="bible-title">Bible Reader</div>
+        <div class="header-nav">
+          <a href="index.html" class="nav-btn">Home</a>
+          <a href="library.html" class="nav-btn">Library</a>
+          <a href="calendar.html" class="nav-btn">Calendar</a>
+        </div>
+      </div>
+
+      <!-- bible controls for selecting book/chapter -->
+      <div class="bible-controls">
+        <div class="bible-selector">
+          <!-- translation dropdown -->
+          <select id="bible-translation" class="bible-select">
+            <option value="WEB">World English Bible</option>
+            <option value="KJV">King James Version</option>
+            <option value="NKJV">New King James Version</option>
+            <option value="ESV">English Standard Version</option>
+            <option value="NLT">New Living Translation</option>
+            <option value="ASV">American Standard</option>
+            <option value="BBE">Bible in Basic English</option>
+          </select>
+
+          <div class="bible-navigation">
+            <select id="bible-book" class="bible-select">
+              <option value="">Select Book</option>
+            </select>
+            <select id="bible-chapter" class="bible-select">
+              <option value="">Chapter</option>
+            </select>
+            <button type="button" id="load-chapter" class="load-btn">
+              Read
+            </button>
+          </div>
+        </div>
+
+        <div class="bible-nav-buttons">
+          <button type="button" id="prev-chapter" class="nav-btn">
+            ← Previous
+          </button>
+          <button type="button" id="next-chapter" class="nav-btn">
+            Next →
+          </button>
+        </div>
+      </div>
+
+      <div id="bible-content" class="bible-content">
+        <div class="bible-welcome">
+          <div class="welcome-icon">📖</div>
+          <h3>Welcome to Bible Reader</h3>
+          <p>Select a translation, book, and chapter to begin reading</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/validation.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      // Initialize bible page
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("Bible page loading...");
+
+        if (typeof initializeBibleReader === "function") {
+          initializeBibleReader();
+          console.log("Bible reader initialized");
+        } else {
+          console.error("initializeBibleReader function not found");
+        }
+
+        const bibleContent = document.getElementById("bible-content");
+        if (bibleContent) {
+          bibleContent.addEventListener("scroll", handleBibleScroll);
+          console.log("Scroll listener added");
+        } else {
+          console.error("bible-content element not found");
+        }
+
+        console.log("Bible page initialization complete");
+      });
+    </script>
+  </body>
+</html>

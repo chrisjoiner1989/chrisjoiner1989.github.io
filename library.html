@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mount Builder - Sermon Library</title>
+    <link rel="stylesheet" href="css/style.css?v=2024080612" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#722f37" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="apple-touch-icon" href="assets/mount-builder.png" />
+    <link rel="icon" type="image/png" href="assets/mount-builder.png" />
+  </head>
+  <body>
+    <header class="main-header">
+      <img src="./assets/mount-builder.png" alt="mount builder" class="logo" />
+      <nav class="header-nav">
+        <a href="index.html" class="nav-btn">Form</a>
+        <a href="library.html" class="nav-btn library-btn active">Library</a>
+        <a href="bible.html" class="nav-btn bible-btn">Bible</a>
+        <a href="calendar.html" class="nav-btn calendar-btn">Calendar</a>
+      </nav>
+    </header>
+
+    <div class="library-section">
+      <!-- library header with action buttons -->
+      <div class="library-header">
+        <h2>Sermon Library</h2>
+        <div class="library-header-buttons">
+          <a href="index.html" class="nav-btn add-new-btn">Add New</a>
+          <a href="index.html" class="input-btn back-btn">Back to Form</a>
+        </div>
+      </div>
+
+      <!-- search and filter controls -->
+      <div class="library-controls">
+        <input
+          type="text"
+          id="search-sermons"
+          placeholder="Search sermons..."
+        />
+        <select id="filter-speaker">
+          <option value="">All Speakers</option>
+        </select>
+        <select id="sort-sermons">
+          <option value="date-desc">Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="title">By Title</option>
+        </select>
+      </div>
+
+      <div id="sermons-list" class="sermons-list"></div>
+    </div>
+
+    <script src="js/validation.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      // Initialize library page
+      document.addEventListener("DOMContentLoaded", function () {
+        loadSermons();
+        populateSpeakerFilter();
+        renderSermonList();
+      });
+    </script>
+  </body>
+</html>

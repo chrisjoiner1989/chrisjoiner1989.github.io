@@ -1,4 +1,4 @@
-// Bible APIs - using multiple APIs because free ones don't have everything
+// bible API setup - free APIs don't have all translations so using multiple
 const BIBLE_APIS = {
   // bible-api.com for public domain translations
   primary: {
@@ -38,7 +38,7 @@ function getBookNumber(bookName) {
   return bookNumber;
 }
 
-// searches for verse api call
+// searches for bible verses - validates format first then hits API
 async function searchForVerse() {
   const reference = referenceInput.value.trim();
 
@@ -47,7 +47,7 @@ async function searchForVerse() {
     return;
   }
 
-  // checks if valid
+  // checks if valid format before making API call
   if (!validateVerseFormat()) {
     verseDisplay.innerHTML = '<p class="error">Please check verse format</p>';
     return;
@@ -90,6 +90,7 @@ async function searchForVerse() {
   }
 }
 
+// shows the verse result with add to notes button
 function displayVerse() {
   if (!currentVerseData) return;
 
@@ -105,6 +106,7 @@ function displayVerse() {
   addVerseBtn.style.display = "block";
 }
 
+// adds verse text to sermon notes - saves copy/paste time
 function addVerseToNotes() {
   if (!currentVerseData) {
     alert("Please search for a verse first");
@@ -116,6 +118,7 @@ function addVerseToNotes() {
   notesInput.focus();
 }
 
+// all 66 bible books with chapter counts - saves API calls
 const BIBLE_BOOKS = [
   { name: "Genesis", chapters: 50 },
   { name: "Exodus", chapters: 40 },
@@ -318,6 +321,7 @@ function initializeBibleReader() {
   });
 }
 
+// loads full bible chapters - way more complex than single verses
 async function loadBibleChapter() {
   const bookSelect = document.getElementById("bible-book");
   const chapterSelect = document.getElementById("bible-chapter");
