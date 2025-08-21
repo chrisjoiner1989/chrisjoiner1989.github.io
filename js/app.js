@@ -31,6 +31,7 @@ const searchBtn = document.querySelector(".search-btn");
 const saveBtn = document.querySelector(".save-btn");
 const clearBtn = document.querySelector(".clear-btn");
 const exportBtn = document.querySelector(".export-btn");
+const powerpointBtn = document.querySelector(".powerpoint-btn");
 
 // global vars for app state - probably should refactor this later
 let sermons = [];

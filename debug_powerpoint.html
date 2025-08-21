@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPoint Debug</title>
+</head>
+<body>
+    <h1>PowerPoint Library Debug</h1>
+    <button onclick="debugLibraries()">Check Libraries</button>
+    <button onclick="createSimplePresentation()">Create Simple Presentation</button>
+    <div id="output"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@latest/dist/pptxgen.min.js"></script>
+    
+    <script>
+        function debugLibraries() {
+            const output = document.getElementById('output');
+            let info = '<h3>Library Status:</h3>';
+            
+            info += `<p>JSZip available: ${typeof JSZip !== 'undefined'}</p>`;
+            info += `<p>PptxGenJS available: ${typeof PptxGenJS !== 'undefined'}</p>`;
+            info += `<p>window.PptxGenJS available: ${typeof window.PptxGenJS !== 'undefined'}</p>`;
+            info += `<p>pptxgen available: ${typeof pptxgen !== 'undefined'}</p>`;
+            
+            if (typeof window.PptxGenJS !== 'undefined') {
+                info += `<p>PptxGenJS version: ${window.PptxGenJS.version || 'unknown'}</p>`;
+            }
+            
+            output.innerHTML = info;
+        }
+        
+        function createSimplePresentation() {
+            const output = document.getElementById('output');
+            try {
+                // Try to create a simple presentation
+                let pptx;
+                if (typeof PptxGenJS !== 'undefined') {
+                    pptx = new PptxGenJS();
+                } else if (typeof window.PptxGenJS !== 'undefined') {
+                    pptx = new window.PptxGenJS();
+                } else {
+                    throw new Error('PptxGenJS not found');
+                }
+                
+                // Add a simple slide
+                let slide = pptx.addSlide();
+                slide.addText('Hello World!', { x: 1, y: 1, fontSize: 24 });
+                
+                // Save the presentation
+                pptx.writeFile('test-presentation.pptx');
+                
+                output.innerHTML += '<p style="color: green;">✅ Simple presentation created successfully!</p>';
+            } catch (error) {
+                output.innerHTML += `<p style="color: red;">❌ Error: ${error.message}</p>`;
+                console.error('Error creating presentation:', error);
+            }
+        }
+        
+        // Auto-run debug on page load
+        window.onload = debugLibraries;
+    </script>
+</body>
+</html>

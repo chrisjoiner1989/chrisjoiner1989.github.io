@@ -43,8 +43,6 @@
   transition: background-color 0.2s;
 }
 
-
-
 /* darker red on hover - gives good feedback */
 .nav-btn:hover {
   background-color: #b22929;
@@ -218,9 +216,23 @@ button:hover {
 
 .button-group {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* two equal columns */
+  grid-template-columns: 1fr 1fr; /* two equal columns for mobile */
   gap: 12px; /* space between buttons */
   margin-top: 24px; /* space above button group */
+}
+
+/* PowerPoint button styling */
+.powerpoint-btn {
+  background-color: #722f37; /* Distinct burgundy color for faith theme */
+}
+
+.powerpoint-btn:hover {
+  background-color: #5a242a; /* Darker burgundy on hover */
+}
+
+.powerpoint-btn:disabled {
+  background-color: #8c8c8c;
+  cursor: not-allowed;
 }
 
 .verse-display {
@@ -331,7 +343,7 @@ button:hover {
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  border-bottom: 1px solid #E5E5E7;
+  border-bottom: 1px solid #e5e5e7;
 }
 
 .bible-header .header-nav {
@@ -857,7 +869,7 @@ button:hover {
   }
 
   .button-group {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
   }
 
