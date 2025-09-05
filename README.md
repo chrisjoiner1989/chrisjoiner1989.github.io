@@ -80,3 +80,39 @@ Built a whole library section with search, filter by speaker, sort options, and 
 6. Offline reading mode for Bible chapters (maybe cache frequently used books)
 
 7. Series planning tools (outline multiple sermons in a series at once)
+
+## Native (Android/iOS) via Capacitor
+
+This project is configured to run as a native app using Capacitor.
+
+### Prerequisites
+- Android: Android Studio installed with SDKs and an emulator or device
+- iOS (macOS only): Xcode installed
+
+### Prepare web assets
+
+```bash
+rm -rf www && mkdir -p www && cp -r assets css js *.html manifest.json www/
+ npx cap sync
+```
+
+### Android
+
+```bash
+npm run cap:add:android   # first time only
+npm run cap:open:android  # opens Android Studio
+```
+Then build/run from Android Studio.
+
+### iOS (optional, macOS)
+
+```bash
+npm i --save @capacitor/ios
+npm run cap:add:ios       # first time only
+npm run cap:open:ios      # opens Xcode
+```
+Then build/run from Xcode.
+
+### Notes
+- Web assets are served from `www/` (configured in `capacitor.config.json`).
+- The UI includes a bottom tab bar and uses CSS safe-area insets for devices with notches.
