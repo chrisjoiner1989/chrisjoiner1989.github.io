@@ -1,9 +1,9 @@
 // testing the validation stuff - need to make sure verse format works right
-import {
+const {
   validateVerseFormat,
   isValidDate,
   validateSermonData,
-} from "../../src/utils/validation.js";
+} = require("../src/utils/validation.js");
 
 // TODO: need to implement these functions in validation.js
 describe("Validation Tests", () => {
