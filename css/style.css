@@ -89,6 +89,20 @@ body {
   margin: 0;
 }
 
+/* Safe area support for devices with notches (iOS/Android) */
+:root {
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-padding-top {
+  padding-top: max(0.5rem, var(--safe-top));
+}
+
+.safe-padding-bottom {
+  padding-bottom: max(0.75rem, var(--safe-bottom));
+}
+
 h1 {
   font-size: 1.8rem;
 }
@@ -103,6 +117,38 @@ h1 {
   background-color: #fafafa;
   color: #1c1c1e;
   box-sizing: border-box;
+}
+
+/* Bottom tab bar for native-like navigation */
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 10px 12px calc(10px + var(--safe-bottom));
+  background: #ffffff;
+  border-top: 1px solid #e5e5e7;
+  z-index: 1000;
+}
+
+.tabbar a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #1c1c1e;
+  background: #f5f5f7;
+  font-size: 0.9rem;
+}
+
+.tabbar a.active {
+  background: #cc3333;
+  color: #ffffff;
 }
 
 /* form layout - vertical stack with consistent spacing */

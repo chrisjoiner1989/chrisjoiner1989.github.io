@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
     <link rel="icon" type="image/png" href="assets/mount-builder.png" />
   </head>
-  <body style="background-color: #ffffff; margin: 0; padding: 0">
+  <body class="safe-padding-bottom" style="background-color: #ffffff; margin: 0; padding: 0">
     <div class="bible-section" style="display: block">
       <!-- bible header with back button and nav -->
       <div class="bible-header">
@@ -77,6 +77,12 @@
         </div>
       </div>
     </div>
+
+    <nav class="tabbar">
+      <a href="library.html" class="tab-item">Library</a>
+      <a href="index.html" class="tab-item">Form</a>
+      <a href="bible.html" class="tab-item active">Bible</a>
+    </nav>
 
     <script src="js/validation.js"></script>
     <script src="js/api.js"></script>

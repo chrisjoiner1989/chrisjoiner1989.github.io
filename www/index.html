@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mount Builder - Sermon Builder App</title>
+    <link rel="stylesheet" href="css/style.css?v=2024080612" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#722f37" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="apple-touch-icon" href="assets/mount-builder.png" />
+    <link rel="icon" type="image/png" href="assets/mount-builder.png" />
+  </head>
+  <body>
+    <header class="main-header">
+      <img src="./assets/mount-builder.png" alt="mount builder" class="logo" />
+      <nav class="header-nav">
+        <a href="library.html" class="nav-btn library-btn">Library</a>
+        <a href="bible.html" class="nav-btn bible-btn">Bible</a>
+        <a href="calendar.html" class="nav-btn calendar-btn">Calendar</a>
+      </nav>
+    </header>
+    <main class="main-container">
+      <div class="container">
+        <form id="sermon-form">
+          <div class="input-group">
+            <label for="speaker">Sermon Speaker:</label>
+            <input
+              type="text"
+              name="speaker"
+              id="speaker"
+              placeholder="Senior Pastor"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="title">Sermon Title:</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Sermon Title"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="reference">Verse Reference:</label>
+            <div class="input-with-button">
+              <input
+                type="text"
+                id="reference"
+                name="reference"
+                placeholder="e.g John 3:16"
+              />
+              <button type="button" class="input-btn search-btn">
+                Search verse
+              </button>
+            </div>
+            <small id="reference-help" class="help-text"></small>
+            <div id="verse-display" class="verse-display"></div>
+            <button
+              type="button"
+              class="input-btn addverse-btn"
+              style="display: none"
+            >
+              Add Verse
+            </button>
+          </div>
+          <div class="input-group">
+            <label for="date">Sermon Date:</label>
+            <input type="date" id="date" name="date" />
+          </div>
+
+          <div class="input-group">
+            <label for="series">Sermon series:</label>
+            <input
+              type="text"
+              id="series"
+              name="series"
+              placeholder="Sermon on the mount"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="notes">Sermon notes:</label>
+            <textarea name="notes" id="notes" rows="8"></textarea>
+          </div>
+        </form>
+        <!-- main action buttons -->
+        <div class="button-group">
+          <button type="button" class="input-btn save-btn">Save Sermon</button>
+          <button type="button" class="input-btn clear-btn">Clear</button>
+          <button type="button" class="input-btn export-btn">
+            Export Sermon
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- js files - order matters for dependencies -->
+    <script src="js/validation.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

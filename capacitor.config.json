@@ -1,0 +1,8 @@
+{
+  "appId": "com.mountbuilder.app",
+  "appName": "Mount Builder",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
