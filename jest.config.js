@@ -1,11 +1,12 @@
 module.exports = {
     testEnvironment: 'jsdom',
     setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
-    moduleNameMapping: {
+    moduleNameMapper: {
       '^@/(.*)$': '<rootDir>/src/$1'
     },
     collectCoverageFrom: [
       'src/**/*.js',
-      '!src/**/*.test.js'
+      'js/**/*.js',
+      '!**/*.test.js'
     ]
   };
