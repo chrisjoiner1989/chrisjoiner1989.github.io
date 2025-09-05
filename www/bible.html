@@ -35,6 +35,20 @@
       <!-- bible controls for selecting book/chapter -->
       <div class="bible-controls">
         <div class="bible-selector">
+          <div class="reader-preferences">
+            <div class="pref-group">
+              <label for="reader-font-size">Text size</label>
+              <input type="range" id="reader-font-size" min="16" max="24" value="20" step="1" />
+            </div>
+            <div class="pref-group">
+              <label for="reader-theme">Theme</label>
+              <select id="reader-theme" class="bible-select">
+                <option value="light">Light</option>
+                <option value="sepia">Sepia</option>
+                <option value="dark">Dark</option>
+              </select>
+            </div>
+          </div>
           <!-- translation dropdown -->
           <select id="bible-translation" class="bible-select">
             <option value="WEB">World English Bible</option>

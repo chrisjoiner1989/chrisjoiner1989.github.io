@@ -422,6 +422,63 @@ button:hover {
   padding: 0 2rem 2rem 2rem;
 }
 
+.reader-preferences {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.pref-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+#reader-font-size {
+  width: 100%;
+}
+
+/* themes for bible content */
+.theme-light .bible-content {
+  background: #ffffff;
+  color: #212529;
+}
+
+.theme-sepia .bible-content {
+  background: #f6f1e7;
+  color: #3b2f2f;
+}
+
+.theme-dark .bible-content {
+  background: #121212;
+  color: #e6e6e6;
+}
+
+.theme-dark .chapter-header {
+  border-bottom-color: #2a2a2a;
+}
+
+.theme-dark .bible-header,
+.theme-dark .bible-controls {
+  background: #0f0f0f;
+}
+
+.theme-dark .bible-select,
+.theme-dark .bible-nav-buttons .nav-btn {
+  background: #1a1a1a;
+  color: #ddd;
+  border-color: #2a2a2a;
+}
+
+@media (max-width: 768px) {
+  .reader-preferences {
+    grid-template-columns: 1fr;
+  }
+}
+
 .bible-selector {
   max-width: 800px;
   margin: 0 auto;
