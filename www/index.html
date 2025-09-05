@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
     <link rel="icon" type="image/png" href="assets/mount-builder.png" />
   </head>
-  <body class="safe-padding-bottom">
+  <body class="safe-padding-bottom has-sticky-actions">
     <header class="main-header safe-padding-top">
       <img src="./assets/mount-builder.png" alt="mount builder" class="logo" />
       <nav class="header-nav">
@@ -95,16 +95,21 @@
             <textarea name="notes" id="notes" rows="8"></textarea>
           </div>
         </form>
-        <!-- main action buttons -->
-        <div class="button-group">
+        <!-- main action buttons (inline for larger screens) -->
+        <div class="button-group inline-actions">
           <button type="button" class="input-btn save-btn">Save Sermon</button>
           <button type="button" class="input-btn clear-btn">Clear</button>
-          <button type="button" class="input-btn export-btn">
-            Export Sermon
-          </button>
+          <button type="button" class="input-btn export-btn">Export Sermon</button>
         </div>
       </div>
     </main>
+
+    <!-- sticky action bar for mobile/smaller screens -->
+    <nav class="sticky-actions">
+      <button type="button" class="input-btn save-btn">Save</button>
+      <button type="button" class="input-btn clear-btn">Clear</button>
+      <button type="button" class="input-btn export-btn">Export</button>
+    </nav>
 
     <nav class="tabbar">
       <a href="library.html" class="tab-item">Library</a>
