@@ -14,6 +14,13 @@
   border-bottom: 1px solid #e5e5e7;
 }
 
+/* Hide top header on narrow/mobile to favor native-like bottom tabs */
+@media (max-width: 767px) {
+  .main-header {
+    display: none;
+  }
+}
+
 /* logo centered with fixed width - keeps branding consistent */
 .logo {
   display: block;

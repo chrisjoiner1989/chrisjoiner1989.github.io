@@ -1,6 +1,16 @@
 // main app initialization - waits for DOM to load before setting up events
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   console.log("Mount Builder starting up...");
+
+  // Hide the native splash as soon as the app is ready
+  try {
+    if (window && window.Capacitor && window.Capacitor.isNativePlatform) {
+      const { SplashScreen } = await import("@capacitor/splash-screen");
+      await SplashScreen.hide();
+    }
+  } catch (err) {
+    console.debug("SplashScreen.hide not available:", err);
+  }
 
   // Add click event to logo to refresh page
   const logo = document.querySelector(".logo");
@@ -14,6 +24,28 @@ document.addEventListener("DOMContentLoaded", function () {
     logo.title = "Click to refresh page";
   }
 });
+
+// Native back button handling (Android)
+(async () => {
+  try {
+    if (window && window.Capacitor && window.Capacitor.getPlatform) {
+      const platform = window.Capacitor.getPlatform();
+      if (platform === "android") {
+        const { App } = await import("@capacitor/app");
+        App.addListener("backButton", ({ canGoBack }) => {
+          // Try to navigate back if browser history allows, otherwise exit
+          if (canGoBack && window.history.length > 1) {
+            window.history.back();
+          } else {
+            App.exitApp();
+          }
+        });
+      }
+    }
+  } catch (err) {
+    console.debug("Capacitor App backButton not available:", err);
+  }
+})();
 
 // get all the form elements - some might not exist on every page
 const sermonForm = document.getElementById("sermon-form");
