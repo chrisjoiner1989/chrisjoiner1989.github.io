@@ -19,10 +19,10 @@
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
     <link rel="icon" type="image/png" href="assets/mount-builder.png" />
   </head>
-  <body class="safe-padding-bottom" style="background-color: #ffffff; margin: 0; padding: 0">
+  <body class="safe-padding-bottom faith-theme" style="background-color: #ffffff; margin: 0; padding: 0">
     <div class="bible-section" style="display: block">
       <!-- bible header with back button and nav -->
-      <div class="bible-header">
+      <div class="bible-header" role="banner">
         <a href="index.html" class="bible-back-btn">←</a>
         <div class="bible-title">Bible Reader</div>
         <div class="header-nav">
@@ -33,7 +33,7 @@
       </div>
 
       <!-- bible controls for selecting book/chapter -->
-      <div class="bible-controls">
+      <div class="bible-controls" role="region" aria-label="Bible Controls">
         <div class="bible-selector">
           <div class="reader-preferences">
             <div class="pref-group">
@@ -83,7 +83,7 @@
         </div>
       </div>
 
-      <div id="bible-content" class="bible-content">
+      <div id="bible-content" class="bible-content" role="main">
         <div class="bible-welcome">
           <div class="welcome-icon">📖</div>
           <h3>Welcome to Bible Reader</h3>
@@ -92,11 +92,15 @@
       </div>
     </div>
 
-    <nav class="tabbar">
+    <nav class="tabbar" aria-label="Primary Navigation">
       <a href="library.html" class="tab-item">Library</a>
       <a href="index.html" class="tab-item">Form</a>
       <a href="bible.html" class="tab-item active">Bible</a>
     </nav>
+
+    <footer class="faith-footer" aria-live="polite">
+      <span>“The grass withers, the flower fades, but the word of our God will stand forever.” — Isaiah 40:8</span>
+    </footer>
 
     <script src="js/validation.js"></script>
     <script src="js/api.js"></script>
