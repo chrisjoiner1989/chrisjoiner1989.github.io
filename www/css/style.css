@@ -191,6 +191,45 @@ h1 {
   }
 }
 
+/* Sticky action bar positioning above the tab bar */
+.sticky-actions {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--tabbar-height) + var(--safe-bottom));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border-top: 1px solid #e5e5e7;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.06);
+  z-index: 1100;
+}
+
+/* Ensure page content leaves room for sticky actions on mobile */
+body.has-sticky-actions.safe-padding-bottom {
+  padding-bottom: calc(
+    max(0.75rem, var(--safe-bottom)) +
+    var(--tabbar-height) +
+    72px
+  );
+}
+
+/* Inline actions visible on larger screens; hidden when sticky bar is present */
+.inline-actions {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .inline-actions {
+    display: grid;
+  }
+  .sticky-actions {
+    display: none;
+  }
+}
+
 /* form layout - vertical stack with consistent spacing */
 form {
   display: flex;
