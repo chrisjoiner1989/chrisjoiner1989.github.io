@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
     <link rel="icon" type="image/png" href="assets/mount-builder.png" />
   </head>
-  <body class="safe-padding-bottom">
+  <body class="safe-padding-bottom faith-theme">
     <header class="main-header safe-padding-top">
       <img src="./assets/mount-builder.png" alt="mount builder" class="logo" />
       <nav class="header-nav">
@@ -106,11 +106,15 @@
       </div>
     </main>
 
-    <nav class="tabbar">
+    <nav class="tabbar" aria-label="Primary Navigation">
       <a href="library.html" class="tab-item">Library</a>
       <a href="index.html" class="tab-item active">Form</a>
       <a href="bible.html" class="tab-item">Bible</a>
     </nav>
+
+    <footer class="faith-footer" aria-live="polite">
+      <span>“Let everything that has breath praise the Lord.” — Psalm 150:6</span>
+    </footer>
 
     <!-- js files - order matters for dependencies -->
     <script src="js/validation.js"></script>

@@ -393,6 +393,16 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* scripture footer */
+.faith-footer {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  color: #4a4a4a;
+  text-align: center;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+}
+
 /* bible component - spent way too long on this */
 .bible-section {
   width: 100%;
