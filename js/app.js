@@ -23,6 +23,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     logo.style.cursor = "pointer";
     logo.title = "Click to refresh page";
   }
+
+  // Toast container
+  if (!document.getElementById("toast-container")) {
+    const container = document.createElement("div");
+    container.id = "toast-container";
+    container.setAttribute("aria-live", "polite");
+    container.setAttribute("aria-atomic", "true");
+    container.style.position = "fixed";
+    container.style.left = "50%";
+    container.style.bottom = "calc(16px + env(safe-area-inset-bottom))";
+    container.style.transform = "translateX(-50%)";
+    container.style.zIndex = "2000";
+    container.style.display = "grid";
+    container.style.gap = "8px";
+    document.body.appendChild(container);
+  }
 });
 
 // Native back button handling (Android)
@@ -200,6 +216,30 @@ function formatDate(dateStr) {
 // debugs helper for development
 window.viewSermons = () => {
   console.table(sermons);
+};
+
+// Simple toast utility
+window.showToast = function (message, type = "info") {
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.style.padding = "10px 14px";
+  toast.style.borderRadius = "10px";
+  toast.style.color = type === "error" ? "#721c24" : type === "success" ? "#155724" : "#0c5460";
+  toast.style.background = type === "error" ? "#f8d7da" : type === "success" ? "#d4edda" : "#d1ecf1";
+  toast.style.border = type === "error" ? "1px solid #f5c6cb" : type === "success" ? "1px solid #c3e6cb" : "1px solid #bee5eb";
+  toast.style.boxShadow = "0 2px 10px rgba(0,0,0,0.12)";
+  toast.style.fontSize = "0.95rem";
+  toast.style.maxWidth = "90vw";
+  toast.style.justifySelf = "center";
+  toast.style.pointerEvents = "auto";
+  toast.style.cursor = "pointer";
+  toast.addEventListener("click", () => container.removeChild(toast));
+  container.appendChild(toast);
+  setTimeout(() => {
+    if (toast.parentNode === container) container.removeChild(toast);
+  }, 3500);
 };
 
 // View switching functions removed - now using separate HTML pages
