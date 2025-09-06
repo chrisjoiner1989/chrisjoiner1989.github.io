@@ -185,7 +185,7 @@ h1 {
   color: var(--text-primary);
   box-sizing: border-box;
   box-shadow: var(--shadow-light);
-  margin-bottom: calc(2rem + var(--safe-area-inset-bottom));
+  margin-bottom: calc(100px + var(--safe-area-inset-bottom));
 }
 
 /* Bottom tab bar for native-like navigation */
@@ -438,6 +438,14 @@ button:active {
 .library-section {
   max-width: 1000px;
   margin: 20px auto;
+  margin-bottom: calc(120px + var(--safe-area-inset-bottom));
+  padding: 20px;
+}
+
+.calendar-section {
+  max-width: 1000px;
+  margin: 20px auto;
+  margin-bottom: calc(120px + var(--safe-area-inset-bottom));
   padding: 20px;
 }
 
@@ -515,6 +523,7 @@ button:active {
   width: 100%;
   max-width: 100%;
   margin: 0;
+  margin-bottom: calc(100px + var(--safe-area-inset-bottom));
   padding: 0;
   background-color: #ffffff;
   min-height: 100vh;
@@ -1221,6 +1230,10 @@ button:active {
   .bottom-nav-label {
     font-size: 0.7rem;
   }
+  
+  .main-container {
+    margin-bottom: calc(100px + var(--safe-area-inset-bottom));
+  }
 }
 
 /* Mobile-specific improvements */
@@ -1231,7 +1244,7 @@ button:active {
   }
 
   .main-container {
-    margin-bottom: calc(80px + var(--safe-area-inset-bottom));
+    margin-bottom: calc(100px + var(--safe-area-inset-bottom));
   }
 
   /* Improve touch targets */
