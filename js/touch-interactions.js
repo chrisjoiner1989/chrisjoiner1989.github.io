@@ -14,7 +14,7 @@ class TouchInteractions {
   // Add visual feedback for touch interactions
   addTouchFeedback() {
     const touchElements = document.querySelectorAll(
-      "button, .nav-btn, .bottom-nav-item, input, textarea, .theme-toggle"
+      "button, .bottom-nav-item, input, textarea, .theme-toggle"
     );
 
     touchElements.forEach((element) => {

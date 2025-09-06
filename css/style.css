@@ -59,6 +59,9 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: var(--shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Hide top header on narrow/mobile to favor native-like bottom tabs */
@@ -73,15 +76,11 @@ body {
   display: block;
   width: 150px;
   height: auto;
-  margin: 0 auto 1rem auto;
+  margin: 0 auto;
+  flex-shrink: 0;
 }
 
-/* nav buttons layout - flexbox with gap is easier than margins */
-.header-nav {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
+/* Removed header-nav styles - using bottom navigation instead */
 
 /* rounded nav buttons - native app style */
 .nav-btn {
@@ -1390,25 +1389,16 @@ button:active {
 
 /* Header theme toggle container */
 .header-theme-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  top: calc(1rem + var(--safe-area-inset-top));
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-end;
 }
 
-/* Theme toggle in header nav */
-.header-nav .theme-toggle {
-  margin-left: 0 !important;
-  margin-right: 10px !important;
-  width: 50px !important;
-  height: 28px !important;
-  background: var(--border-color) !important;
-  border-radius: 14px !important;
-  border: none !important;
-  padding: 2px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-}
+/* Removed header-nav theme toggle styles - using header theme container instead */
 
 /* Dark mode specific adjustments */
 [data-theme="dark"] .main-header {

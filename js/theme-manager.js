@@ -67,12 +67,16 @@ class ThemeManager {
         this.toggleTheme();
       });
 
-      // Add to header nav
-      const headerNav = document.querySelector(".header-nav");
-      if (headerNav) {
-        headerNav.appendChild(toggle);
+      // Add to header
+      const header = document.querySelector(".main-header");
+      if (header) {
+        // Create a container for the theme toggle
+        const themeContainer = document.createElement("div");
+        themeContainer.className = "header-theme-container";
+        themeContainer.appendChild(toggle);
+        header.appendChild(themeContainer);
       } else {
-        console.warn("Header nav not found, skipping theme toggle creation");
+        console.warn("Main header not found, skipping theme toggle creation");
       }
 
       // Also add to bottom nav for mobile
