@@ -1034,6 +1034,7 @@ button:active {
   .main-container {
     max-width: 600px;
     padding: 2rem;
+    margin-bottom: calc(100px + var(--safe-area-inset-bottom));
   }
 
   h1 {
@@ -1231,9 +1232,6 @@ button:active {
     font-size: 0.7rem;
   }
   
-  .main-container {
-    margin-bottom: calc(100px + var(--safe-area-inset-bottom));
-  }
 }
 
 /* Mobile-specific improvements */
