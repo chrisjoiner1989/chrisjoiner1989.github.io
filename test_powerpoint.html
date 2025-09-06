@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPoint Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
+        button {
+            background-color: #722f37;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #5a242a;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>PowerPoint Generation Test</h1>
+    
+    <div class="form-group">
+        <label for="title">Sermon Title:</label>
+        <input type="text" id="title" value="God's Amazing Grace">
+    </div>
+    
+    <div class="form-group">
+        <label for="speaker">Speaker:</label>
+        <input type="text" id="speaker" value="Pastor John">
+    </div>
+    
+    <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" id="date">
+    </div>
+    
+    <div class="form-group">
+        <label for="series">Series:</label>
+        <input type="text" id="series" value="Grace Series">
+    </div>
+    
+    <div class="form-group">
+        <label for="reference">Scripture Reference:</label>
+        <input type="text" id="reference" value="Ephesians 2:8-9">
+    </div>
+    
+    <div class="form-group">
+        <label for="notes">Sermon Notes:</label>
+        <textarea id="notes">1. What is Grace?
+   - Unmerited favor from God
+   - Gift we don't deserve
+   - Foundation of our faith
+
+2. Why Do We Need Grace?
+   - All have sinned Romans 3:23
+   - Cannot save ourselves
+   - God's love covers our failures
+
+3. How Do We Receive Grace?
+   - Through faith alone
+   - Not by works Ephesians 2:8-9
+   - Accept Jesus as Lord and Savior
+
+Conclusion: Grace changes everything. When we understand God's grace, we are transformed from the inside out. Let us live in response to this amazing gift.</textarea>
+    </div>
+    
+    <button onclick="testPowerPoint()" class="powerpoint-btn">Generate Test PowerPoint</button>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@latest/dist/pptxgen.min.js"></script>
+    <script src="js/powerpoint.js"></script>
+    
+    <script>
+        // Set today's date
+        document.getElementById('date').value = new Date().toISOString().split('T')[0];
+        
+        function testPowerPoint() {
+            generatePowerPoint();
+        }
+    </script>
+</body>
+</html>
