@@ -90,7 +90,7 @@ if (editingSermon && titleInput) {
     referenceInput.value = sermon.verseReference || "";
 
     localStorage.removeItem("editingSermon");
-    alert("Sermon loaded for editing. Click Save when done.");
+    toast.info("Sermon loaded for editing. Click Save when done.");
   } catch (e) {
     console.error("Error loading editing sermon:", e);
     localStorage.removeItem("editingSermon");
@@ -164,7 +164,7 @@ if (dateInput) {
     if (isValidDate(dateInput.value)) {
       localStorage.setItem("sermonDate", dateInput.value);
     } else {
-      alert("Please enter a valid date");
+      toast.error("Please enter a valid date");
       loadSavedDate(); // Reset to saved or default date
     }
   });

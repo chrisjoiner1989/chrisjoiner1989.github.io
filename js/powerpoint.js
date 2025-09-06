@@ -41,7 +41,7 @@ function generatePowerPoint() {
     const sermonData = getSermonData();
     
     if (!sermonData.notes || sermonData.notes.trim() === '') {
-      alert('Please enter sermon notes before generating PowerPoint.');
+      toast.error('Please enter sermon notes before generating PowerPoint.');
       return;
     }
     
@@ -54,7 +54,7 @@ function generatePowerPoint() {
     
   } catch (error) {
     console.error('Error generating PowerPoint:', error);
-    alert('An error occurred while generating the PowerPoint. Please try again.');
+    toast.error('An error occurred while generating the PowerPoint. Please try again.');
   } finally {
     showLoadingState(false);
   }
@@ -233,7 +233,7 @@ function createPowerPointPresentation(sermonData, slides) {
   
   // Show success message
   setTimeout(() => {
-    alert(`PowerPoint presentation "${filename}" has been generated and downloaded!`);
+    toast.success(`PowerPoint presentation "${filename}" has been generated and downloaded!`);
   }, 1000);
 }
 

@@ -11,6 +11,7 @@ const urlsToCache = [
   "/js/storage.js",
   "/js/validation.js",
   "/js/api.js",
+  "/js/toast.js",
   "/js/powerpoint.js",
   "/js/touch-interactions.js",
   "/js/theme-manager.js",

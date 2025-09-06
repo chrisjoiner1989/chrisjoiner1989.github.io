@@ -12,13 +12,13 @@ function saveSermon(e) {
 
   // validation
   if (!title) {
-    alert("Please enter a sermon title");
+    toast.error("Please enter a sermon title");
     titleInput.focus();
     return;
   }
 
   if (!date) {
-    alert("Please select a date for the sermon");
+    toast.error("Please select a date for the sermon");
     dateInput.focus();
     return;
   }
@@ -43,7 +43,7 @@ function saveSermon(e) {
   saveToStorage();
 
   // shows success
-  alert("✓ Sermon saved successfully!");
+  toast.success("Sermon saved successfully!");
 
   // analyzes the data after save
   analyzeSermons();
@@ -102,7 +102,7 @@ function getDaysUntil(dateStr) {
 // exports sermons as HTML file - easier than building a PDF generator
 function exportData() {
   if (sermons.length === 0) {
-    alert("No sermons to export yet!");
+    toast.warning("No sermons to export yet!");
     return;
   }
 
@@ -187,7 +187,7 @@ function exportData() {
   link.click();
   URL.revokeObjectURL(url);
 
-  alert("Sermons exported!");
+  toast.success("Sermons exported successfully!");
 }
 
 // saves data to localStorage with error handling
@@ -196,7 +196,7 @@ function saveToStorage() {
     localStorage.setItem("mountBuilderSermons", JSON.stringify(sermons));
   } catch (e) {
     console.error("Failed to save:", e);
-    alert("Could not save to browser storage");
+    toast.error("Could not save to browser storage");
   }
 }
 
@@ -298,11 +298,11 @@ function viewSermon(id) {
   const sermon = sermons.find((s) => s.id === id);
   if (!sermon) return;
 
-  alert(
-    `Title: ${sermon.title}\nSpeaker: ${sermon.speaker}\nDate: ${formatDate(
-      sermon.date
-    )}\nSeries: ${sermon.series}\n\nNotes:\n${sermon.notes}`
-  );
+  const message = `Title: ${sermon.title}\nSpeaker: ${sermon.speaker}\nDate: ${formatDate(
+    sermon.date
+  )}\nSeries: ${sermon.series}\n\nNotes:\n${sermon.notes}`;
+  
+  toast.info(message, 8000);
 }
 
 function editSermon(id) {
@@ -326,7 +326,7 @@ function deleteSermon(id) {
   sermons = sermons.filter((s) => s.id !== id);
   saveToStorage();
   renderSermonList();
-  alert("Sermon deleted successfully.");
+  toast.success("Sermon deleted successfully.");
 }
 
 function moveSermon(sermonId, newDate) {
@@ -335,6 +335,6 @@ function moveSermon(sermonId, newDate) {
     sermon.date = newDate;
     saveToStorage();
     renderCalendar(); // Refresh calendar view
-    alert(`Sermon "${sermon.title}" moved to ${formatDate(newDate)}`);
+    toast.success(`Sermon "${sermon.title}" moved to ${formatDate(newDate)}`);
   }
 }

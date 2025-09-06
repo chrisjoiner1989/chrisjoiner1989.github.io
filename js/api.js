@@ -43,7 +43,7 @@ async function searchForVerse() {
   const reference = referenceInput.value.trim();
 
   if (!reference) {
-    alert("Please enter a verse reference first");
+    toast.error("Please enter a verse reference first");
     return;
   }
 
@@ -109,7 +109,7 @@ function displayVerse() {
 // adds verse text to sermon notes - saves copy/paste time
 function addVerseToNotes() {
   if (!currentVerseData) {
-    alert("Please search for a verse first");
+    toast.warning("Please search for a verse first");
     return;
   }
 
@@ -335,7 +335,7 @@ async function loadBibleChapter() {
 
   // validation
   if (!book || !chapter) {
-    alert("Please select both a book and chapter");
+    toast.error("Please select both a book and chapter");
     return;
   }
 
@@ -439,7 +439,7 @@ function updateChapterSelect() {
 // Navigate to previous chapter
 function previousChapter() {
   if (!currentBook || !currentChapter) {
-    alert("Please load a chapter first");
+    toast.warning("Please load a chapter first");
     return;
   }
 
@@ -453,7 +453,7 @@ function previousChapter() {
       newBook = BIBLE_BOOKS[bookIndex - 1].name;
       newChapter = BIBLE_BOOKS[bookIndex - 1].chapters;
     } else {
-      alert("You're at the beginning of the Bible");
+      toast.info("You're at the beginning of the Bible");
       return;
     }
   }
@@ -464,7 +464,7 @@ function previousChapter() {
 // Navigate to next chapter
 function nextChapter() {
   if (!currentBook || !currentChapter) {
-    alert("Please load a chapter first");
+    toast.warning("Please load a chapter first");
     return;
   }
 
@@ -479,7 +479,7 @@ function nextChapter() {
       newBook = BIBLE_BOOKS[bookIndex + 1].name;
       newChapter = 1;
     } else {
-      alert("You're at the end of the Bible");
+      toast.info("You're at the end of the Bible");
       return;
     }
   }
