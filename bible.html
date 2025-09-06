@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
     <title>Mount Builder - Bible Reader</title>
     <link rel="stylesheet" href="css/style.css?v=2024080612" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,9 +18,21 @@
     <meta name="theme-color" content="#722f37" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Mount Builder" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/mount-builder.png"
+    />
     <link rel="icon" type="image/png" href="assets/mount-builder.png" />
+    <link rel="mask-icon" href="assets/mount-builder.png" color="#722f37" />
   </head>
   <body style="background-color: #ffffff; margin: 0; padding: 0">
     <div class="bible-section" style="display: block">
@@ -26,9 +41,9 @@
         <a href="index.html" class="bible-back-btn">←</a>
         <div class="bible-title">Bible Reader</div>
         <div class="header-nav">
-          <a href="index.html" class="nav-btn">Home</a>
-          <a href="library.html" class="nav-btn">Library</a>
-          <a href="calendar.html" class="nav-btn">Calendar</a>
+          <a href="index.html" class="nav-btn">✍️ Home</a>
+          <a href="library.html" class="nav-btn">📚 Library</a>
+          <a href="calendar.html" class="nav-btn">📅 Calendar</a>
         </div>
       </div>
 
@@ -82,6 +97,8 @@
     <script src="js/api.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/touch-interactions.js"></script>
+    <script src="js/theme-manager.js"></script>
     <script>
       // Initialize bible page
       document.addEventListener("DOMContentLoaded", function () {
@@ -104,6 +121,40 @@
 
         console.log("Bible page initialization complete");
       });
+
+      // Service Worker Registration
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("SW registered: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
+      }
     </script>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav-item">
+        <div class="bottom-nav-icon">✍️</div>
+        <div class="bottom-nav-label">Sermon</div>
+      </a>
+      <a href="library.html" class="bottom-nav-item">
+        <div class="bottom-nav-icon">📚</div>
+        <div class="bottom-nav-label">Library</div>
+      </a>
+      <a href="bible.html" class="bottom-nav-item active">
+        <div class="bottom-nav-icon">📖</div>
+        <div class="bottom-nav-label">Bible</div>
+      </a>
+      <a href="calendar.html" class="bottom-nav-item">
+        <div class="bottom-nav-icon">📅</div>
+        <div class="bottom-nav-label">Calendar</div>
+      </a>
+    </nav>
   </body>
 </html>

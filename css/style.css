@@ -5,13 +5,60 @@
   box-sizing: border-box;
 }
 
-/* main header - white background with subtle bottom border */
+/* Mobile-first native app styling */
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-right: env(safe-area-inset-right);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --primary-color: #cc3333;
+  --primary-hover: #b22929;
+  --secondary-color: #722f37;
+  --background-color: #ffffff;
+  --surface-color: #f8f9fa;
+  --text-primary: #1c1c1e;
+  --text-secondary: #6c6c70;
+  --border-color: #e5e5e7;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --border-radius: 12px;
+  --border-radius-large: 16px;
+  --touch-target: 44px;
+}
+
+/* Native app body styling */
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body {
+  height: 100%;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* main header - native app style with safe areas */
 .main-header {
-  background-color: #ffffff;
+  background-color: var(--background-color);
   padding: 1rem;
+  padding-top: calc(1rem + var(--safe-area-inset-top));
   text-align: center;
   margin-bottom: 15px;
-  border-bottom: 1px solid #e5e5e7;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-light);
 }
 
 /* logo centered with fixed width - keeps branding consistent */
@@ -29,23 +76,38 @@
   justify-content: center;
 }
 
-/* rounded nav buttons - 32px radius looks more modern */
+/* rounded nav buttons - native app style */
 .nav-btn {
   padding: 0.7rem 1.5rem;
   font-size: 0.9rem;
   border: none;
-  border-radius: 32px;
-  background-color: #cc3333;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
   color: white;
   cursor: pointer;
   font-family: "Anton", sans-serif;
   font-weight: normal;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
+  min-height: var(--touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  box-shadow: var(--shadow-light);
 }
 
 /* darker red on hover - gives good feedback */
 .nav-btn:hover {
-  background-color: #b22929;
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.nav-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-light);
 }
 
 .search-section {
@@ -81,26 +143,34 @@
 body {
   font-family: "Anton", sans-serif;
   padding: 0.5rem;
-  background-color: #ffffff;
-  color: #1c1c1e;
+  padding-top: calc(0.5rem + var(--safe-area-inset-top));
+  padding-bottom: calc(0.5rem + var(--safe-area-inset-bottom));
+  padding-left: calc(0.5rem + var(--safe-area-inset-left));
+  padding-right: calc(0.5rem + var(--safe-area-inset-right));
+  background-color: var(--background-color);
+  color: var(--text-primary);
   line-height: 1.5;
   margin: 0;
+  min-height: 100vh;
+  position: relative;
 }
 
 h1 {
   font-size: 1.8rem;
 }
 
-/* main container - slightly off-white background */
+/* main container - native app style */
 .main-container {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
   padding: 0.75rem;
-  border-radius: 8px;
-  background-color: #fafafa;
-  color: #1c1c1e;
+  border-radius: var(--border-radius-large);
+  background-color: var(--surface-color);
+  color: var(--text-primary);
   box-sizing: border-box;
+  box-shadow: var(--shadow-light);
+  margin-bottom: calc(2rem + var(--safe-area-inset-bottom));
 }
 
 /* form layout - vertical stack with consistent spacing */
@@ -138,20 +208,42 @@ form {
   white-space: nowrap;
   width: auto;
   min-width: 80px;
+  margin: 0;
 }
 
-/* input styling - full width with good padding for mobile */
+.input-with-button .input-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  width: auto;
+  min-width: 80px;
+  margin: 0;
+}
+
+/* input styling - native app style */
 input,
 textarea {
-  padding: 12px;
+  padding: 12px 16px;
   font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 5px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
   font-family: inherit;
   outline: none;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: var(--touch-target);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(204, 51, 51, 0.1);
+  transform: translateY(-1px);
 }
 
 /* mobile date inputs - finally got this working! */
@@ -195,23 +287,70 @@ textarea {
   max-height: 400px;
 }
 
-/* default buttons - red theme with touch-friendly sizing */
+/* default buttons - native app style */
 button {
-  padding: 12px 8px;
+  padding: 12px 16px;
   font-size: 0.85rem;
   border: none;
-  border-radius: 32px;
-  background-color: #cc3333;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
   color: white;
   cursor: pointer;
-  min-height: 45px;
+  min-height: var(--touch-target);
   font-family: inherit;
   box-sizing: border-box;
   width: 100%;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  box-shadow: var(--shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
-  background-color: #b22929; /* darker on hover */
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-light);
+}
+
+/* Input buttons - specific styling for form buttons */
+.input-btn {
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  min-height: var(--touch-target);
+  font-family: inherit;
+  box-sizing: border-box;
+  width: 100%;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  box-shadow: var(--shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.input-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-light);
 }
 
 .button-group {
@@ -219,6 +358,11 @@ button:hover {
   grid-template-columns: 1fr 1fr; /* two equal columns for mobile */
   gap: 12px; /* space between buttons */
   margin-top: 24px; /* space above button group */
+}
+
+.button-group .input-btn {
+  width: 100%;
+  margin: 0;
 }
 
 /* PowerPoint button styling */
@@ -881,4 +1025,509 @@ button:hover {
   .logo {
     width: 100px;
   }
+}
+
+/* Bottom Navigation Bar - Native App Style */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--border-color);
+  padding: 8px 16px;
+  padding-bottom: calc(8px + var(--safe-area-inset-bottom));
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  border-radius: var(--border-radius);
+  min-width: 60px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.bottom-nav-item.active {
+  color: var(--primary-color);
+  background-color: rgba(204, 51, 51, 0.1);
+  border-radius: var(--border-radius);
+}
+
+.bottom-nav-item.active .bottom-nav-icon {
+  transform: scale(1.1);
+}
+
+.bottom-nav-item.active .bottom-nav-label {
+  font-weight: 600;
+}
+
+.bottom-nav-item:hover {
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.bottom-nav-item:hover .bottom-nav-icon {
+  transform: scale(1.05);
+}
+
+.bottom-nav-icon {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: all 0.2s ease;
+}
+
+.bottom-nav-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* Bottom nav theme toggle */
+.bottom-nav .theme-toggle {
+  width: 40px !important;
+  height: 24px !important;
+  margin: 0 !important;
+  background: var(--border-color) !important;
+  border-radius: 12px !important;
+  border: none !important;
+  padding: 2px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  position: relative !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+  box-shadow: none !important;
+  transform: none !important;
+  min-height: auto !important;
+  max-height: none !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-weight: normal !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  outline: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+  vertical-align: baseline !important;
+  line-height: normal !important;
+}
+
+.bottom-nav .theme-toggle-slider {
+  width: 20px !important;
+  height: 20px !important;
+  background: var(--background-color) !important;
+  border-radius: 50% !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: var(--shadow-light) !important;
+  position: relative !important;
+}
+
+.bottom-nav .theme-toggle-slider::before {
+  content: "☀️" !important;
+  font-size: 10px !important;
+  transition: all 0.3s ease !important;
+}
+
+[data-theme="dark"] .bottom-nav .theme-toggle-slider {
+  transform: translateX(16px) !important;
+}
+
+[data-theme="dark"] .bottom-nav .theme-toggle-slider::before {
+  content: "🌙" !important;
+}
+
+/* Hide bottom nav on desktop */
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: none !important;
+  }
+}
+
+/* Ensure bottom nav is visible on mobile */
+@media (max-width: 767px) {
+  .bottom-nav {
+    display: flex !important;
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 767px) {
+  .main-header {
+    padding: 0.75rem;
+    padding-top: calc(0.75rem + var(--safe-area-inset-top));
+  }
+
+  .main-container {
+    margin-bottom: calc(80px + var(--safe-area-inset-bottom));
+  }
+
+  /* Improve touch targets */
+  .nav-btn {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+
+  button {
+    min-height: 48px;
+  }
+
+  input,
+  textarea {
+    min-height: 48px;
+  }
+
+  /* Better spacing for mobile */
+  .button-group {
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  /* Improve form spacing */
+  form {
+    gap: 20px;
+  }
+
+  .input-group {
+    gap: 8px;
+  }
+}
+
+/* iOS-specific improvements */
+@supports (-webkit-touch-callout: none) {
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .main-header {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .bottom-nav {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+/* Dark mode support */
+[data-theme="dark"] {
+  --background-color: #1c1c1e;
+  --surface-color: #2c2c2e;
+  --text-primary: #ffffff;
+  --text-secondary: #8e8e93;
+  --border-color: #38383a;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* System preference dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background-color: #1c1c1e;
+    --surface-color: #2c2c2e;
+    --text-primary: #ffffff;
+    --text-secondary: #8e8e93;
+    --border-color: #38383a;
+    --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Theme toggle button - override all button styles */
+.theme-toggle {
+  position: relative !important;
+  width: 50px !important;
+  height: 28px !important;
+  background: var(--border-color) !important;
+  border-radius: 14px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 2px !important;
+  margin-left: 10px !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+  box-shadow: none !important;
+  transform: none !important;
+  min-height: auto !important;
+  max-height: none !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-weight: normal !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  outline: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+  vertical-align: baseline !important;
+  line-height: normal !important;
+}
+
+.theme-toggle:hover {
+  background: var(--text-secondary) !important;
+  transform: scale(1.05) !important;
+}
+
+.theme-toggle:active {
+  transform: scale(0.95) !important;
+}
+
+.theme-toggle-slider {
+  width: 24px;
+  height: 24px;
+  background: var(--background-color);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-light);
+  position: relative;
+}
+
+.theme-toggle-slider::before {
+  content: "☀️";
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .theme-toggle-slider {
+  transform: translateX(22px);
+}
+
+[data-theme="dark"] .theme-toggle-slider::before {
+  content: "🌙";
+}
+
+/* Header theme toggle container */
+.header-theme-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Theme toggle in header nav */
+.header-nav .theme-toggle {
+  margin-left: 0 !important;
+  margin-right: 10px !important;
+  width: 50px !important;
+  height: 28px !important;
+  background: var(--border-color) !important;
+  border-radius: 14px !important;
+  border: none !important;
+  padding: 2px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+/* Dark mode specific adjustments */
+[data-theme="dark"] .main-header {
+  background-color: var(--background-color);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .bottom-nav {
+  background-color: var(--background-color);
+  border-top-color: var(--border-color);
+}
+
+[data-theme="dark"] .verse-display {
+  background-color: var(--surface-color);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .sermon-card {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .sermon-card h3 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .sermon-meta {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .bible-section {
+  background-color: var(--background-color);
+}
+
+[data-theme="dark"] .bible-header {
+  background: var(--background-color);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .bible-controls {
+  background: var(--background-color);
+}
+
+[data-theme="dark"] .bible-content {
+  background: var(--background-color);
+}
+
+[data-theme="dark"] .bible-welcome {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .bible-welcome h3 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .chapter-header {
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .chapter-header h3 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .chapter-text {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .calendar-grid {
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .calendar-day {
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .calendar-day.empty {
+  background-color: var(--surface-color);
+}
+
+[data-theme="dark"] .calendar-day:hover:not(.empty) {
+  background-color: var(--surface-color);
+}
+
+[data-theme="dark"] .calendar-day.has-sermon {
+  background: linear-gradient(
+    135deg,
+    var(--surface-color),
+    var(--background-color)
+  );
+}
+
+[data-theme="dark"] .day-number {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .calendar-controls {
+  background: linear-gradient(
+    135deg,
+    var(--background-color),
+    var(--surface-color)
+  );
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .calendar-controls h3 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .planning-tools {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .library-section {
+  background-color: var(--background-color);
+}
+
+[data-theme="dark"] .library-header {
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .library-controls input,
+[data-theme="dark"] .library-controls select {
+  background-color: var(--surface-color);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .search-section {
+  background-color: var(--surface-color);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .search-input {
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-select {
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Dark mode button adjustments */
+[data-theme="dark"] button:not(.theme-toggle),
+[data-theme="dark"] .input-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+[data-theme="dark"] button:not(.theme-toggle):hover,
+[data-theme="dark"] .input-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Dark mode theme toggle */
+[data-theme="dark"] .theme-toggle {
+  background: var(--border-color) !important;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .powerpoint-btn {
+  background-color: var(--secondary-color);
+}
+
+[data-theme="dark"] .powerpoint-btn:hover {
+  background-color: #5a242a;
 }

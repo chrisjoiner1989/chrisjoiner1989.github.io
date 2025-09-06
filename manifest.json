@@ -4,48 +4,83 @@
   "description": "Sermon preparation and organization tool",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fffff0",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
   "theme_color": "#722f37",
+  "color_scheme": "light dark",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["productivity", "education", "lifestyle"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "assets/mount-builder.png",
       "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/mount-builder.png", 
-      "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/mount-builder.png",
-      "sizes": "128x128", 
-      "type": "image/png"
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/mount-builder.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/mount-builder.png",
       "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/mount-builder.png",
       "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/mount-builder.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/mount-builder.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "assets/mount-builder.png",
       "sizes": "384x384",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/mount-builder.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/mount-builder.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/mount-builder.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
     }
   ]
 }

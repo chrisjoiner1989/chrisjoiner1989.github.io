@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
     <title>Mount Builder - Sermon Library</title>
     <link rel="stylesheet" href="css/style.css?v=2024080612" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,18 +18,30 @@
     <meta name="theme-color" content="#722f37" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Mount Builder" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
     <link rel="apple-touch-icon" href="assets/mount-builder.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/mount-builder.png"
+    />
     <link rel="icon" type="image/png" href="assets/mount-builder.png" />
+    <link rel="mask-icon" href="assets/mount-builder.png" color="#722f37" />
   </head>
   <body>
     <header class="main-header">
       <img src="./assets/mount-builder.png" alt="mount builder" class="logo" />
       <nav class="header-nav">
-        <a href="index.html" class="nav-btn">Form</a>
-        <a href="library.html" class="nav-btn library-btn active">Library</a>
-        <a href="bible.html" class="nav-btn bible-btn">Bible</a>
-        <a href="calendar.html" class="nav-btn calendar-btn">Calendar</a>
+        <a href="index.html" class="nav-btn">✍️ Form</a>
+        <a href="library.html" class="nav-btn library-btn active">📚 Library</a>
+        <a href="bible.html" class="nav-btn bible-btn">📖 Bible</a>
+        <a href="calendar.html" class="nav-btn calendar-btn">📅 Calendar</a>
       </nav>
     </header>
 
@@ -60,10 +75,32 @@
       <div id="sermons-list" class="sermons-list"></div>
     </div>
 
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav-item">
+        <div class="bottom-nav-icon">✍️</div>
+        <div class="bottom-nav-label">Sermon</div>
+      </a>
+      <a href="library.html" class="bottom-nav-item active">
+        <div class="bottom-nav-icon">📚</div>
+        <div class="bottom-nav-label">Library</div>
+      </a>
+      <a href="bible.html" class="bottom-nav-item">
+        <div class="bottom-nav-icon">📖</div>
+        <div class="bottom-nav-label">Bible</div>
+      </a>
+      <a href="calendar.html" class="bottom-nav-item">
+        <div class="bottom-nav-icon">📅</div>
+        <div class="bottom-nav-label">Calendar</div>
+      </a>
+    </nav>
+
     <script src="js/validation.js"></script>
     <script src="js/api.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/touch-interactions.js"></script>
+    <script src="js/theme-manager.js"></script>
     <script>
       // Initialize library page
       document.addEventListener("DOMContentLoaded", function () {
@@ -71,6 +108,20 @@
         populateSpeakerFilter();
         renderSermonList();
       });
+
+      // Service Worker Registration
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("SW registered: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
+      }
     </script>
   </body>
 </html>

@@ -76,6 +76,7 @@ if (searchBtn) {
 if (saveBtn) saveBtn.addEventListener("click", saveSermon);
 if (clearBtn) clearBtn.addEventListener("click", clearForm);
 if (exportBtn) exportBtn.addEventListener("click", exportData);
+if (powerpointBtn) powerpointBtn.addEventListener("click", generatePowerPoint);
 
 const addVerseBtn = document.querySelector(".addverse-btn");
 if (addVerseBtn) addVerseBtn.addEventListener("click", addVerseToNotes);
