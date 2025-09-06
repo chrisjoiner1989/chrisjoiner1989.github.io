@@ -43,7 +43,11 @@ function saveSermon(e) {
   saveToStorage();
 
   // shows success
-  alert("✓ Sermon saved successfully!");
+  if (window.showToast) {
+    window.showToast("Sermon saved", "success");
+  } else {
+    alert("✓ Sermon saved successfully!");
+  }
 
   // analyzes the data after save
   analyzeSermons();
@@ -102,7 +106,8 @@ function getDaysUntil(dateStr) {
 // exports sermons as HTML file - easier than building a PDF generator
 function exportData() {
   if (sermons.length === 0) {
-    alert("No sermons to export yet!");
+    if (window.showToast) window.showToast("No sermons to export", "info");
+    else alert("No sermons to export yet!");
     return;
   }
 
@@ -187,27 +192,42 @@ function exportData() {
   link.click();
   URL.revokeObjectURL(url);
 
-  alert("Sermons exported!");
+  if (window.showToast) window.showToast("Export ready", "success");
+  else alert("Sermons exported!");
 }
 
 // saves data to localStorage with error handling
-function saveToStorage() {
+async function saveToStorage() {
   try {
-    localStorage.setItem("mountBuilderSermons", JSON.stringify(sermons));
+    if (window.localforage && localforage.setItem) {
+      await localforage.setItem("mountBuilderSermons", sermons);
+    } else {
+      localStorage.setItem("mountBuilderSermons", JSON.stringify(sermons));
+    }
   } catch (e) {
     console.error("Failed to save:", e);
-    alert("Could not save to browser storage");
+    if (window.showToast) window.showToast("Could not save data", "error");
+    else alert("Could not save to browser storage");
   }
 }
 
 // loads saved sermons on startup - handles corrupted data
-function loadSermons() {
+async function loadSermons() {
   try {
+    if (window.localforage && localforage.getItem) {
+      const savedArr = await localforage.getItem("mountBuilderSermons");
+      if (Array.isArray(savedArr)) {
+        sermons = savedArr;
+        console.log(`Loaded ${sermons.length} sermons (IndexedDB)`);
+        analyzeSermons();
+        return;
+      }
+    }
     const saved = localStorage.getItem("mountBuilderSermons");
     if (saved) {
       sermons = JSON.parse(saved);
-      console.log(`Loaded ${sermons.length} sermons`);
-      analyzeSermons(); // show stats on load
+      console.log(`Loaded ${sermons.length} sermons (localStorage)`);
+      analyzeSermons();
     }
   } catch (e) {
     console.error("Failed to load sermons:", e);
@@ -298,11 +318,11 @@ function viewSermon(id) {
   const sermon = sermons.find((s) => s.id === id);
   if (!sermon) return;
 
-  alert(
-    `Title: ${sermon.title}\nSpeaker: ${sermon.speaker}\nDate: ${formatDate(
-      sermon.date
-    )}\nSeries: ${sermon.series}\n\nNotes:\n${sermon.notes}`
-  );
+  const msg = `Title: ${sermon.title}\nSpeaker: ${sermon.speaker}\nDate: ${formatDate(
+    sermon.date
+  )}\nSeries: ${sermon.series}`;
+  if (window.showToast) window.showToast(msg, "info");
+  else alert(`${msg}\n\nNotes:\n${sermon.notes}`);
 }
 
 function editSermon(id) {
@@ -326,7 +346,8 @@ function deleteSermon(id) {
   sermons = sermons.filter((s) => s.id !== id);
   saveToStorage();
   renderSermonList();
-  alert("Sermon deleted successfully.");
+  if (window.showToast) window.showToast("Sermon deleted", "success");
+  else alert("Sermon deleted successfully.");
 }
 
 function moveSermon(sermonId, newDate) {
@@ -335,6 +356,7 @@ function moveSermon(sermonId, newDate) {
     sermon.date = newDate;
     saveToStorage();
     renderCalendar(); // Refresh calendar view
-    alert(`Sermon "${sermon.title}" moved to ${formatDate(newDate)}`);
+    if (window.showToast) window.showToast(`Moved to ${formatDate(newDate)}`, "success");
+    else alert(`Sermon "${sermon.title}" moved to ${formatDate(newDate)}`);
   }
 }
