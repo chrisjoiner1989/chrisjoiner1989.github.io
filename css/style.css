@@ -54,7 +54,7 @@ body {
   margin-bottom: 15px;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
-  top: 0;
+  top: 80px;
   z-index: 100;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -185,7 +185,7 @@ h1 {
   color: var(--text-primary);
   box-sizing: border-box;
   box-shadow: var(--shadow-light);
-  margin-bottom: calc(100px + var(--safe-area-inset-bottom));
+  margin-bottom: 2rem;
 }
 
 /* Bottom tab bar for native-like navigation */
@@ -438,14 +438,14 @@ button:active {
 .library-section {
   max-width: 1000px;
   margin: 20px auto;
-  margin-bottom: calc(120px + var(--safe-area-inset-bottom));
+  margin-bottom: 20px;
   padding: 20px;
 }
 
 .calendar-section {
   max-width: 1000px;
   margin: 20px auto;
-  margin-bottom: calc(120px + var(--safe-area-inset-bottom));
+  margin-bottom: 20px;
   padding: 20px;
 }
 
@@ -523,7 +523,7 @@ button:active {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  margin-bottom: calc(100px + var(--safe-area-inset-bottom));
+  margin-bottom: 20px;
   padding: 0;
   background-color: #ffffff;
   min-height: 100vh;
@@ -1034,7 +1034,7 @@ button:active {
   .main-container {
     max-width: 600px;
     padding: 2rem;
-    margin-bottom: calc(100px + var(--safe-area-inset-bottom));
+    margin-bottom: 2rem;
   }
 
   h1 {
@@ -1067,22 +1067,22 @@ button:active {
   }
 }
 
-/* Bottom Navigation Bar - Native App Style */
+/* Top Navigation Bar - Native App Style */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   background-color: var(--background-color);
-  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   padding: 8px 16px;
-  padding-bottom: calc(8px + var(--safe-area-inset-bottom));
+  padding-top: calc(8px + var(--safe-area-inset-top));
   display: flex;
   justify-content: space-around;
   align-items: center;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
@@ -1204,18 +1204,18 @@ button:active {
   content: "🌙" !important;
 }
 
-/* Bottom navigation visible on all screen sizes */
+/* Top navigation visible on all screen sizes */
 .bottom-nav {
   display: flex !important;
 }
 
-/* Desktop bottom navigation styling */
+/* Desktop top navigation styling */
 @media (min-width: 768px) {
   .bottom-nav {
     max-width: 600px;
     margin: 0 auto;
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
   
   .bottom-nav-item {
@@ -1242,7 +1242,7 @@ button:active {
   }
 
   .main-container {
-    margin-bottom: calc(100px + var(--safe-area-inset-bottom));
+    margin-bottom: 2rem;
   }
 
   /* Improve touch targets */
@@ -1412,7 +1412,7 @@ button:active {
 
 [data-theme="dark"] .bottom-nav {
   background-color: var(--background-color);
-  border-top-color: var(--border-color);
+  border-bottom-color: var(--border-color);
 }
 
 [data-theme="dark"] .verse-display {
