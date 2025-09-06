@@ -97,8 +97,8 @@ class ThemeManager {
           return;
         }
 
-        // Only add theme toggle to bottom nav on mobile screens
-        if (window.innerWidth <= 767) {
+        // Don't add theme toggle to bottom nav since we have it in header
+        if (false) {
           const toggle = document.createElement("button");
           toggle.className = "theme-toggle";
           toggle.setAttribute("aria-label", "Toggle dark mode");

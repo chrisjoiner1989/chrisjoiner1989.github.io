@@ -64,12 +64,7 @@ body {
   justify-content: center;
 }
 
-/* Hide top header on narrow/mobile to favor native-like bottom tabs */
-@media (max-width: 767px) {
-  .main-header {
-    display: none;
-  }
-}
+/* Main header visible on all screen sizes */
 
 /* logo centered with fixed width - keeps branding consistent */
 .logo {
@@ -546,24 +541,7 @@ button:active {
   margin-left: auto;
 }
 
-.bible-back-btn {
-  width: 40px;
-  height: 40px;
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  color: #495057;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bible-back-btn:hover {
-  background: #e9ecef;
-  border-color: #adb5bd;
-}
+/* Removed bible-back-btn styles - using bottom navigation instead */
 
 .bible-title {
   font-family: "Anton", sans-serif;
@@ -1216,17 +1194,32 @@ button:active {
   content: "🌙" !important;
 }
 
-/* Hide bottom nav on desktop */
-@media (min-width: 768px) {
-  .bottom-nav {
-    display: none !important;
-  }
+/* Bottom navigation visible on all screen sizes */
+.bottom-nav {
+  display: flex !important;
 }
 
-/* Ensure bottom nav is visible on mobile */
-@media (max-width: 767px) {
+/* Desktop bottom navigation styling */
+@media (min-width: 768px) {
   .bottom-nav {
-    display: flex !important;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bottom-nav-item {
+    padding: 12px 16px;
+    min-width: 80px;
+  }
+  
+  .bottom-nav-icon {
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+  }
+  
+  .bottom-nav-label {
+    font-size: 0.7rem;
   }
 }
 
