@@ -204,13 +204,13 @@ window.viewSermons = () => {
 
 // View switching functions removed - now using separate HTML pages
 
-// Service worker registration disabled - no sw.js file exists
-// if ("serviceWorker" in navigator) {
-//   navigator.serviceWorker
-//     .register("/sw.js")
-//     .then(() => console.log("SW registered"))
-//     .catch(() => console.log("SW registration failed"));
-// }
+// Register service worker for offline support
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/sw.js")
+    .then(() => console.log("Service Worker registered"))
+    .catch((err) => console.log("Service Worker registration failed", err));
+}
 
 // Calendar State Management
 let currentDate = new Date();

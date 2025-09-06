@@ -41,6 +41,8 @@ function getBookNumber(bookName) {
 // searches for bible verses - validates format first then hits API
 async function searchForVerse() {
   const reference = referenceInput.value.trim();
+  const translationSelect = document.getElementById("verse-translation");
+  const selectedTranslation = (translationSelect?.value || "WEB").toUpperCase();
 
   if (!reference) {
     alert("Please enter a verse reference first");
@@ -53,36 +55,67 @@ async function searchForVerse() {
     return;
   }
 
+  // Parse the reference into parts: Book, Chapter, Verse (and optional end)
+  const refMatch = reference.match(/^([1-3]?\s?[A-Za-z]+)\s+(\d{1,3}):(\d{1,3})(-(\d{1,3}))?$/);
+  if (!refMatch) {
+    verseDisplay.innerHTML = '<p class="error">Invalid reference format</p>';
+    return;
+  }
+  const bookName = refMatch[1];
+  const chapterNum = parseInt(refMatch[2], 10);
+  const verseStart = parseInt(refMatch[3], 10);
+  const verseEnd = refMatch[5] ? parseInt(refMatch[5], 10) : verseStart;
+
   // shows loading
   searchBtn.disabled = true;
   searchBtn.textContent = "Searching...";
   verseDisplay.innerHTML = '<p class="loading">Looking up verse...</p>';
 
   try {
-    // use primary API for verse search (WEB translation)
-    const query = reference.replace(/\s+/g, "+");
-    const response = await fetch(BIBLE_APIS.primary.base + query);
+    // If using bolls translations, fetch chapter and extract verse(s)
+    if (BIBLE_APIS.bolls.supportedTranslations.includes(selectedTranslation)) {
+      const url = BIBLE_APIS.bolls.formatUrl(bookName, chapterNum, selectedTranslation);
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Verse not found for selected translation");
+      const data = await response.json();
+      if (!Array.isArray(data)) throw new Error("Unexpected API response format");
 
-    if (!response.ok) {
-      throw new Error("Verse not found");
+      const verses = data.filter((v) => v.verse >= verseStart && v.verse <= verseEnd);
+      if (verses.length === 0) throw new Error("Verse not found in chapter");
+      const text = verses.map((v) => `${v.verse}. ${v.text}`).join(" ");
+
+      currentVerseData = {
+        reference: `${bookName} ${chapterNum}:${verseStart}${verseEnd !== verseStart ? `-${verseEnd}` : ""}`,
+        text,
+        translation: selectedTranslation,
+      };
+      displayVerse();
+      return;
     }
 
+    // Otherwise use primary API (supports WEB/KJV/ASV/BBE for verses)
+    const query = reference.replace(/\s+/g, "+");
+    let url = BIBLE_APIS.primary.base + query;
+    if (selectedTranslation !== "WEB") {
+      url += `?translation=${selectedTranslation.toLowerCase()}`;
+    }
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Verse not found");
     const data = await response.json();
 
-    // saves verse data
     currentVerseData = {
       reference: data.reference || reference,
       text: data.text,
-      translation: data.translation_name || "WEB",
-    }; // displays the verse
+      translation: data.translation_name || selectedTranslation || "WEB",
+    };
     displayVerse();
   } catch (error) {
     console.error("API Error:", error);
-    verseDisplay.innerHTML = `<p class="error">Could not find verse. Please try again.</p>`;
+    verseDisplay.innerHTML = `<p class=\"error\">Could not find verse. Please try again.</p>`;
     currentVerseData = null;
 
     const addVerseBtn = document.querySelector(".addverse-btn");
-    addVerseBtn.classList.remove("show");
+    if (addVerseBtn) addVerseBtn.classList.remove("show");
   } finally {
     // reset button
     searchBtn.disabled = false;
