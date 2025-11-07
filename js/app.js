@@ -13,7 +13,57 @@ document.addEventListener("DOMContentLoaded", function () {
     logo.style.cursor = "pointer";
     logo.title = "Click to refresh page";
   }
+
+  // Menu modal functionality
+  initializeMenuModal();
+
+  // FAB Save button functionality
+  initializeFAB();
 });
+
+// Initialize menu modal
+function initializeMenuModal() {
+  const menuBtn = document.getElementById("menu-btn");
+  const menuModal = document.getElementById("menu-modal");
+  const closeMenuBtn = document.getElementById("close-menu");
+
+  if (menuBtn && menuModal) {
+    // Open menu
+    menuBtn.addEventListener("click", function () {
+      menuModal.classList.add("active");
+    });
+
+    // Close menu
+    if (closeMenuBtn) {
+      closeMenuBtn.addEventListener("click", function () {
+        menuModal.classList.remove("active");
+      });
+    }
+
+    // Close menu when clicking outside
+    menuModal.addEventListener("click", function (e) {
+      if (e.target === menuModal) {
+        menuModal.classList.remove("active");
+      }
+    });
+
+    // Close menu after clicking any menu item
+    const menuItems = menuModal.querySelectorAll(".menu-item");
+    menuItems.forEach((item) => {
+      item.addEventListener("click", function () {
+        menuModal.classList.remove("active");
+      });
+    });
+  }
+}
+
+// Initialize FAB (Floating Action Button)
+function initializeFAB() {
+  const fabSave = document.querySelector(".fab-save");
+  if (fabSave) {
+    fabSave.addEventListener("click", saveSermon);
+  }
+}
 
 // get all the form elements - some might not exist on every page
 const sermonForm = document.getElementById("sermon-form");
@@ -68,6 +118,15 @@ if (editingSermon && titleInput) {
 // Event Listeners
 if (searchBtn) {
   searchBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    searchForVerse();
+  });
+}
+
+// Search verse icon button
+const searchVerseBtn = document.querySelector(".search-verse-btn");
+if (searchVerseBtn) {
+  searchVerseBtn.addEventListener("click", function (e) {
     e.preventDefault();
     searchForVerse();
   });
