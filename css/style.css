@@ -33,19 +33,21 @@
 .nav-btn {
   padding: 0.7rem 1.5rem;
   font-size: 0.9rem;
-  border: none;
+  border: 2px solid #cc3333;
   border-radius: 32px;
-  background-color: #cc3333;
-  color: white;
+  background-color: #fff;
+  color: #cc3333;
   cursor: pointer;
   font-family: "Anton", sans-serif;
   font-weight: normal;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
-/* darker red on hover - gives good feedback */
+/* darker burgundy on hover - gives good feedback */
 .nav-btn:hover {
-  background-color: #b22929;
+  background-color: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
 }
 
 .search-section {
@@ -247,19 +249,22 @@ textarea {
 button {
   padding: 12px 8px;
   font-size: 0.85rem;
-  border: none;
+  border: 2px solid #cc3333;
   border-radius: 32px;
-  background-color: #cc3333;
-  color: white;
+  background-color: #fff;
+  color: #cc3333;
   cursor: pointer;
   min-height: 45px;
   font-family: inherit;
   box-sizing: border-box;
   width: 100%;
+  transition: all 0.2s;
 }
 
 button:hover {
-  background-color: #b22929; /* darker on hover */
+  background-color: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
 }
 
 .button-group {
@@ -271,15 +276,21 @@ button:hover {
 
 /* PowerPoint button styling */
 .powerpoint-btn {
-  background-color: #722f37; /* Distinct burgundy color for faith theme */
+  background-color: #fff;
+  color: #cc3333;
+  border: 2px solid #cc3333;
 }
 
 .powerpoint-btn:hover {
-  background-color: #5a242a; /* Darker burgundy on hover */
+  background-color: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
 }
 
 .powerpoint-btn:disabled {
-  background-color: #8c8c8c;
+  background-color: #f5f5f5;
+  color: #8c8c8c;
+  border-color: #8c8c8c;
   cursor: not-allowed;
 }
 
@@ -296,6 +307,7 @@ button:hover {
   max-width: 1000px;
   margin: 20px auto;
   padding: 20px;
+  padding-bottom: 100px;
 }
 
 .library-header {
@@ -373,6 +385,7 @@ button:hover {
   max-width: 100%;
   margin: 0;
   padding: 0;
+  padding-bottom: 100px;
   background-color: #ffffff;
   min-height: 100vh;
   box-sizing: border-box;
@@ -461,14 +474,15 @@ button:hover {
 
 .load-btn {
   padding: 0.75rem 2rem;
-  background: #cc3333;
-  color: white;
-  border: none;
+  background: #fff;
+  color: #cc3333;
+  border: 2px solid #cc3333;
   border-radius: 8px;
   font-size: 1rem;
   font-family: "Anton", sans-serif;
   cursor: pointer;
   height: fit-content;
+  transition: all 0.2s;
 }
 
 .bible-nav-buttons {
@@ -480,23 +494,27 @@ button:hover {
 
 .bible-nav-buttons .nav-btn {
   padding: 0.5rem 1rem;
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background: #fff;
+  border: 2px solid #cc3333;
   border-radius: 6px;
-  color: #495057;
+  color: #cc3333;
   font-size: 0.9rem;
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
+  transition: all 0.2s;
 }
 
 .bible-nav-buttons .nav-btn:hover {
-  background: #e9ecef;
-  border-color: #adb5bd;
+  background: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
 }
 
 .load-btn:hover {
-  background: #b22929;
+  background: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
 }
 
 .bible-content {
@@ -730,14 +748,15 @@ button:hover {
 }
 
 .calendar-controls button {
-  background: #cc3333;
-  color: white;
-  border: none;
+  background: #fff;
+  color: #cc3333;
+  border: 2px solid #cc3333;
   padding: 0.7rem 1.5rem;
   border-radius: 5px;
   cursor: pointer;
   font-size: 0.9rem;
   font-family: "Anton", sans-serif;
+  transition: all 0.2s;
 }
 
 /* month nav buttons - side by side with small gap */
@@ -748,24 +767,29 @@ button:hover {
 }
 
 .nav-buttons button {
-  background: #cc3333; /* red buttons */
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem; /* smaller padding */
-  border-radius: 32px; /* circular look */
+  background: #fff;
+  color: #cc3333;
+  border: 2px solid #cc3333;
+  padding: 0.5rem 1rem;
+  border-radius: 32px;
   cursor: pointer;
-  font-size: 0.8rem; /* smaller text */
+  font-size: 0.8rem;
   font-family: "Anton", sans-serif;
-  min-width: 45px; /* square-ish buttons */
+  min-width: 45px;
   height: 45px;
+  transition: all 0.2s;
 }
 
 .nav-buttons button:hover {
-  background: #b22929;
+  background: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
 }
 
 .calendar-controls button:hover {
-  background: #b22929;
+  background: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
 }
 
 .calendar-controls h3 {
@@ -793,20 +817,23 @@ button:hover {
   flex: 1;
   min-width: 20px;
   padding: 8px 12px;
-  background: linear-gradient(135deg, #cc3333, #b22929);
-  color: white;
-  border: none;
+  background: #fff;
+  color: #cc3333;
+  border: 2px solid #cc3333;
   border-radius: 32px;
   font-family: "Anton", sans-serif;
   font-size: 0.8rem;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(139, 69, 19, 0.2);
+  transition: all 0.2s;
+  box-shadow: none;
 }
 
 .planning-tools button:hover {
-  background: linear-gradient(135deg, #b22929, #a02525);
+  background: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+  box-shadow: 0 2px 4px rgba(204, 51, 51, 0.2);
 }
 
 .series-timeline {
@@ -817,59 +844,83 @@ button:hover {
 
 /* calendar looks bad on small screens */
 @media (max-width: 768px) {
+  /* Add padding to calendar section to prevent bottom nav overlap */
+  .calendar-section {
+    padding-bottom: 100px;
+  }
+
   .calendar-grid {
     gap: 0.5px;
     border-radius: 6px;
   }
 
   .calendar-day {
-    min-height: 80px;
-    padding: 6px;
+    min-height: 70px;
+    padding: 4px;
+    font-size: 0.8rem;
   }
 
   .calendar-day-header {
-    padding: 10px 4px;
-    font-size: 0.85rem;
+    padding: 8px 2px;
+    font-size: 0.7rem;
   }
 
   .day-number {
-    font-size: 0.9rem;
-    margin-bottom: 4px;
+    font-size: 0.85rem;
+    margin-bottom: 2px;
   }
 
   .sermon-marker {
-    font-size: 0.7rem;
-    padding: 3px 5px;
+    font-size: 0.65rem;
+    padding: 2px 4px;
     margin: 1px 0;
   }
 
   .calendar-controls {
-    padding: 12px 16px;
-    margin-bottom: 20px;
+    padding: 12px;
+    margin-bottom: 16px;
     flex-direction: column;
     gap: 12px;
   }
 
   .calendar-controls h3 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     order: -1;
   }
 
   .calendar-controls .nav-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 12px;
     width: 100%;
+  }
+
+  .nav-buttons button {
+    flex: 0 0 auto;
+    min-width: 50px;
+    height: 50px;
+    padding: 0;
+    font-size: 1.2rem;
   }
 
   .planning-tools {
     padding: 12px;
     gap: 8px;
+    margin-bottom: 20px;
   }
 
   .planning-tools button {
     min-width: 90px;
-    padding: 6px 10px;
+    padding: 8px 12px;
     font-size: 0.75rem;
+  }
+
+  .calendar-header {
+    margin-bottom: 16px;
+  }
+
+  .calendar-header h2 {
+    font-size: 1.5rem;
   }
 }
 
@@ -998,11 +1049,11 @@ button:hover {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #722f37;
-  color: white;
-  border: none;
+  background: #fff;
+  color: #cc3333;
+  border: 2px solid #cc3333;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(114, 47, 55, 0.4);
+  box-shadow: 0 4px 12px rgba(204, 51, 51, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1012,7 +1063,8 @@ button:hover {
 
 .fab-save:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(114, 47, 55, 0.6);
+  box-shadow: 0 6px 16px rgba(204, 51, 51, 0.5);
+  background: #f5f5f5;
 }
 
 .fab-save:active {
@@ -1111,29 +1163,31 @@ button:hover {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: #f5f5f5;
-  border: none;
+  background: #fff;
+  border: 2px solid #cc3333;
   border-radius: 12px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
   font-family: "Anton", sans-serif;
   font-size: 1rem;
-  color: #1c1c1e;
+  color: #cc3333;
   width: 100%;
   text-align: left;
 }
 
 .menu-item:hover {
-  background: #e5e5e7;
+  background: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
 }
 
 .menu-item:active {
-  background: #d1d1d6;
+  background: #e5e5e7;
 }
 
 .menu-item svg {
   flex-shrink: 0;
-  stroke: #722f37;
+  stroke: currentColor;
 }
 
 .menu-item span {
@@ -1175,42 +1229,337 @@ button:hover {
   display: none;
 }
 
+/* Hide desktop action buttons on mobile */
+.desktop-actions {
+  display: none;
+}
+
 @media (min-width: 768px) {
-  /* Show desktop navigation on larger screens */
-  .header-nav {
-    display: flex;
+  /* ===== DESKTOP HEADER WITH HORIZONTAL NAVIGATION ===== */
+  .main-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    max-width: 1600px;
+    margin: 0 auto;
   }
 
-  /* Hide bottom nav on desktop */
+  .main-header .logo {
+    width: 60px;
+    height: 60px;
+    margin: 0;
+  }
+
+  .page-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  /* Desktop: Show traditional navigation in header with icons */
+  .header-nav {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .header-nav .nav-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: #cc3333;
+    background: #fff;
+    border: 2px solid #cc3333;
+  }
+
+  .header-nav .nav-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+  }
+
+  .header-nav .nav-btn:hover {
+    background: #f5f5f5;
+    border-color: #b22929;
+    color: #b22929;
+  }
+
+  .header-nav .nav-btn.active {
+    background: #cc3333;
+    color: white;
+    border-color: #cc3333;
+  }
+
+  .header-nav .nav-btn.active svg {
+    stroke: white;
+  }
+
+  /* Desktop: Hide bottom nav completely */
   .bottom-nav {
     display: none;
   }
 
-  /* Hide FAB on desktop, use regular button */
+  /* Desktop: Hide FAB, show inline save button instead */
   .fab-save {
     display: none;
   }
 
-  /* Show button group on desktop */
-  .button-group {
-    display: grid !important;
+  /* Desktop: Hide menu modal */
+  .menu-modal {
+    display: none !important;
   }
 
+  /* Desktop: Better container spacing */
   .main-container {
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 
-  .main-header {
-    flex-direction: column;
+  /* Desktop: Add action buttons back to form */
+  .desktop-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+    justify-content: flex-start;
   }
 
-  .main-header .logo {
-    width: 150px;
-    height: auto;
-    margin: 0 auto 1rem auto;
+  .desktop-actions button {
+    flex: 0 1 auto;
+    min-width: 140px;
+    padding: 0.875rem 1.75rem;
   }
 
-  .page-title {
-    display: none;
+  .desktop-actions .save-btn {
+    background: #fff;
+    color: #cc3333;
+    border: 2px solid #cc3333;
+    order: -1;
+  }
+
+  .desktop-actions .save-btn:hover {
+    background: #f5f5f5;
+    border-color: #b22929;
+    color: #b22929;
+  }
+
+  /* ===== EXPANDED FORM LAYOUT WITH 2-COLUMN GRID ===== */
+  .main-container .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  form {
+    gap: 24px;
+  }
+
+  /* Two-column grid for related fields */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-row .input-group {
+    margin: 0;
+  }
+
+  /* Larger inputs and better spacing */
+  input,
+  textarea {
+    padding: 14px;
+    font-size: 1.125rem;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #722f37;
+    box-shadow: 0 0 0 3px rgba(114, 47, 55, 0.1);
+  }
+
+  #notes {
+    min-height: 350px;
+  }
+
+  /* ===== STANDARDIZED PAGE STRUCTURE ===== */
+
+  /* Library page improvements */
+  .library-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+  }
+
+  .library-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+  }
+
+  .library-header h2 {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .library-controls {
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .sermons-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .sermon-card {
+    padding: 20px;
+  }
+
+  /* Calendar page improvements */
+  .calendar-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+  }
+
+  .calendar-header {
+    margin-bottom: 32px;
+  }
+
+  .calendar-header h2 {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .calendar-day {
+    min-height: 120px;
+    padding: 12px;
+  }
+
+  /* Bible page improvements */
+  .bible-section {
+    padding: 2rem 3rem;
+  }
+
+  .bible-controls {
+    max-width: 900px;
+    padding: 0 0 2rem 0;
+  }
+
+  .bible-content {
+    max-width: 900px;
+    padding: 2rem 0;
+  }
+
+  /* ===== TYPOGRAPHY SCALE & IMPROVED SPACING ===== */
+
+  /* Typography hierarchy */
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-family: "Anton", sans-serif;
+    font-size: 2rem;
+    font-weight: normal;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  h2 {
+    font-family: "Anton", sans-serif;
+    font-size: 1.75rem;
+    font-weight: normal;
+    line-height: 1.3;
+    margin: 0 0 1rem 0;
+  }
+
+  h3 {
+    font-family: "Anton", sans-serif;
+    font-size: 1.5rem;
+    font-weight: normal;
+    line-height: 1.4;
+    margin: 0 0 0.75rem 0;
+  }
+
+  /* Labels with better hierarchy */
+  label {
+    font-family: "Anton", sans-serif;
+    font-size: 1rem;
+    font-weight: normal;
+    color: #1c1c1e;
+  }
+
+  /* Body text for reading */
+  .chapter-text,
+  .verse-display,
+  .sermon-card p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
+
+  /* Small/meta text */
+  small,
+  .help-text,
+  .sermon-meta {
+    font-size: 0.875rem;
+    color: #6c6c70;
+    font-family: "Cormorant Garamond", serif;
+  }
+
+  /* Button typography */
+  button,
+  .nav-btn {
+    font-family: "Anton", sans-serif;
+    font-size: 0.9rem;
+    font-weight: normal;
+    letter-spacing: 0.3px;
+  }
+
+  /* Section spacing improvements */
+  .library-section > *:not(:last-child),
+  .calendar-section > *:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  /* Card spacing */
+  .sermon-card h3 {
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+  }
+
+  .sermon-meta {
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+
+  /* Calendar typography */
+  .calendar-controls h3 {
+    font-size: 1.75rem;
+  }
+
+  .day-number {
+    font-size: 1.125rem;
+  }
+
+  /* Verse display improvements */
+  .verse-display {
+    padding: 16px;
+    margin-top: 12px;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    background-color: #fafafa;
+    border-left: 4px solid #722f37;
   }
 }
