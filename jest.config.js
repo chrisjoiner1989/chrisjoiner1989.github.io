@@ -1,11 +1,8 @@
 module.exports = {
-    testEnvironment: 'jsdom',
-    setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
-    moduleNameMapping: {
-      '^@/(.*)$': '<rootDir>/src/$1'
-    },
-    collectCoverageFrom: [
-      'src/**/*.js',
-      '!src/**/*.test.js'
-    ]
-  };
+  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],
+  // Use correct Jest key: moduleNameMapper
+  moduleNameMapper: {},
+  // Collect coverage from project folders
+  collectCoverageFrom: ["js/**/*.js", "!js/**/*.test.js"],
+};

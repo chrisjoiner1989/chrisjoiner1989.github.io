@@ -40,6 +40,15 @@ function getBookNumber(bookName) {
 
 // searches for bible verses - validates format first then hits API
 async function searchForVerse() {
+  const referenceInput = document.getElementById("reference");
+  const verseDisplay = document.getElementById("verse-display");
+  const searchBtn = document.querySelector(".search-btn");
+
+  if (!referenceInput) {
+    alert("Reference input not found on this page");
+    return;
+  }
+
   const reference = referenceInput.value.trim();
 
   if (!reference) {
@@ -49,14 +58,20 @@ async function searchForVerse() {
 
   // checks if valid format before making API call
   if (!validateVerseFormat()) {
-    verseDisplay.innerHTML = '<p class="error">Please check verse format</p>';
+    if (verseDisplay) {
+      verseDisplay.innerHTML = '<p class="error">Please check verse format</p>';
+    }
     return;
   }
 
   // shows loading
-  searchBtn.disabled = true;
-  searchBtn.textContent = "Searching...";
-  verseDisplay.innerHTML = '<p class="loading">Looking up verse...</p>';
+  if (searchBtn) {
+    searchBtn.disabled = true;
+    searchBtn.textContent = "Searching...";
+  }
+  if (verseDisplay) {
+    verseDisplay.innerHTML = '<p class="loading">Looking up verse...</p>';
+  }
 
   try {
     // use primary API for verse search (WEB translation)
@@ -74,25 +89,34 @@ async function searchForVerse() {
       reference: data.reference || reference,
       text: data.text,
       translation: data.translation_name || "WEB",
-    }; // displays the verse
+    };
+
+    // displays the verse
     displayVerse();
   } catch (error) {
     console.error("API Error:", error);
-    verseDisplay.innerHTML = `<p class="error">Could not find verse. Please try again.</p>`;
+    if (verseDisplay) {
+      verseDisplay.innerHTML = `<p class="error">Could not find verse. Please try again.</p>`;
+    }
     currentVerseData = null;
 
     const addVerseBtn = document.querySelector(".addverse-btn");
-    addVerseBtn.classList.remove("show");
+    if (addVerseBtn) addVerseBtn.classList.remove("show");
   } finally {
     // reset button
-    searchBtn.disabled = false;
-    searchBtn.textContent = "Search verse";
+    if (searchBtn) {
+      searchBtn.disabled = false;
+      searchBtn.textContent = "Search verse";
+    }
   }
 }
 
 // shows the verse result with add to notes button
 function displayVerse() {
   if (!currentVerseData) return;
+
+  const verseDisplay = document.getElementById("verse-display");
+  if (!verseDisplay) return;
 
   verseDisplay.innerHTML = `
       <div class="verse-content">
@@ -103,7 +127,7 @@ function displayVerse() {
     `;
 
   const addVerseBtn = document.querySelector(".addverse-btn");
-  addVerseBtn.style.display = "block";
+  if (addVerseBtn) addVerseBtn.style.display = "block";
 }
 
 // adds verse text to sermon notes - saves copy/paste time
@@ -114,8 +138,11 @@ function addVerseToNotes() {
   }
 
   const verseText = `\n\n${currentVerseData.reference}\n"${currentVerseData.text}"\n`;
-  notesInput.value += verseText;
-  notesInput.focus();
+  const notesInput = document.getElementById("notes");
+  if (notesInput) {
+    notesInput.value += verseText;
+    notesInput.focus();
+  }
 }
 
 // all 66 bible books with chapter counts - saves API calls
@@ -415,7 +442,6 @@ function displayBibleChapter(data) {
     </div>
   `;
 }
-
 
 function updateChapterSelect() {
   const bookSelect = document.getElementById("bible-book");

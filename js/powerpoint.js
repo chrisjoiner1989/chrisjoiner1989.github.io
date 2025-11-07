@@ -251,7 +251,7 @@ function createTitleSlide(pptx, sermonData, theme) {
     w: 8.5,
     h: 1.5,
     fontSize: 36,
-    fontFace: 'Cormorant Garamond',
+    fontFace: 'Georgia, Times New Roman, serif',
     color: theme.primary,
     bold: true,
     align: 'center'
@@ -265,7 +265,7 @@ function createTitleSlide(pptx, sermonData, theme) {
       w: 8.5,
       h: 0.8,
       fontSize: 20,
-      fontFace: 'Cormorant Garamond',
+      fontFace: 'Georgia, Times New Roman, serif',
       color: theme.secondary,
       italic: true,
       align: 'center'
@@ -324,7 +324,7 @@ function createContentSlide(pptx, slideContent, theme, slideNumber) {
     w: 8.5,
     h: 1,
     fontSize: 28,
-    fontFace: 'Cormorant Garamond',
+    fontFace: 'Georgia, Times New Roman, serif',
     color: theme.primary,
     bold: true
   });
@@ -357,7 +357,7 @@ function createContentSlide(pptx, slideContent, theme, slideNumber) {
           fontSize: 16,
           color: theme.secondary,
           italic: true,
-          fontFace: 'Cormorant Garamond'
+          fontFace: 'Georgia, Times New Roman, serif'
         });
         break;
         
@@ -403,7 +403,7 @@ function createClosingSlide(pptx, theme) {
     w: 8.5,
     h: 1.2,
     fontSize: 40,
-    fontFace: 'Cormorant Garamond',
+    fontFace: 'Georgia, Times New Roman, serif',
     color: theme.primary,
     bold: true,
     align: 'center'
@@ -416,7 +416,7 @@ function createClosingSlide(pptx, theme) {
     w: 8.5,
     h: 0.8,
     fontSize: 20,
-    fontFace: 'Cormorant Garamond',
+    fontFace: 'Georgia, Times New Roman, serif',
     color: theme.secondary,
     italic: true,
     align: 'center'

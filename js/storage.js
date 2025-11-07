@@ -3,23 +3,32 @@ function saveSermon(e) {
   e.preventDefault();
 
   // get all values from form inputs
-  const title = titleInput.value.trim();
-  const speaker = speakerInput.value.trim() || "Guest Speaker";
-  const date = dateInput.value;
-  const series = seriesInput.value.trim();
-  const notes = notesInput.value.trim();
-  const reference = referenceInput.value.trim();
+  const titleInput = document.getElementById("title");
+  const speakerInput = document.getElementById("speaker");
+  const dateInput = document.getElementById("date");
+  const seriesInput = document.getElementById("series");
+  const notesInput = document.getElementById("notes");
+  const referenceInput = document.getElementById("reference");
+
+  const title = titleInput ? titleInput.value.trim() : "";
+  const speaker = speakerInput
+    ? speakerInput.value.trim() || "Guest Speaker"
+    : "Guest Speaker";
+  const date = dateInput ? dateInput.value : "";
+  const series = seriesInput ? seriesInput.value.trim() : "";
+  const notes = notesInput ? notesInput.value.trim() : "";
+  const reference = referenceInput ? referenceInput.value.trim() : "";
 
   // validation
   if (!title) {
     alert("Please enter a sermon title");
-    titleInput.focus();
+    if (titleInput) titleInput.focus();
     return;
   }
 
   if (!date) {
     alert("Please select a date for the sermon");
-    dateInput.focus();
+    if (dateInput) dateInput.focus();
     return;
   }
 
@@ -61,7 +70,7 @@ function analyzeSermons() {
   const avgNotesLength = Math.round(
     sermons.reduce((sum, s) => sum + s.notes.length, 0) / totalSermons
   );
-  
+
   // count sermons by speaker
   const speakers = {};
   sermons.forEach((sermon) => {
@@ -330,7 +339,7 @@ function deleteSermon(id) {
 }
 
 function moveSermon(sermonId, newDate) {
-  const sermon = sermons.find((s) => s.id == sermonId);
+  const sermon = sermons.find((s) => s.id === sermonId);
   if (sermon) {
     sermon.date = newDate;
     saveToStorage();

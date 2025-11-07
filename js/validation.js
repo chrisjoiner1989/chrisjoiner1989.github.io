@@ -1,6 +1,7 @@
 // sets today's date by default - saves time when creating sermons
 function setDefaultDate() {
   // Skip if we're not on the form page
+  const dateInput = document.getElementById("date");
   if (!dateInput) return;
 
   const today = new Date();
@@ -14,6 +15,7 @@ function setDefaultDate() {
 // loads saved date from localStorage or falls back to today
 function loadSavedDate() {
   // Skip if we're not on the form page
+  const dateInput = document.getElementById("date");
   if (!dateInput) return;
 
   const savedDate = localStorage.getItem("sermonDate");
@@ -38,15 +40,24 @@ function isValidDate(dateString) {
 }
 
 // checks bible verse format - regex was tricky to get right
-function validateVerseFormat() {
-  // Skip if we're not on the form page
-  if (!referenceInput || !referenceHelp) return true;
-
-  const input = referenceInput.value.trim();
-
+function validateVerseFormat(providedInput) {
   // regex pattern for bible verses - handles numbered books and verse ranges
   const pattern = /^([1-3]?\s?[A-Za-z]+)\s+(\d{1,3}):(\d{1,3})(-\d{1,3})?$/;
 
+  // If input is provided, run as a pure function for tests/logic
+  if (typeof providedInput === "string") {
+    const trimmed = providedInput.trim();
+    if (trimmed === "enter") return true;
+    return pattern.test(trimmed);
+  }
+
+  // Otherwise, operate on DOM elements when available in the browser
+  // Skip if we're not on the form page
+  const referenceInput = document.getElementById("reference");
+  const referenceHelp = document.getElementById("reference-help");
+  if (!referenceInput || !referenceHelp) return true;
+
+  const input = referenceInput.value.trim();
   if (input === "enter") {
     referenceHelp.textContent = "";
     referenceHelp.style.color = "";
@@ -57,9 +68,14 @@ function validateVerseFormat() {
     referenceHelp.textContent = "✓ Valid format";
     referenceHelp.style.color = "#5a7a5a";
     return true;
-  } else {
-    referenceHelp.textContent = "Use format: Book Chapter:Verse";
-    referenceHelp.style.color = "#8b4513";
-    return false;
   }
+
+  referenceHelp.textContent = "Use format: Book Chapter:Verse";
+  referenceHelp.style.color = "#8b4513";
+  return false;
+}
+
+// Export for tests without affecting browser usage
+if (typeof module !== "undefined") {
+  module.exports = { isValidDate, validateVerseFormat };
 }
