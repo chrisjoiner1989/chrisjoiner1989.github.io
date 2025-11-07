@@ -1562,4 +1562,760 @@ button:hover {
     background-color: #fafafa;
     border-left: 4px solid #722f37;
   }
+
+  /* Sermon sections desktop layout */
+  .sermon-section {
+    margin-bottom: 24px;
+  }
+
+  .section-header {
+    margin-bottom: 16px;
+  }
+
+  .delete-section-btn {
+    padding: 8px 16px;
+    min-width: auto;
+  }
+}
+
+/* ===== SERMON BUILDER STYLES ===== */
+
+/* Sermon sections container */
+#sermon-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Individual sermon section */
+.sermon-section {
+  background: #ffffff;
+  border: 2px solid #e5e5e7;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.2s;
+}
+
+.sermon-section:hover {
+  border-color: #cc3333;
+  box-shadow: 0 2px 8px rgba(204, 51, 51, 0.1);
+}
+
+/* Section header with number and delete button */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e7;
+}
+
+.section-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #cc3333;
+  color: white;
+  border-radius: 50%;
+  font-family: "Anton", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.delete-section-btn {
+  background: transparent;
+  border: 2px solid #e5e5e7;
+  color: #8e8e93;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  width: auto;
+  min-width: auto;
+  min-height: auto;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-section-btn:hover {
+  background: #fee;
+  border-color: #cc3333;
+  color: #cc3333;
+}
+
+.delete-section-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Section content */
+.section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-heading,
+.section-scripture,
+.section-notes {
+  font-family: inherit;
+}
+
+.section-notes {
+  min-height: 120px;
+  font-family: "Cormorant Garamond", serif;
+  line-height: 1.6;
+}
+
+/* Add section button */
+#add-section-btn {
+  background: #fff;
+  color: #cc3333;
+  border: 2px dashed #cc3333;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Anton", sans-serif;
+  font-size: 1rem;
+  margin-top: 16px;
+}
+
+#add-section-btn:hover {
+  background: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
+  border-style: solid;
+}
+
+/* Builder action buttons */
+.builder-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.builder-actions button {
+  flex: 1;
+  min-width: 140px;
+}
+
+#start-preaching-btn {
+  background: #cc3333;
+  color: white;
+  border: 2px solid #cc3333;
+}
+
+#start-preaching-btn:hover {
+  background: #b22929;
+  border-color: #b22929;
+}
+
+/* Notification styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  background: #4caf50;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: "Anton", sans-serif;
+  z-index: 3000;
+  animation: slideInRight 0.3s ease-out;
+}
+
+.notification.fade-out {
+  animation: fadeOut 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ===== PREACHING MODE STYLES ===== */
+
+/* Preaching mode body */
+.preaching-mode-body {
+  background: #faf9f7;
+  color: #2c2c2c;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Dark mode styles */
+.preaching-mode-body.dark-mode {
+  background: #1c1c1e;
+  color: #f5f5f7;
+}
+
+/* Preaching header */
+.preaching-header {
+  background: #ffffff;
+  border-bottom: 2px solid #e5e5e7;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .preaching-header {
+  background: #2c2c2e;
+  border-bottom-color: #3a3a3c;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.sermon-title-header {
+  font-family: "Anton", sans-serif;
+  font-size: 1.3rem;
+  color: #2c2c2c;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dark-mode .sermon-title-header {
+  color: #f5f5f7;
+}
+
+/* Timer container */
+.timer-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: #f5f5f7;
+  border-radius: 12px;
+  border: 2px solid #e5e5e7;
+}
+
+.dark-mode .timer-container {
+  background: #3a3a3c;
+  border-color: #48484a;
+}
+
+.timer-display {
+  font-family: "Anton", sans-serif;
+  font-size: 1.5rem;
+  color: #cc3333;
+  min-width: 120px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.dark-mode .timer-display {
+  color: #ff6b6b;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.timer-btn {
+  background: transparent;
+  border: none;
+  color: #8e8e93;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  width: auto;
+  min-width: auto;
+  min-height: auto;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-btn:hover {
+  background: #e5e5e7;
+  color: #cc3333;
+}
+
+.dark-mode .timer-btn:hover {
+  background: #48484a;
+  color: #ff6b6b;
+}
+
+.timer-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Icon buttons */
+.btn-icon {
+  background: transparent;
+  border: 2px solid #e5e5e7;
+  color: #8e8e93;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  width: auto;
+  min-width: auto;
+  min-height: auto;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  background: #f5f5f5;
+  border-color: #cc3333;
+  color: #cc3333;
+}
+
+.dark-mode .btn-icon {
+  border-color: #48484a;
+  color: #8e8e93;
+}
+
+.dark-mode .btn-icon:hover {
+  background: #3a3a3c;
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Secondary button */
+.btn-secondary {
+  background: #f5f5f7;
+  border: 2px solid #e5e5e7;
+  color: #8e8e93;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: "Anton", sans-serif;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  width: auto;
+  min-height: auto;
+}
+
+.btn-secondary:hover {
+  background: #e5e5e7;
+  border-color: #cc3333;
+  color: #cc3333;
+}
+
+.dark-mode .btn-secondary {
+  background: #3a3a3c;
+  border-color: #48484a;
+  color: #8e8e93;
+}
+
+.dark-mode .btn-secondary:hover {
+  background: #48484a;
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+/* Main preaching content */
+.preaching-main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.section-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Progress indicator */
+.progress-indicator {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.progress-text {
+  font-family: "Anton", sans-serif;
+  font-size: 1rem;
+  color: #8e8e93;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e5e5e7;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.dark-mode .progress-bar {
+  background: #3a3a3c;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #cc3333, #b22929);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.dark-mode .progress-fill {
+  background: linear-gradient(90deg, #ff6b6b, #ff5252);
+}
+
+/* Section display */
+.section-display {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  min-height: 400px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.section-display.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dark-mode .section-display {
+  background: #2c2c2e;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.section-heading {
+  font-family: "Anton", sans-serif;
+  font-size: 2.5rem;
+  color: #2c2c2c;
+  margin: 0 0 24px 0;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.dark-mode .section-heading {
+  color: #f5f5f7;
+}
+
+.section-scripture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.5rem;
+  color: #cc3333;
+  font-style: italic;
+  margin-bottom: 32px;
+  padding: 16px;
+  background: #faf9f7;
+  border-radius: 12px;
+}
+
+.dark-mode .section-scripture {
+  color: #ff6b6b;
+  background: #1c1c1e;
+}
+
+.section-scripture svg {
+  flex-shrink: 0;
+}
+
+.section-notes {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.4rem;
+  line-height: 2;
+  color: #2c2c2c;
+  text-align: left;
+}
+
+.dark-mode .section-notes {
+  color: #e5e5e7;
+}
+
+.section-notes p {
+  margin-bottom: 24px;
+}
+
+.section-notes p:last-child {
+  margin-bottom: 0;
+}
+
+/* Error message */
+.error-message {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.error-message h2 {
+  font-family: "Anton", sans-serif;
+  font-size: 2rem;
+  color: #cc3333;
+  margin-bottom: 16px;
+}
+
+.error-message p {
+  font-size: 1.2rem;
+  color: #6c6c70;
+  margin-bottom: 24px;
+}
+
+.error-message .btn-primary {
+  background: #cc3333;
+  color: white;
+  border: 2px solid #cc3333;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Anton", sans-serif;
+  font-size: 1rem;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.error-message .btn-primary:hover {
+  background: #b22929;
+  border-color: #b22929;
+}
+
+/* Preaching navigation */
+.preaching-nav {
+  background: #ffffff;
+  border-top: 2px solid #e5e5e7;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .preaching-nav {
+  background: #2c2c2e;
+  border-top-color: #3a3a3c;
+}
+
+.nav-btn-large {
+  background: #fff;
+  color: #cc3333;
+  border: 2px solid #cc3333;
+  padding: 12px 24px;
+  border-radius: 32px;
+  cursor: pointer;
+  font-family: "Anton", sans-serif;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  min-width: auto;
+  min-height: auto;
+  width: auto;
+}
+
+.nav-btn-large:hover:not(:disabled) {
+  background: #f5f5f5;
+  border-color: #b22929;
+  color: #b22929;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(204, 51, 51, 0.2);
+}
+
+.nav-btn-large:disabled {
+  background: #f5f5f5;
+  color: #c7c7cc;
+  border-color: #c7c7cc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dark-mode .nav-btn-large {
+  background: #3a3a3c;
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+.dark-mode .nav-btn-large:hover:not(:disabled) {
+  background: #48484a;
+  border-color: #ff5252;
+  color: #ff5252;
+}
+
+.dark-mode .nav-btn-large:disabled {
+  background: #2c2c2e;
+  color: #48484a;
+  border-color: #48484a;
+}
+
+.nav-btn-large svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Keyboard hints */
+.keyboard-hints {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hint {
+  font-family: "Anton", sans-serif;
+  font-size: 0.85rem;
+  color: #8e8e93;
+  padding: 6px 12px;
+  background: #f5f5f7;
+  border-radius: 6px;
+  border: 1px solid #e5e5e7;
+}
+
+.dark-mode .hint {
+  background: #3a3a3c;
+  border-color: #48484a;
+  color: #8e8e93;
+}
+
+/* Responsive preaching mode */
+@media (max-width: 768px) {
+  .preaching-header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+
+  .sermon-title-header {
+    font-size: 1.1rem;
+  }
+
+  .timer-container {
+    padding: 6px 12px;
+  }
+
+  .timer-display {
+    font-size: 1.2rem;
+    min-width: 100px;
+  }
+
+  .preaching-main {
+    padding: 16px;
+  }
+
+  .section-display {
+    padding: 24px;
+    min-height: 300px;
+  }
+
+  .section-heading {
+    font-size: 1.8rem;
+  }
+
+  .section-scripture {
+    font-size: 1.2rem;
+    padding: 12px;
+  }
+
+  .section-notes {
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+
+  .preaching-nav {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .nav-btn-large {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .nav-btn-large span {
+    display: none;
+  }
+
+  .keyboard-hints {
+    display: none;
+  }
+
+  .header-right {
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 1200px) {
+  .section-display {
+    padding: 64px;
+    min-height: 500px;
+  }
+
+  .section-heading {
+    font-size: 3rem;
+  }
+
+  .section-scripture {
+    font-size: 1.8rem;
+  }
+
+  .section-notes {
+    font-size: 1.6rem;
+    line-height: 2.2;
+  }
 }
