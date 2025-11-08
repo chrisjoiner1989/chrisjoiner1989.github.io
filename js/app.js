@@ -26,34 +26,107 @@ function initializeMenuModal() {
   const menuBtn = document.getElementById("menu-btn");
   const menuModal = document.getElementById("menu-modal");
   const closeMenuBtn = document.getElementById("close-menu");
+  let previouslyFocusedElement = null;
 
   if (menuBtn && menuModal) {
     // Open menu
     menuBtn.addEventListener("click", function () {
+      previouslyFocusedElement = document.activeElement;
       menuModal.classList.add("active");
+      menuModal.setAttribute("aria-hidden", "false");
+
+      // Focus the close button when modal opens
+      setTimeout(() => {
+        closeMenuBtn?.focus();
+      }, 100);
+
+      // Enable focus trap
+      enableFocusTrap(menuModal);
     });
+
+    // Close menu function
+    const closeMenu = () => {
+      menuModal.classList.remove("active");
+      menuModal.setAttribute("aria-hidden", "true");
+      disableFocusTrap(menuModal);
+
+      // Return focus to trigger button
+      if (previouslyFocusedElement) {
+        previouslyFocusedElement.focus();
+      }
+    };
 
     // Close menu
     if (closeMenuBtn) {
-      closeMenuBtn.addEventListener("click", function () {
-        menuModal.classList.remove("active");
-      });
+      closeMenuBtn.addEventListener("click", closeMenu);
     }
 
     // Close menu when clicking outside
     menuModal.addEventListener("click", function (e) {
       if (e.target === menuModal) {
-        menuModal.classList.remove("active");
+        closeMenu();
+      }
+    });
+
+    // Close menu with Escape key
+    menuModal.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeMenu();
       }
     });
 
     // Close menu after clicking any menu item
     const menuItems = menuModal.querySelectorAll(".menu-item");
     menuItems.forEach((item) => {
-      item.addEventListener("click", function () {
-        menuModal.classList.remove("active");
-      });
+      item.addEventListener("click", closeMenu);
     });
+  }
+}
+
+/**
+ * Enable focus trap within a modal
+ * @param {HTMLElement} modal - The modal element
+ */
+function enableFocusTrap(modal) {
+  const focusableElements = modal.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+
+  if (focusableElements.length === 0) return;
+
+  const firstFocusable = focusableElements[0];
+  const lastFocusable = focusableElements[focusableElements.length - 1];
+
+  // Store the trap handler so we can remove it later
+  modal._focusTrapHandler = function (e) {
+    if (e.key !== "Tab") return;
+
+    if (e.shiftKey) {
+      // Shift + Tab
+      if (document.activeElement === firstFocusable) {
+        e.preventDefault();
+        lastFocusable.focus();
+      }
+    } else {
+      // Tab
+      if (document.activeElement === lastFocusable) {
+        e.preventDefault();
+        firstFocusable.focus();
+      }
+    }
+  };
+
+  modal.addEventListener("keydown", modal._focusTrapHandler);
+}
+
+/**
+ * Disable focus trap
+ * @param {HTMLElement} modal - The modal element
+ */
+function disableFocusTrap(modal) {
+  if (modal._focusTrapHandler) {
+    modal.removeEventListener("keydown", modal._focusTrapHandler);
+    delete modal._focusTrapHandler;
   }
 }
 

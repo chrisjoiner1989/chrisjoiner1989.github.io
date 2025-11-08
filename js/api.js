@@ -339,12 +339,133 @@ function parseAPIResponse(
 }
 function initializeBibleReader() {
   const bookSelect = document.getElementById("bible-book");
+  const chapterSelect = document.getElementById("bible-chapter");
+  const translationSelect = document.getElementById("bible-translation");
 
   BIBLE_BOOKS.forEach((book) => {
     const option = document.createElement("option");
     option.value = book.name;
     option.textContent = book.name;
     bookSelect.appendChild(option);
+  });
+
+  // Auto-load chapter when selection changes
+  if (chapterSelect) {
+    chapterSelect.addEventListener("change", function() {
+      if (bookSelect.value && chapterSelect.value) {
+        loadBibleChapter();
+      }
+    });
+  }
+
+  // Also reload if translation changes (only if chapter is already loaded)
+  if (translationSelect) {
+    translationSelect.addEventListener("change", function() {
+      if (currentBook && currentChapter) {
+        loadBibleChapter();
+      }
+    });
+  }
+
+  // Initialize reading preferences
+  initializeReadingPreferences();
+}
+
+// Initialize font size and theme controls
+function initializeReadingPreferences() {
+  const bibleSection = document.querySelector(".bible-section");
+  const bibleContent = document.getElementById("bible-content");
+
+  // Load saved preferences from localStorage
+  const savedFontSize = localStorage.getItem("bibleFontSize") || "medium";
+  const savedTheme = localStorage.getItem("bibleTheme") || "light";
+
+  // Apply saved preferences
+  applyFontSize(savedFontSize);
+  applyTheme(savedTheme);
+
+  // Font size controls
+  const fontSizeBtns = document.querySelectorAll(".font-size-btn");
+  fontSizeBtns.forEach(btn => {
+    btn.addEventListener("click", function() {
+      const size = this.getAttribute("data-size");
+
+      // Remove active class from all buttons
+      fontSizeBtns.forEach(b => b.classList.remove("active"));
+
+      // Add active class to clicked button
+      this.classList.add("active");
+
+      // Apply font size
+      applyFontSize(size);
+
+      // Save preference
+      localStorage.setItem("bibleFontSize", size);
+    });
+  });
+
+  // Theme controls
+  const themeBtns = document.querySelectorAll(".theme-btn");
+  themeBtns.forEach(btn => {
+    btn.addEventListener("click", function() {
+      const theme = this.getAttribute("data-theme");
+
+      // Remove active class from all buttons
+      themeBtns.forEach(b => b.classList.remove("active"));
+
+      // Add active class to clicked button
+      this.classList.add("active");
+
+      // Apply theme
+      applyTheme(theme);
+
+      // Save preference
+      localStorage.setItem("bibleTheme", theme);
+    });
+  });
+}
+
+function applyFontSize(size) {
+  const bibleContent = document.getElementById("bible-content");
+  const fontSizeBtns = document.querySelectorAll(".font-size-btn");
+
+  if (bibleContent) {
+    // Remove all font size classes
+    bibleContent.classList.remove("font-small", "font-medium", "font-large", "font-xlarge");
+
+    // Add new font size class
+    bibleContent.classList.add(`font-${size}`);
+  }
+
+  // Update active button
+  fontSizeBtns.forEach(btn => {
+    if (btn.getAttribute("data-size") === size) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+}
+
+function applyTheme(theme) {
+  const bibleSection = document.querySelector(".bible-section");
+  const themeBtns = document.querySelectorAll(".theme-btn");
+
+  if (bibleSection) {
+    // Remove all theme classes
+    bibleSection.classList.remove("theme-light", "theme-sepia", "theme-dark");
+
+    // Add new theme class
+    bibleSection.classList.add(`theme-${theme}`);
+  }
+
+  // Update active button
+  themeBtns.forEach(btn => {
+    if (btn.getAttribute("data-theme") === theme) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
   });
 }
 
@@ -354,7 +475,6 @@ async function loadBibleChapter() {
   const chapterSelect = document.getElementById("bible-chapter");
   const translationSelect = document.getElementById("bible-translation");
   const contentDiv = document.getElementById("bible-content");
-  const loadBtn = document.getElementById("load-chapter");
 
   const book = bookSelect.value;
   const chapter = chapterSelect.value;
@@ -362,14 +482,16 @@ async function loadBibleChapter() {
 
   // validation
   if (!book || !chapter) {
-    alert("Please select both a book and chapter");
     return;
   }
 
-  // show loading
-  loadBtn.disabled = true;
-  loadBtn.textContent = "Loading...";
-  contentDiv.innerHTML = "<p>Loading chapter...</p>";
+  // show loading with better UX
+  contentDiv.innerHTML = `
+    <div class="bible-loading">
+      <div class="loading-spinner"></div>
+      <p>Loading ${book} ${chapter}...</p>
+    </div>
+  `;
 
   try {
     // select the best API for this translation
@@ -406,16 +528,17 @@ async function loadBibleChapter() {
   } catch (error) {
     console.error("Bible loading error:", error);
     contentDiv.innerHTML = `
-      <div class="error" style="text-align: center; padding: 2rem; color: #dc143c;">
+      <div class="bible-error">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
         <p>Could not load chapter.</p>
-        <p><small>Book: ${book}, Chapter: ${chapter}, Translation: ${translation}</small></p>
+        <p><small>${book} ${chapter} (${translation})</small></p>
         <p><small>${error.message}</small></p>
         <p><small>Try selecting a different translation</small></p>
       </div>`;
-  } finally {
-    // reset button
-    loadBtn.disabled = false;
-    loadBtn.textContent = "Go";
   }
 }
 
@@ -428,8 +551,8 @@ function displayBibleChapter(data) {
   currentBook = bookSelect.value;
   currentChapter = parseInt(chapterSelect.value);
 
-  // Process text for display
-  let processedText = data.text.replace(/\n/g, "<br><br>");
+  // Process text for display with better verse formatting
+  let processedText = formatBibleText(data.text);
 
   // Displays just the chapter content - clean and minimal
   contentDiv.innerHTML = `
@@ -441,6 +564,149 @@ function displayBibleChapter(data) {
       ${processedText}
     </div>
   `;
+
+  // Add click-to-copy functionality to verse numbers
+  initializeVerseClickToCopy();
+}
+
+// Format Bible text with proper verse numbers and spacing
+function formatBibleText(text) {
+  if (!text) return "";
+
+  // Clean up the text first
+  let cleanText = text.trim();
+
+  // Pattern to match verse numbers at the start of lines or after periods
+  // Matches patterns like "1. " or "1 " at the beginning or after whitespace
+  const versePattern = /(\d+)\.\s+/g;
+
+  // Replace verse numbers with properly formatted spans
+  cleanText = cleanText.replace(versePattern, function(match, verseNum) {
+    return `<span class="verse-number">${verseNum}</span> `;
+  });
+
+  // Handle case where verse numbers don't have periods (some APIs)
+  // Match standalone numbers at the start of a line or after double space
+  cleanText = cleanText.replace(/(\n|^)(\d+)\s+/g, function(match, prefix, verseNum) {
+    return `${prefix}<span class="verse-number">${verseNum}</span> `;
+  });
+
+  // Add paragraph breaks for readability
+  // Split on double line breaks to create paragraphs
+  let paragraphs = cleanText.split(/\n\n+/);
+
+  // Wrap each paragraph
+  let formattedText = paragraphs.map(para => {
+    // Don't wrap if already has verse numbers (to avoid double wrapping)
+    if (para.trim()) {
+      // Add line breaks for single newlines within paragraphs
+      para = para.replace(/\n/g, ' ');
+      return `<p>${para}</p>`;
+    }
+    return '';
+  }).filter(p => p).join('');
+
+  return formattedText;
+}
+
+// Initialize click-to-copy for verse numbers
+function initializeVerseClickToCopy() {
+  const verseNumbers = document.querySelectorAll(".verse-number");
+
+  verseNumbers.forEach(verseNum => {
+    verseNum.addEventListener("click", function(e) {
+      e.preventDefault();
+
+      // Get verse number from the clicked element
+      const verseNumber = this.textContent.trim();
+
+      // Get the verse text (next sibling)
+      let verseText = "";
+      let nextNode = this.nextSibling;
+
+      // Collect text until we hit the next verse number or end
+      while (nextNode && !nextNode.classList?.contains("verse-number")) {
+        if (nextNode.nodeType === Node.TEXT_NODE) {
+          verseText += nextNode.textContent;
+        } else if (nextNode.textContent) {
+          verseText += nextNode.textContent;
+        }
+        nextNode = nextNode.nextSibling;
+
+        // Stop if we hit a verse-number class
+        if (nextNode?.classList?.contains("verse-number")) {
+          break;
+        }
+      }
+
+      // Clean up the verse text
+      verseText = verseText.trim();
+
+      // Create the reference
+      const reference = `${currentBook} ${currentChapter}:${verseNumber}`;
+      const fullText = `"${verseText}" — ${reference}`;
+
+      // Copy to clipboard
+      copyToClipboard(fullText, reference);
+    });
+  });
+}
+
+// Copy text to clipboard with visual feedback
+async function copyToClipboard(text, reference) {
+  try {
+    await navigator.clipboard.writeText(text);
+    showCopyNotification(`Copied ${reference}`);
+  } catch (err) {
+    // Fallback for older browsers
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      document.execCommand("copy");
+      showCopyNotification(`Copied ${reference}`);
+    } catch (e) {
+      showCopyNotification("Failed to copy", true);
+    }
+
+    document.body.removeChild(textarea);
+  }
+}
+
+// Show copy notification
+function showCopyNotification(message, isError = false) {
+  // Remove any existing notification
+  const existing = document.querySelector(".copy-notification");
+  if (existing) {
+    existing.remove();
+  }
+
+  // Create notification
+  const notification = document.createElement("div");
+  notification.className = `copy-notification ${isError ? "error" : "success"}`;
+  notification.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      ${isError
+        ? '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>'
+        : '<polyline points="20 6 9 17 4 12"></polyline>'}
+    </svg>
+    <span>${message}</span>
+  `;
+
+  document.body.appendChild(notification);
+
+  // Trigger animation
+  setTimeout(() => notification.classList.add("show"), 10);
+
+  // Remove after 2 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => notification.remove(), 300);
+  }, 2000);
 }
 
 function updateChapterSelect() {
@@ -526,3 +792,86 @@ function navigateToChapter(book, chapter) {
   // Loads the chapter
   loadBibleChapter();
 }
+
+/**
+ * Fetch verse by reference for floating Bible panel
+ * Exported globally for use by floatingBible.js
+ * @param {string} reference - Verse reference (e.g., "John 3:16")
+ * @param {string} translation - Translation code (e.g., "web", "kjv")
+ * @returns {Promise<{reference: string, text: string, translation: string}>}
+ */
+window.fetchVerse = async function(reference, translation = 'web') {
+  try {
+    // Normalize translation to uppercase for API selection
+    const normalizedTranslation = translation.toUpperCase();
+
+    // Use primary API (bible-api.com) for supported translations
+    if (BIBLE_APIS.primary.supportedTranslations.includes(normalizedTranslation)) {
+      const query = reference.replace(/\s+/g, "+");
+      const url = normalizedTranslation === "WEB"
+        ? `${BIBLE_APIS.primary.base}${query}`
+        : `${BIBLE_APIS.primary.base}${query}?translation=${normalizedTranslation.toLowerCase()}`;
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Verse not found");
+      }
+
+      const data = await response.json();
+
+      return {
+        reference: data.reference || reference,
+        text: data.text,
+        translation: data.translation_name || normalizedTranslation
+      };
+    }
+    // Use bolls.life API for modern translations
+    else if (BIBLE_APIS.bolls.supportedTranslations.includes(normalizedTranslation)) {
+      // Parse reference to extract book, chapter, and verse
+      const match = reference.match(/^([1-3]?\s?[A-Za-z\s]+)\s+(\d+):(\d+)(-\d+)?$/);
+
+      if (!match) {
+        throw new Error("Invalid reference format");
+      }
+
+      const [, bookName, chapter, verseStart] = match;
+      const bookNumber = getBookNumber(bookName.trim());
+
+      if (!bookNumber) {
+        throw new Error("Book not found");
+      }
+
+      const url = `${BIBLE_APIS.bolls.base}get-text/${normalizedTranslation}/${bookNumber}/${chapter}/`;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Verse not found");
+      }
+
+      const data = await response.json();
+
+      // Bolls returns array of verses, need to find the specific one
+      if (Array.isArray(data)) {
+        const verseNum = parseInt(verseStart);
+        const verseData = data.find(v => v.verse === verseNum);
+
+        if (verseData) {
+          return {
+            reference: `${bookName} ${chapter}:${verseStart}`,
+            text: verseData.text,
+            translation: normalizedTranslation
+          };
+        }
+      }
+
+      throw new Error("Verse not found in response");
+    }
+    else {
+      throw new Error(`Translation ${normalizedTranslation} not supported`);
+    }
+  } catch (error) {
+    console.error('Error fetching verse:', error);
+    throw error;
+  }
+};

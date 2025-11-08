@@ -74,7 +74,7 @@
 
             <div class="input-group">
               <label for="date">Sermon Date:</label>
-              <input type="date" id="date" name="date" />
+              <input type="date" id="date" name="date" title="Select the date you'll be preaching this sermon" />
             </div>
           </div>
 
@@ -86,7 +86,8 @@
                 type="text"
                 id="title"
                 name="title"
-                placeholder="Sermon Title"
+                placeholder="e.g., The Power of Prayer"
+                title="Give your sermon a descriptive title"
                 required
               />
             </div>
@@ -97,7 +98,8 @@
                 type="text"
                 id="series"
                 name="series"
-                placeholder="Sermon on the mount"
+                placeholder="e.g., Summer Sermon Series"
+                title="Optional: Part of a sermon series?"
               />
             </div>
           </div>
@@ -110,10 +112,11 @@
                 type="text"
                 id="reference"
                 name="reference"
-                placeholder="e.g John 3:16"
+                placeholder="e.g., John 3:16 or Matthew 5:1-12"
+                title="Enter a Bible verse reference (e.g., John 3:16)"
               />
-              <button type="button" class="icon-btn search-verse-btn" title="Search Verse">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <button type="button" class="icon-btn search-verse-btn" title="Search Verse" aria-label="Search for Bible verse">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
@@ -133,7 +136,13 @@
           <!-- Notes full width -->
           <div class="input-group">
             <label for="notes">Sermon Notes:</label>
-            <textarea name="notes" id="notes" rows="8"></textarea>
+            <textarea
+              name="notes"
+              id="notes"
+              rows="8"
+              placeholder="Add your sermon notes here. You can include key points, illustrations, applications, etc."
+              title="General sermon notes and introduction"
+            ></textarea>
           </div>
 
           <!-- Sermon Outline Sections -->
@@ -142,7 +151,7 @@
             <div id="sermon-sections" role="region" aria-label="Sermon outline sections">
               <!-- Sections will be added dynamically here -->
             </div>
-            <button type="button" id="add-section-btn" aria-label="Add sermon section">
+            <button type="button" id="add-section-btn" aria-label="Add sermon section" title="Add a new section to your sermon outline">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -153,7 +162,7 @@
 
           <!-- Sermon Builder Actions -->
           <div class="builder-actions">
-            <button type="button" id="save-sermon-btn" class="save-btn">
+            <button type="button" id="save-sermon-btn" class="save-btn" title="Save your sermon to local storage">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                 <polyline points="17 21 17 13 7 13 7 21"></polyline>
@@ -161,7 +170,7 @@
               </svg>
               Save Sermon
             </button>
-            <button type="button" id="start-preaching-btn">
+            <button type="button" id="start-preaching-btn" title="Enter full-screen preaching mode to view your sermon during delivery">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
                 <polyline points="10 17 15 12 10 7"></polyline>
@@ -180,6 +189,12 @@
         </form>
       </div>
     </main>
+
+    <!-- Auto-save Indicator -->
+    <div class="auto-save-indicator" id="auto-save-indicator" aria-live="polite" aria-atomic="true">
+      <span class="spinner" style="display: none;"></span>
+      <span class="save-text">Saving...</span>
+    </div>
 
     <!-- Floating Action Button for Save -->
     <button type="button" class="fab-save" title="Save Sermon">
@@ -235,11 +250,11 @@
     </nav>
 
     <!-- Menu Modal -->
-    <div class="menu-modal" id="menu-modal">
+    <div class="menu-modal" id="menu-modal" role="dialog" aria-modal="true" aria-labelledby="menu-header" aria-hidden="true">
       <div class="menu-content">
         <div class="menu-header">
-          <h3>More Actions</h3>
-          <button class="close-menu" id="close-menu">&times;</button>
+          <h3 id="menu-header">More Actions</h3>
+          <button class="close-menu" id="close-menu" aria-label="Close menu">&times;</button>
         </div>
         <div class="menu-items">
           <button type="button" class="menu-item clear-btn">
@@ -283,6 +298,8 @@
     <script src="./js/api.js?v=2"></script>
     <script src="./js/storage.js?v=2"></script>
     <script src="./js/powerpoint.js?v=2"></script>
+    <script src="./js/bibleTopics.js?v=3"></script>
+    <script src="./js/floatingBible.js?v=3"></script>
     <script src="./js/sermonBuilder.js?v=2"></script>
     <script src="./js/app.js?v=2"></script>
   </body>

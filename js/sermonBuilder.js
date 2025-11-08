@@ -79,6 +79,7 @@ class SermonBuilder {
             id="section-heading-${sectionId}"
             class="section-heading"
             placeholder="e.g., Introduction, Main Point 1, Conclusion"
+            title="Give this section a descriptive heading"
             value="${sectionData?.heading || ''}"
             required
             aria-required="true"
@@ -92,6 +93,7 @@ class SermonBuilder {
             id="section-scripture-${sectionId}"
             class="section-scripture"
             placeholder="e.g., Matthew 5:1-12"
+            title="Optional: Key scripture for this section"
             value="${sectionData?.scripture || ''}"
           />
         </div>
@@ -102,7 +104,8 @@ class SermonBuilder {
             id="section-notes-${sectionId}"
             class="section-notes"
             rows="6"
-            placeholder="Add your sermon notes for this section..."
+            placeholder="Add your sermon notes for this section. Include key points, illustrations, and applications."
+            title="Detailed notes for this sermon section"
             aria-label="Section notes"
           >${sectionData?.notes || ''}</textarea>
         </div>
@@ -176,6 +179,9 @@ class SermonBuilder {
     const inputs = sectionElement.querySelectorAll('input, textarea');
     inputs.forEach(input => {
       input.addEventListener('input', () => {
+        // Show saving indicator
+        this.showAutoSaveIndicator('saving');
+
         // Debounce auto-save
         clearTimeout(this.autoSaveTimeout);
         this.autoSaveTimeout = setTimeout(() => {
@@ -183,6 +189,35 @@ class SermonBuilder {
         }, 1000);
       });
     });
+  }
+
+  /**
+   * Show auto-save indicator
+   * @param {string} state - 'saving' or 'saved'
+   */
+  showAutoSaveIndicator(state) {
+    const indicator = document.getElementById('auto-save-indicator');
+    if (!indicator) return;
+
+    const spinner = indicator.querySelector('.spinner');
+    const text = indicator.querySelector('.save-text');
+
+    indicator.classList.remove('saving', 'saved');
+
+    if (state === 'saving') {
+      spinner.style.display = 'block';
+      text.textContent = 'Saving...';
+      indicator.classList.add('saving');
+    } else if (state === 'saved') {
+      spinner.style.display = 'none';
+      text.textContent = 'Saved ✓';
+      indicator.classList.add('saved');
+
+      // Hide after 2 seconds
+      setTimeout(() => {
+        indicator.classList.remove('saved');
+      }, 2000);
+    }
   }
 
   /**
@@ -251,6 +286,9 @@ class SermonBuilder {
 
       if (!silent) {
         this.showNotification('Sermon saved successfully!');
+      } else {
+        // Show auto-save indicator for silent saves
+        this.showAutoSaveIndicator('saved');
       }
     } catch (error) {
       console.error('Error saving sermon:', error);

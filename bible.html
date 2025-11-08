@@ -64,6 +64,48 @@
 
       <!-- bible controls for selecting book/chapter -->
       <div class="bible-controls">
+        <!-- Reading preferences -->
+        <div class="reading-preferences">
+          <div class="preference-group">
+            <label class="preference-label">Text Size</label>
+            <div class="font-size-controls">
+              <button type="button" class="font-size-btn" data-size="small" title="Small text">A</button>
+              <button type="button" class="font-size-btn active" data-size="medium" title="Medium text">A</button>
+              <button type="button" class="font-size-btn" data-size="large" title="Large text">A</button>
+              <button type="button" class="font-size-btn" data-size="xlarge" title="Extra large text">A</button>
+            </div>
+          </div>
+          <div class="preference-group">
+            <label class="preference-label">Theme</label>
+            <div class="theme-controls">
+              <button type="button" class="theme-btn active" data-theme="light" title="Light theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+              </button>
+              <button type="button" class="theme-btn" data-theme="sepia" title="Sepia theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </button>
+              <button type="button" class="theme-btn" data-theme="dark" title="Dark theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="bible-selector">
           <!-- translation dropdown -->
           <select id="bible-translation" class="bible-select">
@@ -83,9 +125,6 @@
             <select id="bible-chapter" class="bible-select">
               <option value="">Chapter</option>
             </select>
-            <button type="button" id="load-chapter" class="load-btn">
-              Read
-            </button>
           </div>
         </div>
 
@@ -101,9 +140,18 @@
 
       <div id="bible-content" class="bible-content">
         <div class="bible-welcome">
-          <div class="welcome-icon">📖</div>
-          <h3>Welcome to Bible Reader</h3>
-          <p>Select a translation, book, and chapter to begin reading</p>
+          <svg class="welcome-icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            <line x1="12" y1="7" x2="12" y2="13"></line>
+            <line x1="9" y1="10" x2="15" y2="10"></line>
+          </svg>
+          <h3>Read the Word</h3>
+          <p>Select a translation, book, and chapter above to begin your study</p>
+          <div class="welcome-verse">
+            <em>"Your word is a lamp to my feet and a light to my path."</em>
+            <small>— Psalm 119:105</small>
+          </div>
         </div>
       </div>
     </div>
