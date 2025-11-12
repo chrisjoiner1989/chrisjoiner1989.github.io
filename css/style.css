@@ -5,6 +5,15 @@
   box-sizing: border-box;
 }
 
+/* Support for iPhone notch and Dynamic Island */
+:root {
+  /* Safe area insets for notched devices */
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+}
+
 /* CSS Custom Properties for Theme Engine */
 /* Default (Light) Theme */
 :root {
@@ -1513,8 +1522,7 @@ button:hover {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 0.5rem 0;
-  padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+  padding: 0.5rem var(--sar) calc(0.5rem + var(--sab)) var(--sal);
   box-shadow: 0 -2px 10px var(--shadow);
   z-index: 1000;
   transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -1717,9 +1725,11 @@ button:hover {
   flex: 1;
 }
 
-/* Update main container to account for bottom nav */
+/* Update main container to account for bottom nav and safe areas */
 .main-container {
-  padding-bottom: 100px;
+  padding-bottom: calc(100px + var(--sab));
+  padding-left: var(--sal);
+  padding-right: var(--sar);
 }
 
 /* Update header for mobile-first design */
@@ -1729,6 +1739,9 @@ button:hover {
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
+  padding-top: calc(1rem + var(--sat));
+  padding-left: calc(1rem + var(--sal));
+  padding-right: calc(1rem + var(--sar));
   background-color: var(--card-bg);
   margin-bottom: 15px;
   border-bottom: 1px solid var(--border-color);
