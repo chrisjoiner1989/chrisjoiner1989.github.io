@@ -409,6 +409,7 @@
   box-shadow: 0 4px 20px var(--youversion-shadow);
   z-index: 100;
   border: 1px solid var(--youversion-border);
+  transition: bottom 0.3s ease;
 }
 
 .verse-action-btn {

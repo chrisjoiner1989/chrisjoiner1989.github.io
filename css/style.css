@@ -1525,7 +1525,7 @@ button:hover {
   padding: 0.5rem var(--sar) calc(0.5rem + var(--sab)) var(--sal);
   box-shadow: 0 -2px 10px var(--shadow);
   z-index: 1000;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-item {
@@ -1745,8 +1745,12 @@ button:hover {
   background-color: var(--card-bg);
   margin-bottom: 15px;
   border-bottom: 1px solid var(--border-color);
-  position: relative;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .page-title {

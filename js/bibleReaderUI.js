@@ -7,6 +7,8 @@
 // State management
 let selectedVerse = null;
 let highlightedVerses = new Set();
+let lastScrollTop = 0;
+let scrollTimeout = null;
 
 // Initialize Bible Reader UI
 function initializeBibleReaderUI() {
@@ -29,6 +31,9 @@ function initializeBibleReaderUI() {
 
   // Verse interaction (will be set up after verses load)
   setupVerseInteractions();
+
+  // Auto-hide navigation on scroll
+  setupAutoHideNavigation();
 
   // Load highlighted verses from storage
   loadHighlightedVerses();
@@ -265,6 +270,121 @@ function setupMenuButton() {
       );
     });
   }
+}
+
+// Setup auto-hide navigation on scroll
+function setupAutoHideNavigation() {
+  const bibleContent = document.getElementById("bible-content");
+  const bottomNav = document.querySelector(".bottom-nav");
+  const headerNav = document.querySelector(".main-header");
+  const bibleTopNav = document.querySelector(".bible-top-nav");
+  const chapterNav = document.getElementById("chapter-navigation");
+  const verseToolbar = document.getElementById("verse-action-toolbar");
+  const bibleReader = document.querySelector(".youversion-bible-reader");
+
+  if (!bibleContent || !bottomNav) return;
+
+  bibleContent.addEventListener("scroll", function () {
+    const currentScrollTop = bibleContent.scrollTop;
+
+    // Clear existing timeout
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+
+    // Scrolling down - hide navigation
+    if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
+      // Hide bottom nav
+      bottomNav.style.transform = "translateY(100%)";
+      bottomNav.style.transition = "transform 0.3s ease";
+
+      // Hide top header
+      if (headerNav) {
+        headerNav.style.transform = "translateY(-100%)";
+        headerNav.style.transition = "transform 0.3s ease";
+      }
+
+      // Adjust Bible reader to expand to full screen
+      if (bibleReader) {
+        bibleReader.style.top = "0";
+        bibleReader.style.transition = "top 0.3s ease";
+      }
+
+      // Adjust Bible top nav
+      if (bibleTopNav) {
+        bibleTopNav.style.top = "0";
+        bibleTopNav.style.transition = "top 0.3s ease";
+      }
+
+      // Adjust chapter navigation
+      if (chapterNav) {
+        chapterNav.style.bottom = "0";
+        chapterNav.style.transition = "bottom 0.3s ease";
+      }
+
+      // Adjust verse toolbar
+      if (verseToolbar && verseToolbar.style.display !== "none") {
+        verseToolbar.style.bottom = "16px";
+      }
+    }
+    // Scrolling up - show navigation
+    else if (currentScrollTop < lastScrollTop) {
+      // Show bottom nav
+      bottomNav.style.transform = "translateY(0)";
+
+      // Show top header
+      if (headerNav) {
+        headerNav.style.transform = "translateY(0)";
+      }
+
+      // Restore Bible reader position
+      if (bibleReader) {
+        bibleReader.style.top = "80px";
+      }
+
+      // Restore Bible top nav (it's inside bible reader, so relative to reader)
+      if (bibleTopNav) {
+        bibleTopNav.style.top = "";
+      }
+
+      // Restore chapter navigation
+      if (chapterNav) {
+        chapterNav.style.bottom = "70px";
+      }
+
+      // Restore verse toolbar
+      if (verseToolbar && verseToolbar.style.display !== "none") {
+        verseToolbar.style.bottom = "70px";
+      }
+    }
+
+    lastScrollTop = currentScrollTop;
+
+    // Show navigation after 2 seconds of no scrolling
+    scrollTimeout = setTimeout(() => {
+      bottomNav.style.transform = "translateY(0)";
+
+      if (headerNav) {
+        headerNav.style.transform = "translateY(0)";
+      }
+
+      if (bibleReader) {
+        bibleReader.style.top = "80px";
+      }
+
+      if (bibleTopNav) {
+        bibleTopNav.style.top = "";
+      }
+
+      if (chapterNav) {
+        chapterNav.style.bottom = "70px";
+      }
+
+      if (verseToolbar && verseToolbar.style.display !== "none") {
+        verseToolbar.style.bottom = "70px";
+      }
+    }, 2000);
+  });
 }
 
 // Setup verse interactions
