@@ -5,13 +5,87 @@
   box-sizing: border-box;
 }
 
-/* main header - white background with subtle bottom border */
+/* CSS Custom Properties for Theme Engine */
+/* Default (Light) Theme */
+:root {
+  /* Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --text-primary: #1c1c1e;
+  --text-secondary: #86868b;
+  --accent-primary: #cc3333;
+  --accent-secondary: #b22929;
+  --border-color: #e5e5e7;
+  --hover-bg: #f5f5f7;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --card-bg: #ffffff;
+
+  /* Font Sizes */
+  --font-base: 16px;
+  --font-heading: 20px;
+  --font-large: 24px;
+}
+
+/* Theme variations applied via data-theme attribute */
+:root[data-theme="sepia"] {
+  --bg-primary: #f4ecd8;
+  --bg-secondary: #e8dcc4;
+  --text-primary: #5c4a3a;
+  --text-secondary: #8b7355;
+  --accent-primary: #8b4513;
+  --accent-secondary: #6b3410;
+  --border-color: #d4c4a8;
+  --hover-bg: #e8dcc4;
+  --shadow: rgba(92, 74, 58, 0.15);
+  --card-bg: #f9f3e3;
+}
+
+:root[data-theme="dark"] {
+  --bg-primary: #1c1c1e;
+  --bg-secondary: #2c2c2e;
+  --text-primary: #e5e5e7;
+  --text-secondary: #98989d;
+  --accent-primary: #ff6b6b;
+  --accent-secondary: #ff5252;
+  --border-color: #3a3a3c;
+  --hover-bg: #2c2c2e;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --card-bg: #2c2c2e;
+}
+
+/* Font size variations applied via data-font-size attribute */
+:root[data-font-size="small"] {
+  --font-base: 14px;
+  --font-heading: 18px;
+  --font-large: 20px;
+}
+
+:root[data-font-size="medium"] {
+  --font-base: 16px;
+  --font-heading: 20px;
+  --font-large: 24px;
+}
+
+:root[data-font-size="large"] {
+  --font-base: 18px;
+  --font-heading: 24px;
+  --font-large: 28px;
+}
+
+:root[data-font-size="xlarge"] {
+  --font-base: 20px;
+  --font-heading: 28px;
+  --font-large: 32px;
+}
+
+/* main header - uses theme colors */
 .main-header {
-  background-color: #ffffff;
+  background-color: var(--card-bg);
   padding: 1rem;
   text-align: center;
   margin-bottom: 15px;
-  border-bottom: 1px solid #e5e5e7;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* logo centered with fixed width - keeps branding consistent */
@@ -20,6 +94,28 @@
   width: 150px;
   height: auto;
   margin: 0 auto 1rem auto;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+/* Adjust logo for different themes to blend with header background */
+:root[data-theme="light"] .logo {
+  filter: none;
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .logo {
+  filter: brightness(0.9) invert(0.95) hue-rotate(180deg);
+  opacity: 0.95;
+}
+
+:root[data-theme="sepia"] .logo {
+  filter: sepia(0.4) brightness(0.85) saturate(0.8);
+  opacity: 0.9;
+}
+
+.page-title {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 /* nav buttons layout - flexbox with gap is easier than margins */
@@ -29,25 +125,38 @@
   justify-content: center;
 }
 
-/* rounded nav buttons - 32px radius looks more modern */
+/* rounded nav buttons - uses theme colors */
 .nav-btn {
   padding: 0.7rem 1.5rem;
   font-size: 0.9rem;
-  border: 2px solid #cc3333;
+  border: 2px solid var(--accent-primary);
   border-radius: 32px;
-  background-color: #fff;
-  color: #cc3333;
+  background-color: var(--bg-primary);
+  color: var(--accent-primary);
   cursor: pointer;
   font-family: "Anton", sans-serif;
   font-weight: normal;
   transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* darker burgundy on hover - gives good feedback */
 .nav-btn:hover {
-  background-color: #f5f5f5;
-  border-color: #b22929;
-  color: #b22929;
+  background-color: var(--hover-bg);
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+}
+
+.nav-btn.active {
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.nav-btn svg {
+  flex-shrink: 0;
 }
 
 .search-section {
@@ -83,27 +192,29 @@
 body {
   font-family: "Anton", sans-serif;
   padding: 0;
-  background-color: #ffffff;
-  color: #1c1c1e;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.5;
   margin: 0;
   overflow-x: hidden; /* Prevent horizontal scroll */
   width: 100%;
   max-width: 100vw;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1 {
   font-size: 1.8rem;
+  color: var(--text-primary);
 }
 
-/* main container - slightly off-white background */
+/* main container - uses theme background */
 .main-container {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
   padding: 0.75rem;
-  background-color: #fafafa;
-  color: #1c1c1e;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   box-sizing: border-box;
 }
 
@@ -129,6 +240,8 @@ form {
   margin-bottom: 8px; /* space below label */
   font-weight: bold; /* make labels stand out */
   font-size: 0.9rem; /* smaller than input text */
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .input-with-button {
@@ -161,14 +274,14 @@ form {
 }
 
 .icon-btn {
-  background: #f5f5f5;
-  border: 2px solid #ccc;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
   cursor: pointer;
   padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #722f37;
+  color: var(--accent-primary);
   transition: all 0.2s;
   border-radius: 5px;
   flex-shrink: 0;
@@ -179,13 +292,13 @@ form {
 }
 
 .icon-btn:hover {
-  background: #e5e5e7;
-  border-color: #722f37;
-  color: #5a2329;
+  background: var(--hover-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-secondary);
 }
 
 .icon-btn:active {
-  background: #d1d1d6;
+  background: var(--hover-bg);
   transform: scale(0.95);
 }
 
@@ -200,13 +313,16 @@ input,
 textarea {
   padding: 12px;
   font-size: 16px; /* Prevent iOS auto-zoom */
-  border: 2px solid #ccc;
+  border: 2px solid var(--border-color);
   border-radius: 5px;
   font-family: inherit;
   outline: none;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
 /* mobile date inputs - finally got this working! */
@@ -223,13 +339,14 @@ input[type="date"] {
     font-size: 16px;
     min-height: 48px;
     width: 100%;
-    background-color: white;
+    background-color: var(--card-bg);
   }
 
   /* this was driving me crazy for hours */
   input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 5px;
     cursor: pointer;
+    filter: var(--text-primary);
   }
 }
 
@@ -241,7 +358,7 @@ a:focus-visible,
 .topic-btn:focus-visible,
 .verse-action-btn:focus-visible,
 .search-tab:focus-visible {
-  outline: 3px solid #722f37;
+  outline: 3px solid var(--accent-primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -249,8 +366,8 @@ a:focus-visible,
 input:focus,
 textarea:focus,
 select:focus {
-  border-color: #722f37;
-  box-shadow: 0 0 0 3px rgba(114, 47, 55, 0.1);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--shadow);
 }
 
 textarea {
@@ -264,17 +381,18 @@ textarea {
   max-height: 400px;
 }
 
-/* default buttons - red theme with touch-friendly sizing */
+/* default buttons - uses theme colors with touch-friendly sizing */
 button {
   padding: 12px 8px;
   font-size: 0.85rem;
-  border: 2px solid #cc3333;
+  border: 2px solid var(--accent-primary);
   border-radius: 32px;
-  background-color: #fff;
-  color: #cc3333;
+  background-color: var(--card-bg);
+  color: var(--accent-primary);
   cursor: pointer;
   min-height: 45px;
   font-family: inherit;
+  transition: all 0.3s ease;
   box-sizing: border-box;
   width: 100%;
   transition: all 0.2s;
@@ -354,8 +472,11 @@ button:hover {
 .library-controls input,
 .library-controls select {
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
 .sermons-list {
@@ -365,20 +486,21 @@ button:hover {
 }
 
 .sermon-card {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 15px;
-  background: #f9f9f9;
+  background: var(--card-bg);
+  transition: all 0.3s ease;
 }
 
 .sermon-card h3 {
-  color: #1c1c1e;
+  color: var(--text-primary);
   margin: 0 0 10px 0;
 }
 
 .sermon-meta {
   font-size: 0.9em;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 10px;
 }
 
@@ -779,180 +901,106 @@ button:hover {
   line-height: 2.6;
 }
 
-/* Theme Variations */
-/* Sepia Theme */
-.bible-section.theme-sepia {
-  background-color: #f4ecd8;
+/* Theme Variations - Now using CSS Custom Properties from :root */
+/* Bible section inherits theme colors from document root */
+.bible-section {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-.bible-section.theme-sepia .bible-controls {
-  background-color: #f4ecd8;
+.bible-section .bible-controls {
+  background-color: var(--bg-primary);
+  border-bottom-color: var(--border-color);
 }
 
-.bible-section.theme-sepia .reading-preferences {
-  background-color: #ebe3d0;
-  border-color: #d4c9b0;
+.bible-section .reading-preferences {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
 }
 
-.bible-section.theme-sepia .bible-content {
-  background-color: #f4ecd8;
+.bible-section .preference-label {
+  color: var(--text-secondary);
 }
 
-.bible-section.theme-sepia .chapter-text {
-  color: #5c4a3a;
+.bible-section .bible-content {
+  background-color: var(--bg-primary);
 }
 
-.bible-section.theme-sepia .chapter-header h3 {
-  color: #5c4a3a;
+.bible-section .chapter-text {
+  color: var(--text-primary);
 }
 
-.bible-section.theme-sepia .chapter-text .verse-number {
-  color: #8b4513;
+.bible-section .chapter-header h3 {
+  color: var(--text-primary);
 }
 
-.bible-section.theme-sepia .bible-select,
-.bible-section.theme-sepia .font-size-btn,
-.bible-section.theme-sepia .theme-btn {
-  background-color: #f9f5ed;
-  border-color: #d4c9b0;
-  color: #5c4a3a;
+.bible-section .chapter-header small {
+  color: var(--text-secondary);
 }
 
-.bible-section.theme-sepia .font-size-btn.active,
-.bible-section.theme-sepia .theme-btn.active {
-  background-color: #8b4513;
-  border-color: #8b4513;
-  color: #f9f5ed;
+.bible-section .chapter-text .verse-number {
+  color: var(--accent-primary);
 }
 
-/* Dark Theme */
-.bible-section.theme-dark {
-  background-color: #1c1c1e;
+.bible-section .bible-select,
+.bible-section .font-size-btn,
+.bible-section .theme-btn {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
 }
 
-.bible-section.theme-dark .bible-controls {
-  background-color: #1c1c1e;
-  border-bottom-color: #3a3a3c;
+.bible-section .bible-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--shadow);
 }
 
-.bible-section.theme-dark .reading-preferences {
-  background-color: #2c2c2e;
-  border-color: #3a3a3c;
+.bible-section .font-size-btn:hover,
+.bible-section .theme-btn:hover {
+  background-color: var(--hover-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
-.bible-section.theme-dark .preference-label {
-  color: #8e8e93;
+.bible-section .font-size-btn.active,
+.bible-section .theme-btn.active {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--bg-primary);
 }
 
-.bible-section.theme-dark .bible-content {
-  background-color: #1c1c1e;
+.bible-section .bible-welcome {
+  color: var(--text-secondary);
 }
 
-.bible-section.theme-dark .chapter-text {
-  color: #e5e5e7;
+.bible-section .welcome-icon {
+  color: var(--accent-primary);
 }
 
-.bible-section.theme-dark .chapter-header h3 {
-  color: #e5e5e7;
+.bible-section .welcome-verse {
+  background-color: var(--bg-secondary);
+  border-left-color: var(--accent-primary);
 }
 
-.bible-section.theme-dark .chapter-header small {
-  color: #8e8e93;
+.bible-section .welcome-verse em {
+  color: var(--text-primary);
 }
 
-.bible-section.theme-dark .chapter-text .verse-number {
-  color: #ff6b6b;
+.bible-section .nav-btn {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
 }
 
-.bible-section.theme-dark .bible-select,
-.bible-section.theme-dark .font-size-btn,
-.bible-section.theme-dark .theme-btn {
-  background-color: #2c2c2e;
-  border-color: #3a3a3c;
-  color: #e5e5e7;
+.bible-section .nav-btn:hover {
+  background-color: var(--hover-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
-.bible-section.theme-dark .bible-select:focus {
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
-}
-
-.bible-section.theme-dark .font-size-btn:hover,
-.bible-section.theme-dark .theme-btn:hover {
-  background-color: #3a3a3c;
-  border-color: #ff6b6b;
-  color: #ff6b6b;
-}
-
-.bible-section.theme-dark .font-size-btn.active,
-.bible-section.theme-dark .theme-btn.active {
-  background-color: #ff6b6b;
-  border-color: #ff6b6b;
-  color: #1c1c1e;
-}
-
-.bible-section.theme-dark .bible-welcome {
-  color: #8e8e93;
-}
-
-.bible-section.theme-dark .welcome-icon {
-  color: #ff6b6b;
-}
-
-.bible-section.theme-dark .welcome-verse {
-  background-color: #2c2c2e;
-  border-left-color: #ff6b6b;
-}
-
-.bible-section.theme-dark .welcome-verse em {
-  color: #e5e5e7;
-}
-
-.bible-section.theme-sepia .welcome-icon {
-  color: #8b4513;
-}
-
-.bible-section.theme-sepia .welcome-verse {
-  background-color: #ebe3d0;
-  border-left-color: #8b4513;
-}
-
-.bible-section.theme-sepia .welcome-verse em {
-  color: #5c4a3a;
-}
-
-.bible-section.theme-dark .nav-btn {
-  background-color: #2c2c2e;
-  border-color: #3a3a3c;
-  color: #e5e5e7;
-}
-
-.bible-section.theme-dark .nav-btn:hover {
-  background-color: #3a3a3c;
-  border-color: #ff6b6b;
-  color: #ff6b6b;
-}
-
-.bible-section.theme-dark .bible-nav-buttons {
-  background-color: #1c1c1e;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.bible-section.theme-sepia .bible-nav-buttons {
-  background-color: #f4ecd8;
-  box-shadow: 0 -2px 10px rgba(92, 74, 58, 0.1);
-}
-
-.bible-section.theme-sepia .nav-btn {
-  background-color: #f9f5ed;
-  border-color: #d4c9b0;
-  color: #5c4a3a;
-}
-
-.bible-section.theme-sepia .nav-btn:hover {
-  background-color: #ebe3d0;
-  border-color: #8b4513;
-  color: #8b4513;
+.bible-section .bible-nav-buttons {
+  background-color: var(--bg-primary);
+  box-shadow: 0 -2px 10px var(--shadow);
 }
 
 .chapter-text p {
@@ -1460,15 +1508,16 @@ button:hover {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #ffffff;
-  border-top: 1px solid #e5e5e7;
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   padding: 0.5rem 0;
   padding-bottom: env(safe-area-inset-bottom, 0.5rem);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 10px var(--shadow);
   z-index: 1000;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-item {
@@ -1479,7 +1528,7 @@ button:hover {
   gap: 0.25rem;
   padding: 0.5rem 0.25rem;
   text-decoration: none;
-  color: #8e8e93;
+  color: var(--text-secondary);
   font-size: 0.8rem;
   font-weight: 400;
   transition: color 0.2s;
@@ -1498,15 +1547,15 @@ button:hover {
 }
 
 .nav-item:hover {
-  color: #722f37;
+  color: var(--accent-primary);
 }
 
 .nav-item.active {
-  color: #722f37;
+  color: var(--accent-primary);
 }
 
 .nav-item.active svg {
-  stroke: #722f37;
+  stroke: var(--accent-primary);
 }
 
 .nav-item span {
@@ -1521,15 +1570,15 @@ button:hover {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #fff;
-  color: #cc3333;
-  border: 2px solid #cc3333;
+  background: var(--card-bg);
+  color: var(--accent-primary);
+  border: 2px solid var(--accent-primary);
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(204, 51, 51, 0.3);
+  box-shadow: 0 4px 12px var(--shadow);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   z-index: 999;
 }
 
@@ -1680,16 +1729,18 @@ button:hover {
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: var(--card-bg);
   margin-bottom: 15px;
-  border-bottom: 1px solid #e5e5e7;
+  border-bottom: 1px solid var(--border-color);
   position: relative;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .page-title {
   font-size: 1.3rem;
-  color: #1c1c1e;
+  color: var(--text-primary);
   font-weight: normal;
+  transition: color 0.3s ease;
 }
 
 .main-header .logo {
@@ -3516,5 +3567,345 @@ button:hover {
   .floating-bible-panel {
     width: 35%;
     right: -40%;
+  }
+}
+
+/* ========================================
+   SETTINGS PAGE STYLES
+   ======================================== */
+
+.settings-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  padding-bottom: 100px;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.settings-section {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.settings-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.settings-section-header svg {
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.settings-section-header h2 {
+  font-family: "Anton", sans-serif;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.settings-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+.setting-item {
+  margin-bottom: 2rem;
+}
+
+.setting-item:last-child {
+  margin-bottom: 0;
+}
+
+.setting-label {
+  display: block;
+  font-family: "Anton", sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.setting-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* Theme Options */
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background-color: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.theme-option:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.theme-option.active {
+  border-color: var(--accent-primary);
+  background-color: var(--hover-bg);
+}
+
+.theme-preview {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.theme-preview-light {
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f7 100%);
+  color: #1c1c1e;
+}
+
+.theme-preview-sepia {
+  background: linear-gradient(135deg, #f4ecd8 0%, #e8dcc4 100%);
+  color: #5c4a3a;
+}
+
+.theme-preview-dark {
+  background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+  color: #e5e5e7;
+}
+
+.theme-name {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.theme-check {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.2rem;
+  color: var(--accent-primary);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.theme-option.active .theme-check {
+  opacity: 1;
+}
+
+/* Font Size Options */
+.font-size-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.font-size-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.font-size-option:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.font-size-option.active {
+  border-color: var(--accent-primary);
+  background-color: var(--hover-bg);
+}
+
+.size-label {
+  font-weight: bold;
+  color: var(--accent-primary);
+  transition: all 0.2s ease;
+}
+
+.font-size-option.active .size-label {
+  color: var(--accent-secondary);
+}
+
+.size-name {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Storage Info */
+.storage-info {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.storage-stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.storage-stat:last-child {
+  border-bottom: none;
+}
+
+.storage-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.storage-value {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: "Anton", sans-serif;
+}
+
+/* Action Buttons */
+.settings-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-family: "Anton", sans-serif;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.settings-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.settings-action-btn svg {
+  flex-shrink: 0;
+}
+
+.danger-btn {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.danger-btn:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.danger-text {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+/* About Section */
+.about-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.about-info p {
+  margin: 0.25rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 1rem;
+    padding-bottom: 100px;
+  }
+
+  .settings-section {
+    padding: 1rem;
+  }
+
+  .settings-section-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .theme-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .font-size-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-options {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  .theme-option {
+    padding: 1rem 0.5rem;
+  }
+
+  .theme-preview {
+    width: 48px;
+    height: 48px;
+  }
+
+  .theme-preview svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .font-size-options {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

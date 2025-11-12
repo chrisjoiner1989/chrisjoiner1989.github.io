@@ -372,17 +372,15 @@ function initializeBibleReader() {
 }
 
 // Initialize font size and theme controls
+// NOTE: Theme engine is now handled by themeEngine.js
+// This function now only manages button states for Bible-specific controls
 function initializeReadingPreferences() {
-  const bibleSection = document.querySelector(".bible-section");
-  const bibleContent = document.getElementById("bible-content");
+  // Get current preferences from theme engine (if available)
+  const savedFontSize = window.themeEngine ? window.themeEngine.getCurrentFontSize() : 'medium';
+  const savedTheme = window.themeEngine ? window.themeEngine.getCurrentTheme() : 'light';
 
-  // Load saved preferences from localStorage
-  const savedFontSize = localStorage.getItem("bibleFontSize") || "medium";
-  const savedTheme = localStorage.getItem("bibleTheme") || "light";
-
-  // Apply saved preferences
-  applyFontSize(savedFontSize);
-  applyTheme(savedTheme);
+  // Update button states to match current theme
+  updateButtonStates(savedFontSize, savedTheme);
 
   // Font size controls
   const fontSizeBtns = document.querySelectorAll(".font-size-btn");
@@ -390,17 +388,11 @@ function initializeReadingPreferences() {
     btn.addEventListener("click", function() {
       const size = this.getAttribute("data-size");
 
-      // Remove active class from all buttons
-      fontSizeBtns.forEach(b => b.classList.remove("active"));
-
-      // Add active class to clicked button
-      this.classList.add("active");
-
-      // Apply font size
-      applyFontSize(size);
-
-      // Save preference
-      localStorage.setItem("bibleFontSize", size);
+      // Use theme engine to apply font size
+      if (window.themeEngine) {
+        window.themeEngine.applyFontSize(size);
+        updateButtonStates(size, null);
+      }
     });
   });
 
@@ -410,63 +402,38 @@ function initializeReadingPreferences() {
     btn.addEventListener("click", function() {
       const theme = this.getAttribute("data-theme");
 
-      // Remove active class from all buttons
-      themeBtns.forEach(b => b.classList.remove("active"));
-
-      // Add active class to clicked button
-      this.classList.add("active");
-
-      // Apply theme
-      applyTheme(theme);
-
-      // Save preference
-      localStorage.setItem("bibleTheme", theme);
+      // Use theme engine to apply theme
+      if (window.themeEngine) {
+        window.themeEngine.applyTheme(theme);
+        updateButtonStates(null, theme);
+      }
     });
   });
 }
 
-function applyFontSize(size) {
-  const bibleContent = document.getElementById("bible-content");
-  const fontSizeBtns = document.querySelectorAll(".font-size-btn");
-
-  if (bibleContent) {
-    // Remove all font size classes
-    bibleContent.classList.remove("font-small", "font-medium", "font-large", "font-xlarge");
-
-    // Add new font size class
-    bibleContent.classList.add(`font-${size}`);
+// Helper function to update button active states
+function updateButtonStates(fontSize, theme) {
+  if (fontSize) {
+    const fontSizeBtns = document.querySelectorAll(".font-size-btn");
+    fontSizeBtns.forEach(btn => {
+      if (btn.getAttribute("data-size") === fontSize) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
   }
 
-  // Update active button
-  fontSizeBtns.forEach(btn => {
-    if (btn.getAttribute("data-size") === size) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-  });
-}
-
-function applyTheme(theme) {
-  const bibleSection = document.querySelector(".bible-section");
-  const themeBtns = document.querySelectorAll(".theme-btn");
-
-  if (bibleSection) {
-    // Remove all theme classes
-    bibleSection.classList.remove("theme-light", "theme-sepia", "theme-dark");
-
-    // Add new theme class
-    bibleSection.classList.add(`theme-${theme}`);
+  if (theme) {
+    const themeBtns = document.querySelectorAll(".theme-btn");
+    themeBtns.forEach(btn => {
+      if (btn.getAttribute("data-theme") === theme) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
   }
-
-  // Update active button
-  themeBtns.forEach(btn => {
-    if (btn.getAttribute("data-theme") === theme) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-  });
 }
 
 // loads full bible chapters - way more complex than single verses
