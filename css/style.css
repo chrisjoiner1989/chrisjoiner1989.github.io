@@ -1725,8 +1725,9 @@ button:hover {
   flex: 1;
 }
 
-/* Update main container to account for bottom nav and safe areas */
+/* Update main container to account for bottom nav, header, and safe areas */
 .main-container {
+  padding-top: calc(70px + var(--sat)); /* Account for fixed header with notch support */
   padding-bottom: calc(100px + var(--sab));
   padding-left: var(--sal);
   padding-right: var(--sar);
@@ -1861,6 +1862,7 @@ button:hover {
 
   /* Desktop: Better container spacing */
   .main-container {
+    padding-top: 120px; /* Account for fixed header on desktop (60px logo + padding) */
     padding-bottom: 3rem;
     max-width: 1600px;
     margin: 0 auto;

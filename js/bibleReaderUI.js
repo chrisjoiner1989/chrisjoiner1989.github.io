@@ -7,8 +7,6 @@
 // State management
 let selectedVerse = null;
 let highlightedVerses = new Set();
-let lastScrollTop = 0;
-let scrollTimeout = null;
 
 // Initialize Bible Reader UI
 function initializeBibleReaderUI() {
@@ -225,7 +223,7 @@ function setupSettingsModal() {
 
   // Load saved preferences
   const savedFontSize = localStorage.getItem("bible-font-size") || "medium";
-  const savedTheme = localStorage.getItem("bible-theme") || "light";
+  const savedTheme = localStorage.getItem("bible-theme") || "dark";
 
   document.documentElement.setAttribute("data-font-size", savedFontSize);
   document.documentElement.setAttribute("data-theme", savedTheme);
@@ -284,16 +282,19 @@ function setupAutoHideNavigation() {
 
   if (!bibleContent || !bottomNav) return;
 
+  let localLastScrollTop = 0;
+  let localScrollTimeout = null;
+
   bibleContent.addEventListener("scroll", function () {
     const currentScrollTop = bibleContent.scrollTop;
 
     // Clear existing timeout
-    if (scrollTimeout) {
-      clearTimeout(scrollTimeout);
+    if (localScrollTimeout) {
+      clearTimeout(localScrollTimeout);
     }
 
     // Scrolling down - hide navigation
-    if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
+    if (currentScrollTop > localLastScrollTop && currentScrollTop > 50) {
       // Hide bottom nav
       bottomNav.style.transform = "translateY(100%)";
       bottomNav.style.transition = "transform 0.3s ease";
@@ -328,7 +329,7 @@ function setupAutoHideNavigation() {
       }
     }
     // Scrolling up - show navigation
-    else if (currentScrollTop < lastScrollTop) {
+    else if (currentScrollTop < localLastScrollTop) {
       // Show bottom nav
       bottomNav.style.transform = "translateY(0)";
 
@@ -358,10 +359,10 @@ function setupAutoHideNavigation() {
       }
     }
 
-    lastScrollTop = currentScrollTop;
+    localLastScrollTop = currentScrollTop;
 
     // Show navigation after 2 seconds of no scrolling
-    scrollTimeout = setTimeout(() => {
+    localScrollTimeout = setTimeout(() => {
       bottomNav.style.transform = "translateY(0)";
 
       if (headerNav) {
@@ -411,6 +412,12 @@ function setupVerseInteractions() {
   const noteBtn = document.getElementById("add-note-btn");
   if (noteBtn) {
     noteBtn.addEventListener("click", addNoteToVerse);
+  }
+
+  // Play button
+  const playBtn = document.getElementById("play-chapter-btn");
+  if (playBtn) {
+    playBtn.addEventListener("click", playChapter);
   }
 
   // Click outside to deselect verse
@@ -578,6 +585,13 @@ function addNoteToVerse() {
   deselectVerse();
 }
 
+// Play chapter audio
+function playChapter() {
+  alert(
+    "Audio playback coming soon!\n\nThis feature will allow you to listen to the chapter being read aloud."
+  );
+}
+
 // Show notification
 function showNotification(message) {
   // Create notification element
@@ -709,12 +723,15 @@ function updateChapterDisplayYouVersion(data) {
     window.currentChapter = parseInt(chapterSelect.value);
   }
 
+  // Extract passage title if available (placeholder for now)
+  const passageTitle = getPassageTitle(reference);
+
   // Build HTML
   let html = `
     <div class="scripture-chapter">
       <div class="scripture-header">
-        <h2>${reference}</h2>
-        <span class="translation-badge">${translation}</span>
+        <h2>${reference} &nbsp; ${translation}</h2>
+        ${passageTitle ? `<h1 class="passage-title">${passageTitle}</h1>` : ''}
       </div>
       <div class="scripture-verses">
   `;
@@ -722,8 +739,19 @@ function updateChapterDisplayYouVersion(data) {
   if (verses.length > 0) {
     verses.forEach((verse) => {
       const verseId = `${reference}:${verse.number}`.replace(/\s+/g, "-");
+
+      // Extract book name from reference (e.g., "Matthew 5" -> "Matthew")
+      const bookName = reference.split(' ')[0];
+
+      // Check if this verse contains Jesus's words
+      const isJesus = typeof isJesusWords === 'function'
+        ? isJesusWords(bookName, window.currentChapter, parseInt(verse.number))
+        : false;
+
+      const jesusClass = isJesus ? ' jesus-words' : '';
+
       html += `
-        <div class="verse" data-verse-id="${verseId}" data-verse-number="${verse.number}">
+        <div class="verse${jesusClass}" data-verse-id="${verseId}" data-verse-number="${verse.number}">
           <span class="verse-number">${verse.number}</span>
           <span class="verse-text">${verse.text}</span>
         </div>
@@ -748,6 +776,30 @@ function updateChapterDisplayYouVersion(data) {
 
   // Scroll to top
   bibleContent.scrollTop = 0;
+}
+
+// Get passage title for a chapter (placeholder - could be enhanced with actual data)
+function getPassageTitle(reference) {
+  // Simple mapping of common passages to titles
+  const titleMap = {
+    "Luke 16": "Parable of the Shrewd Manager",
+    "John 3": "Jesus and Nicodemus",
+    "Matthew 5": "The Sermon on the Mount",
+    "Psalm 23": "The LORD is My Shepherd",
+    "Genesis 1": "The Creation",
+    "Exodus 20": "The Ten Commandments",
+    "1 Corinthians 13": "The Way of Love",
+    "Romans 8": "Life Through the Spirit",
+  };
+
+  // Check if we have a title for this reference
+  for (const [key, title] of Object.entries(titleMap)) {
+    if (reference.includes(key)) {
+      return title;
+    }
+  }
+
+  return null;
 }
 
 // Add CSS animation for notifications

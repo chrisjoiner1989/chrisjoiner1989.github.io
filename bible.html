@@ -124,15 +124,18 @@
 
       <!-- Chapter Navigation Footer -->
       <div class="chapter-navigation" id="chapter-navigation" style="display: none;">
-        <button type="button" class="chapter-nav-btn" id="prev-chapter">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="chapter-nav-btn" id="prev-chapter" title="Previous Chapter">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
-          <span>Previous</span>
         </button>
-        <button type="button" class="chapter-nav-btn" id="next-chapter">
-          <span>Next</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="chapter-nav-btn" id="play-chapter-btn" title="Play Audio">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </button>
+        <button type="button" class="chapter-nav-btn" id="next-chapter" title="Next Chapter">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
@@ -241,7 +244,7 @@
           <div class="settings-section">
             <label class="settings-label">Theme</label>
             <div class="theme-controls">
-              <button type="button" class="theme-btn active" data-theme="light" title="Light theme">
+              <button type="button" class="theme-btn" data-theme="light" title="Light theme">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="5"></circle>
                   <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -262,7 +265,7 @@
                 </svg>
                 <span>Sepia</span>
               </button>
-              <button type="button" class="theme-btn" data-theme="dark" title="Dark theme">
+              <button type="button" class="theme-btn active" data-theme="dark" title="Dark theme">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
@@ -321,6 +324,7 @@
     <script src="js/validation.js?v=2"></script>
     <script src="js/api.js?v=2"></script>
     <script src="js/storage.js?v=2"></script>
+    <script src="js/jesusWords.js"></script>
     <script src="js/bibleReaderUI.js?v=20241111"></script>
     <script src="js/app.js?v=2"></script>
     <script>
