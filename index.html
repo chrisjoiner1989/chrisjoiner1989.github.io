@@ -135,6 +135,35 @@
             </div>
           </div>
 
+          <!-- Tags input -->
+          <div class="input-group">
+            <label for="tags-input">Tags:</label>
+            <div class="tags-container">
+              <div class="tags-display" id="tags-display">
+                <!-- Tags will be displayed here -->
+              </div>
+              <div class="input-with-autocomplete">
+                <input
+                  type="text"
+                  id="tags-input"
+                  placeholder="Add tags (e.g., Faith, Prayer, Youth)..."
+                  title="Add tags to categorize this sermon"
+                  autocomplete="off"
+                />
+                <div class="tag-suggestions" id="tag-suggestions" style="display: none;">
+                  <!-- Autocomplete suggestions will appear here -->
+                </div>
+              </div>
+              <button type="button" class="preset-tags-btn" id="show-preset-tags" title="Browse preset tags">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+              </button>
+            </div>
+            <small class="help-text">Press Enter or comma to add tags. Click preset button for suggestions.</small>
+          </div>
+
           <!-- Verse Reference full width (needs space for verse display) -->
           <div class="input-group">
             <label for="reference">Verse Reference:</label>
@@ -182,13 +211,24 @@
             <div id="sermon-sections" role="region" aria-label="Sermon outline sections">
               <!-- Sections will be added dynamically here -->
             </div>
-            <button type="button" id="add-section-btn" aria-label="Add sermon section" title="Add a new section to your sermon outline">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              Add Section
-            </button>
+            <div class="outline-actions">
+              <button type="button" id="use-template-btn" class="template-btn" aria-label="Use sermon template" title="Start with a pre-built sermon structure">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="12" y1="18" x2="12" y2="12"></line>
+                  <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+                Use Template
+              </button>
+              <button type="button" id="add-section-btn" aria-label="Add sermon section" title="Add a new section to your sermon outline">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add Section
+              </button>
+            </div>
           </div>
 
           <!-- Sermon Builder Actions -->
@@ -327,10 +367,34 @@
       </div>
     </div>
 
+    <!-- Template Picker Modal -->
+    <div id="template-picker-modal" class="template-modal" style="display: none;">
+      <div class="template-modal-content">
+        <div class="template-modal-header">
+          <h2>Choose a Sermon Template</h2>
+          <p>Start with a proven structure to speed up your sermon preparation</p>
+          <button class="template-modal-close" aria-label="Close template picker">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="template-cards">
+          <!-- Template cards will be populated by JavaScript -->
+        </div>
+        <div class="template-modal-footer">
+          <button type="button" class="btn-secondary" onclick="hideTemplatePicker()">Start from Scratch</button>
+        </div>
+      </div>
+    </div>
+
     <!-- js files - order matters for dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <script src="https://unpkg.com/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
     <script src="./js/themeEngine.js"></script>
+    <script src="./js/tagSystem.js"></script>
+    <script src="./js/tagUI.js"></script>
     <script src="./js/validation.js?v=2"></script>
     <script src="./js/api.js?v=2"></script>
     <script src="./js/storage.js?v=2"></script>
@@ -338,6 +402,7 @@
     <script src="./js/bibleTopics.js?v=3"></script>
     <script src="./js/floatingBible.js?v=3"></script>
     <script src="./js/sermonBuilder.js?v=2"></script>
+    <script src="./js/sermonTemplates.js"></script>
     <script src="./js/app.js?v=2"></script>
   </body>
 </html>

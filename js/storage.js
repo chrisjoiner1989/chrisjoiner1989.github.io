@@ -32,6 +32,9 @@ function saveSermon(e) {
     return;
   }
 
+  // Get tags from tag UI if available
+  const tags = window.getCurrentTags ? window.getCurrentTags() : [];
+
   // creates sermon object
   const newSermon = {
     id: Date.now(), // simple ID
@@ -42,6 +45,7 @@ function saveSermon(e) {
     notes: notes,
     verseReference: reference,
     verseData: currentVerseData, // includes full verse text if searched
+    tags: tags, // sermon tags
     savedAt: new Date().toISOString(),
   };
 
@@ -236,56 +240,102 @@ function populateSpeakerFilter() {
 
 function renderSermonList() {
   const container = document.getElementById("sermons-list");
-  const searchTerm = document
-    .getElementById("search-sermons")
-    .value.toLowerCase();
-  const speakerFilter = document.getElementById("filter-speaker").value;
-  const sortBy = document.getElementById("sort-sermons").value;
+  const searchInput = document.getElementById("search-sermons");
+  const searchTerm = searchInput ? searchInput.value : "";
+  const speakerFilter = document.getElementById("filter-speaker");
+  const speaker = speakerFilter ? speakerFilter.value : "";
+  const sortSelect = document.getElementById("sort-sermons");
+  const sortBy = sortSelect ? sortSelect.value : "date-desc";
 
-  // Filter sermons
-  filteredSermons = sermons.filter((sermon) => {
-    const matchesSearch =
-      sermon.title.toLowerCase().includes(searchTerm) ||
-      sermon.speaker.toLowerCase().includes(searchTerm) ||
-      sermon.series.toLowerCase().includes(searchTerm);
-    const matchesSpeaker = !speakerFilter || sermon.speaker === speakerFilter;
-    return matchesSearch && matchesSpeaker;
-  });
+  // Use search engine if available and search term exists
+  if (window.searchEngine && searchTerm.trim()) {
+    // Perform smart search with fuzzy matching
+    const searchResults = window.searchEngine.search(sermons, searchTerm, {
+      fuzzy: true,
+      minRelevance: 0
+    });
 
-  // Sort sermons
-  filteredSermons.sort((a, b) => {
-    switch (sortBy) {
-      case "date-desc":
-        return new Date(b.date) - new Date(a.date);
-      case "date-asc":
-        return new Date(a.date) - new Date(b.date);
-      case "title":
-        return a.title.localeCompare(b.title);
-      default:
-        return 0;
+    // Apply speaker filter if needed
+    filteredSermons = searchResults
+      .map(result => result.sermon)
+      .filter(sermon => !speaker || sermon.speaker === speaker);
+
+    // Sort by relevance if not specified otherwise
+    if (sortBy === "date-desc" || sortBy === "date-asc" || sortBy === "title") {
+      filteredSermons.sort((a, b) => {
+        switch (sortBy) {
+          case "date-desc":
+            return new Date(b.date) - new Date(a.date);
+          case "date-asc":
+            return new Date(a.date) - new Date(b.date);
+          case "title":
+            return a.title.localeCompare(b.title);
+          default:
+            return 0;
+        }
+      });
     }
-  });
+    // Otherwise keep relevance order from search
+  } else {
+    // Basic filter when no search term
+    filteredSermons = sermons.filter(sermon => !speaker || sermon.speaker === speaker);
+
+    // Sort sermons
+    filteredSermons.sort((a, b) => {
+      switch (sortBy) {
+        case "date-desc":
+          return new Date(b.date) - new Date(a.date);
+        case "date-asc":
+          return new Date(a.date) - new Date(b.date);
+        case "title":
+          return a.title.localeCompare(b.title);
+        default:
+          return 0;
+      }
+    });
+  }
 
   if (filteredSermons.length === 0) {
-    container.innerHTML = "<p>No sermons found.</p>";
+    const message = searchTerm
+      ? `<p>No sermons found for "${searchTerm}". Try a different search term.</p>`
+      : "<p>No sermons found.</p>";
+    container.innerHTML = message;
     return;
   }
 
+  // Highlight search terms in results
+  const highlight = window.searchEngine && searchTerm
+    ? (text) => window.searchEngine.highlight(text, searchTerm)
+    : (text) => text;
+
   container.innerHTML = filteredSermons
     .map(
-      (sermon) => `
+      (sermon) => {
+        // Render tags if they exist
+        const tagsHTML = sermon.tags && sermon.tags.length > 0
+          ? `<div class="sermon-tags">
+              ${sermon.tags.map((tag, index) => {
+                const color = window.tagSystem ? window.tagSystem.getTagColor(tag, index) : '#722f37';
+                return `<span class="tag-chip-small" style="background-color: ${color}">${tag}</span>`;
+              }).join('')}
+            </div>`
+          : '';
+
+        return `
       <div class="sermon-card">
-        <h3>${sermon.title}</h3>
+        <h3>${highlight(sermon.title)}</h3>
         <div class="sermon-meta">
-          <strong>Speaker:</strong> ${sermon.speaker}<br>
+          <strong>Speaker:</strong> ${highlight(sermon.speaker)}<br>
           <strong>Date:</strong> ${formatDate(sermon.date)}<br>
-          <strong>Series:</strong> ${sermon.series}
+          <strong>Series:</strong> ${highlight(sermon.series)}
           ${
             sermon.verseReference
-              ? `<br><strong>Scripture:</strong> ${sermon.verseReference}`
+              ? `<br><strong>Scripture:</strong> ${highlight(sermon.verseReference)}`
               : ""
           }
         </div>
+        ${tagsHTML}
+        ${sermon.notes && searchTerm ? `<div class="sermon-preview">${highlight(sermon.notes.substring(0, 150))}${sermon.notes.length > 150 ? '...' : ''}</div>` : ''}
         <div class="sermon-actions">
           <button onclick="viewSermon(${
             sermon.id
@@ -298,7 +348,8 @@ function renderSermonList() {
           })" class="input-btn">Delete</button>
         </div>
       </div>
-    `
+    `;
+      }
     )
     .join("");
 }

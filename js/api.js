@@ -452,6 +452,16 @@ async function loadBibleChapter() {
     return;
   }
 
+  // Check cache first
+  if (window.bibleCache) {
+    const cachedData = window.bibleCache.get(book, chapter, translation);
+    if (cachedData) {
+      console.log('Loading from cache:', book, chapter, translation);
+      displayBibleChapter(cachedData);
+      return;
+    }
+  }
+
   // show loading with better UX
   contentDiv.innerHTML = `
     <div class="bible-loading">
@@ -488,6 +498,11 @@ async function loadBibleChapter() {
 
     if (!parsedData || !parsedData.text) {
       throw new Error("No chapter text found in API response");
+    }
+
+    // Cache the successfully loaded chapter
+    if (window.bibleCache) {
+      window.bibleCache.set(book, chapter, translation, parsedData);
     }
 
     // show the chapter

@@ -294,6 +294,11 @@ function clearForm() {
   const addVerseBtn = document.querySelector(".addverse-btn");
   if (addVerseBtn) addVerseBtn.style.display = "none";
 
+  // Clear tags if tag system is available
+  if (window.clearTags) {
+    window.clearTags();
+  }
+
   // reset date to today and save to localStorage
   setDefaultDate();
 }
@@ -390,8 +395,9 @@ function renderCalendar() {
     ).padStart(2, "0")}`;
     const sermonsOnDay = sermons.filter((sermon) => sermon.date === dateStr);
 
-    // Make calendar days accept drops
+    // Make calendar days accept drops with enhanced event handlers
     dayElement.addEventListener("dragover", handleDragOver);
+    dayElement.addEventListener("dragleave", handleDragLeave);
     dayElement.addEventListener("drop", handleDrop);
     dayElement.setAttribute("data-date", dateStr);
 
@@ -405,10 +411,11 @@ function renderCalendar() {
           (sermon.title.length > 20 ? "..." : "");
         sermonDiv.title = `${sermon.title} - ${sermon.speaker}`;
 
-        // Make sermon cards draggable
+        // Make sermon cards draggable with enhanced event handlers
         sermonDiv.draggable = true;
         sermonDiv.setAttribute("data-sermon-id", sermon.id);
         sermonDiv.addEventListener("dragstart", handleDragStart);
+        sermonDiv.addEventListener("dragend", handleDragEnd);
 
         dayElement.appendChild(sermonDiv);
       });
@@ -420,23 +427,94 @@ function renderCalendar() {
 
 // Drag and drop variables
 let draggedSermonId = null;
+let draggedElement = null;
 
-// Drag event handlers
+// Drag event handlers with enhanced visual feedback
 function handleDragStart(e) {
   draggedSermonId = e.target.getAttribute("data-sermon-id");
-  e.target.style.opacity = "0.5";
+  draggedElement = e.target;
+
+  // Add dragging class for visual feedback
+  e.target.classList.add("dragging");
+
+  // Create custom drag image (ghost)
+  const dragGhost = e.target.cloneNode(true);
+  dragGhost.style.opacity = "0.8";
+  dragGhost.style.transform = "rotate(3deg)";
+  dragGhost.style.position = "absolute";
+  dragGhost.style.top = "-1000px";
+  document.body.appendChild(dragGhost);
+  e.dataTransfer.setDragImage(dragGhost, 0, 0);
+
+  // Clean up ghost after drag starts
+  setTimeout(() => document.body.removeChild(dragGhost), 0);
+
+  // Set drag data
+  e.dataTransfer.effectAllowed = "move";
+  e.dataTransfer.setData("text/html", e.target.innerHTML);
 }
 
 function handleDragOver(e) {
   e.preventDefault(); // Allow drop
-  e.currentTarget.style.backgroundColor = "#f0f0f0"; // Visual feedback
+  e.stopPropagation();
+
+  const calendarDay = e.currentTarget;
+
+  // Don't show drop indicator on empty days (days outside current month)
+  if (calendarDay.classList.contains("empty")) {
+    calendarDay.classList.add("drag-invalid");
+    e.dataTransfer.dropEffect = "none";
+    return;
+  }
+
+  // Add drag-over class for visual feedback
+  if (!calendarDay.classList.contains("drag-over")) {
+    calendarDay.classList.add("drag-over");
+  }
+
+  e.dataTransfer.dropEffect = "move";
+}
+
+function handleDragLeave(e) {
+  const calendarDay = e.currentTarget;
+
+  // Remove visual feedback when leaving the drop zone
+  calendarDay.classList.remove("drag-over");
+  calendarDay.classList.remove("drag-invalid");
+}
+
+function handleDragEnd(e) {
+  // Clean up dragging state
+  if (draggedElement) {
+    draggedElement.classList.remove("dragging");
+  }
+
+  // Remove all drag-over and drag-invalid classes
+  document.querySelectorAll(".calendar-day").forEach(day => {
+    day.classList.remove("drag-over");
+    day.classList.remove("drag-invalid");
+  });
+
+  draggedElement = null;
 }
 
 function handleDrop(e) {
   e.preventDefault();
-  e.currentTarget.style.backgroundColor = ""; // Reset background
+  e.stopPropagation();
 
-  const newDate = e.currentTarget.getAttribute("data-date");
+  const calendarDay = e.currentTarget;
+
+  // Remove visual feedback classes
+  calendarDay.classList.remove("drag-over");
+  calendarDay.classList.remove("drag-invalid");
+
+  const newDate = calendarDay.getAttribute("data-date");
+
+  // Don't allow drop on empty days
+  if (calendarDay.classList.contains("empty") || !newDate) {
+    return;
+  }
+
   if (draggedSermonId && newDate) {
     // Confirm move if significant date change
     const sermon = sermons.find((s) => s.id == draggedSermonId);
@@ -446,12 +524,26 @@ function handleDrop(e) {
 
     if (daysDiff > 7) {
       if (confirm(`Move "${sermon.title}" to ${formatDate(newDate)}?`)) {
-        moveSermon(draggedSermonId, newDate);
+        moveSermonWithAnimation(draggedSermonId, newDate);
       }
     } else {
-      moveSermon(draggedSermonId, newDate);
+      moveSermonWithAnimation(draggedSermonId, newDate);
     }
   }
+}
+
+// Move sermon with animation
+function moveSermonWithAnimation(sermonId, newDate) {
+  moveSermon(sermonId, newDate);
+
+  // After calendar re-renders, add animation to the newly placed sermon
+  setTimeout(() => {
+    const movedSermon = document.querySelector(`[data-sermon-id="${sermonId}"]`);
+    if (movedSermon) {
+      movedSermon.classList.add("just-dropped");
+      setTimeout(() => movedSermon.classList.remove("just-dropped"), 400);
+    }
+  }, 50);
 }
 
 // Series timeline visualization

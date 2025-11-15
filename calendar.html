@@ -38,11 +38,23 @@
 
       <div id="calendar-grid" class="calendar-grid"></div>
 
-      <!-- planning tools - future features -->
+      <!-- planning tools and export options -->
       <div class="planning-tools">
-        <button type="button" class="input-btn">Add Series</button>
-        <button type="button" class="input-btn">Schedule Sermon</button>
-        <button type="button" class="input-btn">View Timeline</button>
+        <button type="button" class="input-btn" id="export-all-calendar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; vertical-align: middle; margin-right: 6px;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export All to Calendar
+        </button>
+        <button type="button" class="input-btn" id="export-upcoming-calendar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; vertical-align: middle; margin-right: 6px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Export Upcoming Only
+        </button>
       </div>
     </main>
 
@@ -97,6 +109,7 @@
     </nav>
 
     <script src="js/themeEngine.js"></script>
+    <script src="js/calendarExport.js"></script>
     <script src="js/validation.js?v=2"></script>
     <script src="js/api.js?v=2"></script>
     <script src="js/storage.js?v=2"></script>
@@ -106,6 +119,26 @@
       document.addEventListener("DOMContentLoaded", function () {
         loadSermons();
         renderCalendar();
+
+        // Setup export buttons
+        const exportAllBtn = document.getElementById('export-all-calendar');
+        if (exportAllBtn) {
+          exportAllBtn.addEventListener('click', function() {
+            if (window.calendarExporter && sermons) {
+              window.calendarExporter.exportAllSermons(sermons);
+              alert(`Exported ${sermons.length} sermons to calendar file!\n\nImport this file into:\n• Google Calendar\n• Apple Calendar\n• Microsoft Outlook\n• Any calendar app`);
+            }
+          });
+        }
+
+        const exportUpcomingBtn = document.getElementById('export-upcoming-calendar');
+        if (exportUpcomingBtn) {
+          exportUpcomingBtn.addEventListener('click', function() {
+            if (window.calendarExporter && sermons) {
+              window.calendarExporter.exportUpcomingSermons(sermons);
+            }
+          });
+        }
       });
     </script>
   </body>

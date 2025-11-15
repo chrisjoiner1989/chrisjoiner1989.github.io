@@ -162,6 +162,20 @@ class SermonBuilder {
   }
 
   /**
+   * Clear all sections from the outline
+   * Used when applying a template
+   */
+  clearAllSections() {
+    // Remove all section elements from DOM
+    this.sections.forEach(section => {
+      section.element.remove();
+    });
+
+    // Clear sections array
+    this.sections = [];
+  }
+
+  /**
    * Update section numbers after add/delete
    */
   updateSectionNumbers() {

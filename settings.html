@@ -134,6 +134,29 @@
           </div>
 
           <div class="setting-item">
+            <label class="setting-label">Bible Cache</label>
+            <p class="setting-description">Cached chapters load instantly without internet</p>
+            <div class="storage-info">
+              <div class="storage-stat">
+                <span class="storage-label">Cached Chapters:</span>
+                <span class="storage-value" id="cache-chapters">0</span>
+              </div>
+              <div class="storage-stat">
+                <span class="storage-label">Cache Hit Rate:</span>
+                <span class="storage-value" id="cache-hitrate">0%</span>
+              </div>
+            </div>
+            <button type="button" class="settings-action-btn" id="clear-bible-cache" style="margin-top: 1rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18"></path>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              </svg>
+              Clear Bible Cache
+            </button>
+          </div>
+
+          <div class="setting-item">
             <button type="button" class="settings-action-btn danger-btn" id="clear-all-data">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 5 6 21 6"></polyline>
@@ -142,6 +165,197 @@
               Clear All Data
             </button>
             <p class="setting-description danger-text">This will delete all saved sermons and preferences. This action cannot be undone.</p>
+          </div>
+        </section>
+
+        <!-- Cloud Sync & Account Section -->
+        <section class="settings-section">
+          <div class="settings-section-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+            </svg>
+            <h2>Cloud Sync & Account</h2>
+          </div>
+          <p class="settings-description">Backup your sermons and sync across devices (optional)</p>
+
+          <!-- Not Logged In State -->
+          <div id="auth-logged-out" style="display: none;">
+            <div class="setting-item">
+              <label class="setting-label">Why Create an Account?</label>
+              <ul class="feature-list">
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                  </svg>
+                  Automatic cloud backup of your sermons
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                  </svg>
+                  Sync sermons across all your devices
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  Secure, encrypted storage
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                  </svg>
+                  Access from anywhere
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  </svg>
+                  Works offline - syncs when connected
+                </li>
+              </ul>
+            </div>
+
+            <div class="setting-item">
+              <div class="auth-tabs">
+                <button type="button" class="auth-tab active" data-tab="login">Login</button>
+                <button type="button" class="auth-tab" data-tab="register">Create Account</button>
+              </div>
+
+              <!-- Login Form -->
+              <form id="login-form" class="auth-form" style="display: block;">
+                <div class="form-group">
+                  <label for="login-email">Email</label>
+                  <input type="email" id="login-email" class="auth-input" required placeholder="your@email.com" />
+                </div>
+                <div class="form-group">
+                  <label for="login-password">Password</label>
+                  <input type="password" id="login-password" class="auth-input" required placeholder="••••••••" />
+                </div>
+                <div id="login-error" class="auth-error" style="display: none;"></div>
+                <button type="submit" class="settings-action-btn primary-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10 17 15 12 10 7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                  </svg>
+                  Login
+                </button>
+              </form>
+
+              <!-- Register Form -->
+              <form id="register-form" class="auth-form" style="display: none;">
+                <div class="form-group">
+                  <label for="register-name">Name</label>
+                  <input type="text" id="register-name" class="auth-input" required placeholder="Your name" />
+                </div>
+                <div class="form-group">
+                  <label for="register-email">Email</label>
+                  <input type="email" id="register-email" class="auth-input" required placeholder="your@email.com" />
+                </div>
+                <div class="form-group">
+                  <label for="register-password">Password</label>
+                  <input type="password" id="register-password" class="auth-input" required placeholder="Min. 8 characters" />
+                  <small class="input-hint">Must be at least 8 characters with letters and numbers</small>
+                </div>
+                <div id="register-error" class="auth-error" style="display: none;"></div>
+                <button type="submit" class="settings-action-btn primary-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="8.5" cy="7" r="4"></circle>
+                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                  </svg>
+                  Create Account
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Logged In State -->
+          <div id="auth-logged-in" style="display: none;">
+            <div class="setting-item">
+              <label class="setting-label">Account</label>
+              <div class="user-info">
+                <div class="user-avatar">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <div class="user-details">
+                  <div class="user-name" id="user-name">Loading...</div>
+                  <div class="user-email" id="user-email">Loading...</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <label class="setting-label">Sync Status</label>
+              <div class="sync-status">
+                <div class="sync-indicator" id="sync-indicator">
+                  <div class="sync-icon" id="sync-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                    </svg>
+                  </div>
+                  <div class="sync-text" id="sync-text">Checking status...</div>
+                </div>
+                <div class="sync-stats">
+                  <div class="sync-stat">
+                    <span class="sync-label">Synced Sermons:</span>
+                    <span class="sync-value" id="synced-count">0</span>
+                  </div>
+                  <div class="sync-stat">
+                    <span class="sync-label">Needs Sync:</span>
+                    <span class="sync-value" id="needs-sync-count">0</span>
+                  </div>
+                  <div class="sync-stat">
+                    <span class="sync-label">Last Sync:</span>
+                    <span class="sync-value" id="last-sync-time">Never</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <label class="setting-label">Sync Actions</label>
+              <div class="button-group">
+                <button type="button" class="settings-action-btn" id="sync-now-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                  </svg>
+                  Sync Now
+                </button>
+                <button type="button" class="settings-action-btn" id="migrate-to-cloud-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  Upload All to Cloud
+                </button>
+              </div>
+              <p class="setting-description">Sync manually or upload all local sermons to cloud backup</p>
+            </div>
+
+            <div class="setting-item">
+              <button type="button" class="settings-action-btn danger-btn" id="logout-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Logout
+              </button>
+              <p class="setting-description">You'll still have access to your local sermons</p>
+            </div>
           </div>
         </section>
 
@@ -163,6 +377,74 @@
               <p>Version 2.0</p>
               <p>Built with dedication for God's Kingdom</p>
             </div>
+          </div>
+        </section>
+
+        <!-- Performance Monitoring Section -->
+        <section class="settings-section">
+          <div class="settings-section-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+            <h2>Performance</h2>
+          </div>
+          <p class="settings-description">Monitor app performance and speed</p>
+
+          <div class="setting-item">
+            <label class="setting-label">Core Web Vitals</label>
+            <p class="setting-description">Key metrics for web performance</p>
+            <div class="performance-metrics" id="core-web-vitals">
+              <div class="metric-card">
+                <div class="metric-name">LCP</div>
+                <div class="metric-value" id="lcp-value">--</div>
+                <div class="metric-label">Largest Contentful Paint</div>
+                <div class="metric-rating" id="lcp-rating"></div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-name">FID</div>
+                <div class="metric-value" id="fid-value">--</div>
+                <div class="metric-label">First Input Delay</div>
+                <div class="metric-rating" id="fid-rating"></div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-name">CLS</div>
+                <div class="metric-value" id="cls-value">--</div>
+                <div class="metric-label">Cumulative Layout Shift</div>
+                <div class="metric-rating" id="cls-rating"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">Page Statistics</label>
+            <div class="storage-info">
+              <div class="storage-stat">
+                <span class="storage-label">Page Views (Session):</span>
+                <span class="storage-value" id="page-views">0</span>
+              </div>
+              <div class="storage-stat">
+                <span class="storage-label">Errors (Session):</span>
+                <span class="storage-value" id="error-count">0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <button type="button" class="settings-action-btn" id="export-performance">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Export Performance Data
+            </button>
+            <button type="button" class="settings-action-btn" id="clear-performance">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6h18"></path>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+              </svg>
+              Clear Performance Data
+            </button>
           </div>
         </section>
       </div>
@@ -218,8 +500,19 @@
       </a>
     </nav>
 
+    <!-- API Client Scripts -->
+    <script src="js/api/client.js"></script>
+    <script src="js/api/auth.js"></script>
+    <script src="js/api/sermons.js"></script>
+    <script src="js/api/bible.js"></script>
+    <script src="js/storageSync.js"></script>
+
+    <!-- App Scripts -->
     <script src="js/themeEngine.js"></script>
+    <script src="js/performanceMonitor.js"></script>
+    <script src="js/bibleCache.js"></script>
     <script src="js/storage.js?v=2"></script>
     <script src="js/settings.js"></script>
+    <script src="js/settingsAuth.js"></script>
   </body>
 </html>

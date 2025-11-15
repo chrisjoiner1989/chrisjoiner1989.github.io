@@ -101,10 +101,34 @@ function initializeDataManagement() {
     // Update storage info
     updateStorageInfo();
 
+    // Update Bible cache info
+    updateBibleCacheInfo();
+
+    // Update performance info
+    updatePerformanceInfo();
+
     // Clear all data button
     const clearDataBtn = document.getElementById('clear-all-data');
     if (clearDataBtn) {
         clearDataBtn.addEventListener('click', handleClearAllData);
+    }
+
+    // Clear Bible cache button
+    const clearCacheBtn = document.getElementById('clear-bible-cache');
+    if (clearCacheBtn) {
+        clearCacheBtn.addEventListener('click', handleClearBibleCache);
+    }
+
+    // Export performance button
+    const exportPerfBtn = document.getElementById('export-performance');
+    if (exportPerfBtn) {
+        exportPerfBtn.addEventListener('click', handleExportPerformance);
+    }
+
+    // Clear performance button
+    const clearPerfBtn = document.getElementById('clear-performance');
+    if (clearPerfBtn) {
+        clearPerfBtn.addEventListener('click', handleClearPerformance);
     }
 }
 
@@ -182,6 +206,63 @@ function handleClearAllData() {
 }
 
 /**
+ * Update Bible cache information display
+ */
+function updateBibleCacheInfo() {
+    if (!window.bibleCache) {
+        console.log('Bible cache not available');
+        return;
+    }
+
+    const stats = window.bibleCache.getStats();
+
+    // Update cached chapters count
+    const chaptersElement = document.getElementById('cache-chapters');
+    if (chaptersElement) {
+        chaptersElement.textContent = stats.entries;
+    }
+
+    // Update hit rate
+    const hitrateElement = document.getElementById('cache-hitrate');
+    if (hitrateElement) {
+        hitrateElement.textContent = stats.hitRate;
+    }
+
+    console.log('Bible cache stats:', stats);
+}
+
+/**
+ * Handle clear Bible cache action
+ */
+function handleClearBibleCache() {
+    if (!window.bibleCache) {
+        alert('Bible cache is not available');
+        return;
+    }
+
+    const stats = window.bibleCache.getStats();
+    const confirmed = confirm(
+        `Clear Bible chapter cache?\n\n` +
+        `This will remove ${stats.entries} cached chapters.\n` +
+        `They will be re-downloaded from the internet when you view them again.\n\n` +
+        `Your saved sermons and settings will not be affected.`
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        window.bibleCache.clearCache();
+        updateBibleCacheInfo();
+        alert('Bible cache cleared successfully!');
+    } catch (error) {
+        console.error('Error clearing Bible cache:', error);
+        alert('An error occurred while clearing the cache. Please try again.');
+    }
+}
+
+/**
  * Listen for theme changes from other sources
  */
 if (window.themeEngine) {
@@ -210,4 +291,105 @@ if (window.themeEngine) {
             }
         });
     });
+}
+
+/**
+ * Update performance information display
+ */
+function updatePerformanceInfo() {
+    if (!window.performanceMonitor) {
+        console.log('Performance monitor not available');
+        return;
+    }
+
+    const report = window.performanceMonitor.getReport();
+
+    // Update Core Web Vitals
+    updateWebVital('lcp', report.coreWebVitals.LCP);
+    updateWebVital('fid', report.coreWebVitals.FID);
+    updateWebVital('cls', report.coreWebVitals.CLS);
+
+    // Update session stats
+    const pageViewsElement = document.getElementById('page-views');
+    if (pageViewsElement) {
+        pageViewsElement.textContent = report.session.pageViews;
+    }
+
+    const errorCountElement = document.getElementById('error-count');
+    if (errorCountElement) {
+        errorCountElement.textContent = report.session.errors;
+    }
+}
+
+/**
+ * Update a single Web Vital metric
+ */
+function updateWebVital(name, data) {
+    if (!data) return;
+
+    const valueElement = document.getElementById(`${name}-value`);
+    const ratingElement = document.getElementById(`${name}-rating`);
+
+    if (valueElement) {
+        // Format value based on metric type
+        let displayValue;
+        if (name === 'cls') {
+            displayValue = data.avg.toFixed(3);
+        } else {
+            displayValue = `${Math.round(data.avg)} ms`;
+        }
+        valueElement.textContent = displayValue;
+    }
+
+    if (ratingElement) {
+        ratingElement.textContent = data.rating;
+        ratingElement.className = `metric-rating rating-${data.rating}`;
+    }
+}
+
+/**
+ * Handle export performance data
+ */
+function handleExportPerformance() {
+    if (!window.performanceMonitor) {
+        alert('Performance monitor is not available');
+        return;
+    }
+
+    try {
+        window.performanceMonitor.exportData();
+        alert('Performance data exported successfully!');
+    } catch (error) {
+        console.error('Error exporting performance data:', error);
+        alert('An error occurred while exporting performance data.');
+    }
+}
+
+/**
+ * Handle clear performance data
+ */
+function handleClearPerformance() {
+    if (!window.performanceMonitor) {
+        alert('Performance monitor is not available');
+        return;
+    }
+
+    const confirmed = confirm(
+        'Clear all performance data?\n\n' +
+        'This will remove all performance metrics and statistics.\n' +
+        'Your sermons and settings will not be affected.'
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        window.performanceMonitor.clearData();
+        updatePerformanceInfo();
+        alert('Performance data cleared successfully!');
+    } catch (error) {
+        console.error('Error clearing performance data:', error);
+        alert('An error occurred while clearing performance data.');
+    }
 }
