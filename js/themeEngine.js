@@ -10,46 +10,55 @@ class ThemeEngine {
             light: {
                 name: 'Light',
                 colors: {
-                    '--bg-primary': '#ffffff',
+                    '--bg-primary': '#F9F9F9',
                     '--bg-secondary': '#f5f5f7',
-                    '--text-primary': '#1c1c1e',
-                    '--text-secondary': '#86868b',
-                    '--accent-primary': '#cc3333',
-                    '--accent-secondary': '#b22929',
-                    '--border-color': '#e5e5e7',
+                    '--text-primary': '#222222',
+                    '--text-secondary': '#666666',
+                    '--accent-primary': '#8B4049',
+                    '--accent-secondary': '#722f37',
+                    '--border-color': '#E5E5E5',
                     '--hover-bg': '#f5f5f7',
-                    '--shadow': 'rgba(0, 0, 0, 0.1)',
-                    '--card-bg': '#ffffff'
-                }
-            },
-            sepia: {
-                name: 'Sepia',
-                colors: {
-                    '--bg-primary': '#f4ecd8',
-                    '--bg-secondary': '#e8dcc4',
-                    '--text-primary': '#5c4a3a',
-                    '--text-secondary': '#8b7355',
-                    '--accent-primary': '#8b4513',
-                    '--accent-secondary': '#6b3410',
-                    '--border-color': '#d4c4a8',
-                    '--hover-bg': '#e8dcc4',
-                    '--shadow': 'rgba(92, 74, 58, 0.15)',
-                    '--card-bg': '#f9f3e3'
+                    '--shadow': 'rgba(0, 0, 0, 0.08)',
+                    '--card-bg': '#FFFFFF',
+                    '--card-shadow': '0 2px 8px rgba(0, 0, 0, 0.08)',
+                    '--card-radius': '12px',
+                    '--button-radius': '20px'
                 }
             },
             dark: {
                 name: 'Dark',
                 colors: {
-                    '--bg-primary': '#1c1c1e',
-                    '--bg-secondary': '#2c2c2e',
-                    '--text-primary': '#e5e5e7',
-                    '--text-secondary': '#98989d',
-                    '--accent-primary': '#ff6b6b',
-                    '--accent-secondary': '#ff5252',
-                    '--border-color': '#3a3a3c',
-                    '--hover-bg': '#2c2c2e',
-                    '--shadow': 'rgba(0, 0, 0, 0.3)',
-                    '--card-bg': '#2c2c2e'
+                    '--bg-primary': '#0D0D0D',
+                    '--bg-secondary': '#1A1A1A',
+                    '--text-primary': '#F5F5F5',
+                    '--text-secondary': '#B8B8B8',
+                    '--accent-primary': '#A84C49',
+                    '--accent-secondary': '#C05B57',
+                    '--border-color': '#2A2A2A',
+                    '--hover-bg': '#2A2A2A',
+                    '--shadow': 'rgba(0, 0, 0, 0.4)',
+                    '--card-bg': '#1A1A1A',
+                    '--card-shadow': '0 2px 8px rgba(0, 0, 0, 0.4)',
+                    '--card-radius': '12px',
+                    '--button-radius': '20px'
+                }
+            },
+            sepia: {
+                name: 'Sepia',
+                colors: {
+                    '--bg-primary': '#F4ECD8',
+                    '--bg-secondary': '#e8dcc4',
+                    '--text-primary': '#5C4A3A',
+                    '--text-secondary': '#8B7355',
+                    '--accent-primary': '#8B4513',
+                    '--accent-secondary': '#6B3410',
+                    '--border-color': '#D4C4A8',
+                    '--hover-bg': '#e8dcc4',
+                    '--shadow': 'rgba(92, 74, 58, 0.12)',
+                    '--card-bg': '#F9F3E3',
+                    '--card-shadow': '0 2px 8px rgba(92, 74, 58, 0.12)',
+                    '--card-radius': '12px',
+                    '--button-radius': '20px'
                 }
             }
         };

@@ -18,11 +18,11 @@ const FAITH_THEMES = {
     background: '#f0fff0'    // Honeydew
   },
   hope: {
-    primary: '#191970',      // Midnight blue
-    secondary: '#87ceeb',    // Sky blue
+    primary: '#8B4049',      // Biblical red
+    secondary: '#D4A574',    // Biblical gold
     accent: '#ffffff',       // White
-    text: '#1e1e1e',         // Near black
-    background: '#f0f8ff'    // Alice blue
+    text: '#2C1810',         // Dark brown
+    background: '#FAF8F5'    // Parchment
   }
 };
 

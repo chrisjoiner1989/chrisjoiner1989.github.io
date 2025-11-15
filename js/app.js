@@ -2,6 +2,18 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Mount Builder starting up...");
 
+  // Check if first-time user and redirect to welcome screen
+  const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+  const isOnHomePage = window.location.pathname.includes('home.html') ||
+                       window.location.pathname.endsWith('/') ||
+                       window.location.pathname === '';
+
+  if (!hasSeenWelcome && isOnHomePage) {
+    console.log('First-time user detected, redirecting to welcome screen...');
+    window.location.href = 'welcome.html';
+    return;
+  }
+
   // Add click event to logo to refresh page
   const logo = document.querySelector(".logo");
   if (logo) {

@@ -9,8 +9,8 @@
   --youversion-bg: #0D0D0D;
   --youversion-text: #F5F5F5;
   --youversion-text-secondary: #B8B8B8;
-  --youversion-accent: #4A9EFF;
-  --youversion-accent-hover: #6BB0FF;
+  --youversion-accent: #A84C49;
+  --youversion-accent-hover: #C05B57;
   --youversion-border: #2A2A2A;
   --youversion-card-bg: #1A1A1A;
   --youversion-shadow: rgba(0, 0, 0, 0.4);
@@ -25,8 +25,8 @@
   --youversion-bg: #F9F9F9;
   --youversion-text: #222222;
   --youversion-text-secondary: #666666;
-  --youversion-accent: #007BFF;
-  --youversion-accent-hover: #0056b3;
+  --youversion-accent: #8B4049;
+  --youversion-accent-hover: #722f37;
   --youversion-border: #E5E5E5;
   --youversion-card-bg: #FFFFFF;
   --youversion-shadow: rgba(0, 0, 0, 0.08);
@@ -357,21 +357,21 @@
 
 :root[data-theme="dark"] .verse.highlighted {
   background-color: #2A2A15;
-  border-left-color: #4A9EFF;
+  border-left-color: #A84C49;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 :root[data-theme="dark"] .verse.selected {
-  background-color: #4A9EFF !important;
-  color: #000000 !important;
+  background-color: #A84C49 !important;
+  color: #FFFFFF !important;
 }
 
 :root[data-theme="dark"] .verse.selected .verse-number {
-  color: #000000 !important;
+  color: #FFFFFF !important;
 }
 
 :root[data-theme="dark"] .verse.selected .verse-text {
-  color: #000000 !important;
+  color: #FFFFFF !important;
   text-shadow: none;
 }
 

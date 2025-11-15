@@ -15,51 +15,82 @@
 }
 
 /* CSS Custom Properties for Theme Engine */
-/* Default (Light) Theme */
+/* Default (Light) Theme - YouVersion-inspired Biblical Colors */
 :root {
-  /* Colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f5f5f7;
-  --text-primary: #1c1c1e;
-  --text-secondary: #86868b;
-  --accent-primary: #cc3333;
-  --accent-secondary: #b22929;
-  --border-color: #e5e5e7;
-  --hover-bg: #f5f5f7;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --card-bg: #ffffff;
+  /* Biblical Color Palette */
+  --biblical-red: #8B4049;
+  --biblical-red-light: #A84C49;
+  --biblical-gold: #D4A574;
+  --biblical-burgundy: #722f37;
+  --warm-beige: #E8DDD3;
+  --parchment: #FAF8F5;
 
-  /* Font Sizes */
+  /* Primary Colors */
+  --bg-primary: #FAF8F5;
+  --bg-secondary: #F5F0EB;
+  --text-primary: #2C1810;
+  --text-secondary: #6B5D54;
+  --accent-primary: #8B4049;
+  --accent-secondary: #722f37;
+  --accent-gold: #D4A574;
+  --border-color: #E8DDD3;
+  --hover-bg: #F5F0EB;
+  --shadow: rgba(44, 24, 16, 0.08);
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 2px 12px rgba(44, 24, 16, 0.06);
+  --card-radius: 12px;
+  --button-radius: 24px;
+
+  /* Typography */
   --font-base: 16px;
   --font-heading: 20px;
   --font-large: 24px;
+  --line-height-base: 1.7;
+  --line-height-heading: 1.4;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
 }
 
 /* Theme variations applied via data-theme attribute */
-:root[data-theme="sepia"] {
-  --bg-primary: #f4ecd8;
-  --bg-secondary: #e8dcc4;
-  --text-primary: #5c4a3a;
-  --text-secondary: #8b7355;
-  --accent-primary: #8b4513;
-  --accent-secondary: #6b3410;
-  --border-color: #d4c4a8;
-  --hover-bg: #e8dcc4;
-  --shadow: rgba(92, 74, 58, 0.15);
-  --card-bg: #f9f3e3;
+/* Dark Theme - YouVersion-inspired with Biblical Depth */
+:root[data-theme="dark"] {
+  --bg-primary: #1C0F0A;
+  --bg-secondary: #2A1810;
+  --text-primary: #F5F0EB;
+  --text-secondary: #C4B5A8;
+  --accent-primary: #A84C49;
+  --accent-secondary: #8B4049;
+  --accent-gold: #D4A574;
+  --border-color: #3F2A1F;
+  --hover-bg: #3F2A1F;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --card-bg: #2A1810;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --card-radius: 12px;
+  --button-radius: 24px;
 }
 
-:root[data-theme="dark"] {
-  --bg-primary: #1c1c1e;
-  --bg-secondary: #2c2c2e;
-  --text-primary: #e5e5e7;
-  --text-secondary: #98989d;
-  --accent-primary: #ff6b6b;
-  --accent-secondary: #ff5252;
-  --border-color: #3a3a3c;
-  --hover-bg: #2c2c2e;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --card-bg: #2c2c2e;
+/* Sepia Theme - Biblical Parchment Style */
+:root[data-theme="sepia"] {
+  --bg-primary: #F4ECD8;
+  --bg-secondary: #E8DDD3;
+  --text-primary: #4A3728;
+  --text-secondary: #7A6856;
+  --accent-primary: #8B4049;
+  --accent-secondary: #722f37;
+  --accent-gold: #B8935F;
+  --border-color: #D4C4A8;
+  --hover-bg: #E8DDD3;
+  --shadow: rgba(74, 55, 40, 0.12);
+  --card-bg: #FAF8F5;
+  --card-shadow: 0 2px 12px rgba(74, 55, 40, 0.1);
+  --card-radius: 12px;
+  --button-radius: 24px;
 }
 
 /* Font size variations applied via data-font-size attribute */
@@ -87,81 +118,161 @@
   --font-large: 32px;
 }
 
-/* main header - uses theme colors */
-.main-header {
-  background-color: var(--card-bg);
-  padding: 1rem;
-  text-align: center;
-  margin-bottom: 15px;
-  border-bottom: 1px solid var(--border-color);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+/* Header removed for cleaner mobile-first experience */
+
+/* Desktop Sidebar Navigation */
+.desktop-sidebar {
+  display: none; /* Hidden on mobile */
 }
 
-/* logo centered with fixed width - keeps branding consistent */
-.logo {
-  display: block;
-  width: 150px;
-  height: auto;
-  margin: 0 auto 1rem auto;
-  transition: filter 0.3s ease, opacity 0.3s ease;
+@media (min-width: 769px) {
+  .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 240px;
+    background: var(--card-bg);
+    border-right: 1px solid var(--border-color);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sidebar-logo {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-brand {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-nav {
+    list-style: none;
+    padding: 20px 12px;
+    margin: 0;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .sidebar-nav li {
+    margin-bottom: 8px;
+  }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-link:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+  }
+
+  .sidebar-link.active {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(139, 64, 73, 0.2);
+  }
+
+  .sidebar-link svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    stroke: currentColor;
+  }
+
+  .sidebar-label {
+    font-family: 'Anton', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+  }
+
+  /* Collapse sidebar on smaller desktops */
+  @media (max-width: 1024px) {
+    .desktop-sidebar {
+      width: 80px;
+    }
+
+    .sidebar-brand,
+    .sidebar-label {
+      display: none;
+    }
+
+    .sidebar-header {
+      justify-content: center;
+      padding: 24px 12px;
+    }
+
+    .sidebar-nav {
+      padding: 20px 8px;
+    }
+
+    .sidebar-link {
+      justify-content: center;
+      padding: 12px;
+    }
+  }
 }
 
-/* Adjust logo for different themes to blend with header background */
-:root[data-theme="light"] .logo {
-  filter: none;
-  opacity: 1;
-}
-
-:root[data-theme="dark"] .logo {
-  filter: brightness(0.9) invert(0.95) hue-rotate(180deg);
-  opacity: 0.95;
-}
-
-:root[data-theme="sepia"] .logo {
-  filter: sepia(0.4) brightness(0.85) saturate(0.8);
-  opacity: 0.9;
-}
-
-.page-title {
-  color: var(--text-primary);
-  transition: color 0.3s ease;
-}
-
-/* nav buttons layout - flexbox with gap is easier than margins */
-.header-nav {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-/* rounded nav buttons - uses theme colors */
+/* rounded nav buttons - uses theme colors with pill shape */
 .nav-btn {
   padding: 0.7rem 1.5rem;
   font-size: 0.9rem;
   border: 2px solid var(--accent-primary);
-  border-radius: 32px;
+  border-radius: var(--button-radius);
   background-color: var(--bg-primary);
   color: var(--accent-primary);
   cursor: pointer;
   font-family: "Anton", sans-serif;
   font-weight: normal;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* darker burgundy on hover - gives good feedback */
+/* hover with scale transform */
 .nav-btn:hover {
   background-color: var(--hover-bg);
   border-color: var(--accent-secondary);
   color: var(--accent-secondary);
+  transform: scale(1.05);
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
 }
 
 .nav-btn.active {
   background-color: var(--accent-primary);
-  color: var(--bg-primary);
+  color: #FFFFFF;
+  box-shadow: var(--card-shadow);
+}
+
+.nav-btn.active svg {
+  stroke: #FFFFFF;
 }
 
 .nav-btn svg {
@@ -197,38 +308,87 @@
   font-size: 0.9rem;
 }
 
-/* main body styles - anton font looks good for church app */
+/* main body styles - YouVersion-inspired typography */
 body {
-  font-family: "Anton", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   padding: 0;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: var(--line-height-base, 1.7);
   margin: 0;
   overflow-x: hidden; /* Prevent horizontal scroll */
   width: 100%;
   max-width: 100vw;
   transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: var(--font-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Anton", sans-serif;
+  line-height: var(--line-height-heading, 1.4);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 h1 {
-  font-size: 1.8rem;
-  color: var(--text-primary);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
 }
 
-/* main container - uses theme background */
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+p {
+  margin-bottom: var(--spacing-sm, 1rem);
+  line-height: var(--line-height-base, 1.7);
+}
+
+/* main container - uses theme background with better spacing */
 .main-container {
   width: 100%;
-  max-width: 100%;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 0.75rem;
-  background-color: var(--bg-secondary);
+  padding: 24px;
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   box-sizing: border-box;
+  min-height: calc(100vh - 80px);
 }
 
 .main-container .container {
-  padding: 0 0.5rem;
+  padding: 0;
+}
+
+/* Card-based section styling for forms */
+.form-card {
+  background-color: var(--card-bg);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+.form-card:hover {
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.form-card h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin: 0 0 20px 0;
+  font-weight: 600;
 }
 
 /* form layout - vertical stack with consistent spacing */
@@ -283,31 +443,31 @@ form {
 }
 
 .icon-btn {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent-primary);
-  transition: all 0.2s;
-  border-radius: 5px;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  border-radius: 50%;
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  box-shadow: var(--card-shadow);
 }
 
 .icon-btn:hover {
-  background: var(--hover-bg);
-  border-color: var(--accent-primary);
-  color: var(--accent-secondary);
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
 
 .icon-btn:active {
-  background: var(--hover-bg);
   transform: scale(0.95);
 }
 
@@ -317,13 +477,14 @@ form {
   stroke: currentColor;
 }
 
-/* input styling - full width with good padding for mobile */
+/* input styling - full width with good padding for mobile and modern rounded corners */
 input,
-textarea {
-  padding: 12px;
+textarea,
+select {
+  padding: 14px 16px;
   font-size: 16px; /* Prevent iOS auto-zoom */
   border: 2px solid var(--border-color);
-  border-radius: 5px;
+  border-radius: 8px;
   font-family: inherit;
   outline: none;
   width: 100%;
@@ -376,7 +537,19 @@ input:focus,
 textarea:focus,
 select:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px var(--shadow);
+  box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
+}
+
+:root[data-theme="light"] input:focus,
+:root[data-theme="light"] textarea:focus,
+:root[data-theme="light"] select:focus {
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15);
+}
+
+:root[data-theme="sepia"] input:focus,
+:root[data-theme="sepia"] textarea:focus,
+:root[data-theme="sepia"] select:focus {
+  box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.15);
 }
 
 textarea {
@@ -390,27 +563,38 @@ textarea {
   max-height: 400px;
 }
 
-/* default buttons - uses theme colors with touch-friendly sizing */
+/* default buttons - uses theme colors with touch-friendly sizing and pill shape */
 button {
-  padding: 12px 8px;
-  font-size: 0.85rem;
+  padding: 12px 24px;
+  font-size: 0.9rem;
   border: 2px solid var(--accent-primary);
-  border-radius: 32px;
+  border-radius: var(--button-radius);
   background-color: var(--card-bg);
   color: var(--accent-primary);
   cursor: pointer;
-  min-height: 45px;
+  min-height: 48px;
   font-family: inherit;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   box-sizing: border-box;
   width: 100%;
-  transition: all 0.2s;
+  font-weight: 600;
 }
 
 button:hover {
-  background-color: #f5f5f5;
-  border-color: #b22929;
-  color: #b22929;
+  background-color: var(--hover-bg);
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+  transform: scale(1.02);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .button-group {
@@ -450,78 +634,125 @@ button:hover {
 }
 
 .library-section {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 20px;
-  padding-bottom: 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  padding-bottom: 120px;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
 }
 
 .library-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #e5e5e7;
-  padding-bottom: 10px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: none;
+}
+
+.library-header h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 
 .library-header-buttons {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
 }
 
 .library-controls {
   display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 32px;
   flex-wrap: wrap;
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
 }
 
 .library-controls input,
 .library-controls select {
-  padding: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  background-color: var(--card-bg);
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: all 0.3s ease;
+  font-size: 0.95rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.library-controls input:focus,
+.library-controls select:focus {
+  border-color: var(--accent-primary);
+  outline: none;
 }
 
 .sermons-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.sermons-list:empty::after {
+  content: "No sermons found. Create your first sermon to get started!";
+  display: block;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  grid-column: 1 / -1;
 }
 
 .sermon-card {
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 15px;
+  border-radius: var(--card-radius);
+  border-left: 4px solid var(--accent-primary);
+  padding: 20px;
   background: var(--card-bg);
   transition: all 0.3s ease;
+  box-shadow: var(--card-shadow);
+}
+
+.sermon-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
 }
 
 .sermon-card h3 {
   color: var(--text-primary);
-  margin: 0 0 10px 0;
+  margin: 0 0 12px 0;
+  font-size: 1.25rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
 }
 
 .sermon-meta {
-  font-size: 0.9em;
+  font-size: 0.85rem;
   color: var(--text-secondary);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  line-height: 1.6;
 }
 
 .sermon-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .sermon-actions button {
-  padding: 5px 10px;
-  font-size: 0.8em;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  min-height: auto;
 }
 
 .logo:hover {
@@ -1150,83 +1381,98 @@ button:hover {
   display: block;
 }
 
-/* calendar grid - 7 columns for days of the week */
+/* calendar grid - 7 columns for days of the week with modern design */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  border: 2px solid #cc3333;
-  border-radius: 8px;
-  overflow: hidden;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
 }
 
 .calendar-day-header {
-  background: linear-gradient(135deg, #cc3333, #b22929);
-  color: white;
-  padding: 12px 8px;
+  background: var(--accent-primary);
+  color: var(--card-bg);
+  padding: 14px 8px;
   text-align: center;
-  font-weight: bold;
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 0.9rem;
   font-family: "Anton", sans-serif;
   letter-spacing: 0.5px;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
 }
 
 .calendar-day {
-  min-height: 100px;
-  border: 1px solid #e0e0e0;
-  padding: 8px;
+  min-height: 110px;
+  border: 2px solid var(--border-color);
+  padding: 12px;
   cursor: pointer;
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
   position: relative;
   display: flex;
   flex-direction: column;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
 .calendar-day.empty {
-  background-color: #f8f9fa;
+  background-color: var(--hover-bg);
   cursor: default;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .calendar-day:hover:not(.empty) {
-  background-color: #f8f9fa;
-  border-color: #cc3333;
+  background-color: var(--hover-bg);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow);
 }
 
 .calendar-day.has-sermon {
-  background: linear-gradient(135deg, #fff8e7, #f9f4e8);
-  border-color: #cc3333;
-  border-width: 2px;
+  background: var(--card-bg);
+  border-color: var(--accent-primary);
+  border-width: 3px;
+  border-left: 4px solid var(--accent-primary);
+  box-shadow: var(--card-shadow);
 }
 
 .day-number {
-  font-weight: bold;
-  margin-bottom: 6px;
-  font-size: 1rem;
-  color: #2c2c2c;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: var(--text-primary);
   font-family: "Anton", sans-serif;
 }
 
 .sermon-marker {
-  background: #cc3333;
-  color: white;
-  padding: 4px 6px;
-  margin: 2px 0;
-  border-radius: 4px;
+  background: var(--accent-primary);
+  color: var(--card-bg);
+  padding: 6px 10px;
+  margin: 4px 0;
+  border-radius: 6px;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px var(--shadow);
 }
 
 .sermon-marker:hover {
   transform: scale(1.02);
   cursor: grab;
+  background: var(--accent-secondary);
+  box-shadow: 0 2px 6px var(--shadow);
 }
 
 .sermon-marker:active {
   cursor: grabbing;
+  transform: scale(0.98);
 }
 
 .calendar-controls {
@@ -1234,11 +1480,11 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #ffffff, #f8f8f8);
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
 }
 
 .calendar-controls button {
@@ -1338,8 +1584,9 @@ button:hover {
 
 /* calendar looks bad on small screens */
 @media (max-width: 768px) {
-  /* Add padding to calendar section to prevent bottom nav overlap */
+  /* Add padding to calendar section to prevent header and bottom nav overlap */
   .calendar-section {
+    padding-top: 160px; /* Account for sticky header */
     padding-bottom: 100px;
   }
 
@@ -1441,21 +1688,25 @@ button:hover {
 
 /* header responsive stuff */
 @media (max-width: 768px) {
-  /* Add padding to main content areas to prevent bottom nav overlap */
-  .main-container,
-  .library-section,
-  .bible-section {
+  /* Hide main header on mobile - bottom nav provides navigation */
+  .main-header {
+    display: none;
+  }
+
+  /* Adjust padding now that header is hidden */
+  .main-container {
+    padding-top: 20px; /* Reduced from 140px since no header */
     padding-bottom: 100px;
   }
 
-  .main-header {
-    padding: 0.75rem;
+  .library-section {
+    padding-top: 20px; /* Reduced from 160px since no header */
+    padding-bottom: 100px;
   }
 
-  .logo {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 0;
+  .bible-section {
+    padding-top: 20px;
+    padding-bottom: 100px;
   }
 
   .page-title {
@@ -1468,17 +1719,9 @@ button:hover {
   }
 }
 
-/* desktop layout - works on my laptop at least */
+/* desktop layout - DEPRECATED - moved to proper sidebar section below */
+/* Keeping only non-conflicting typography improvements */
 @media (min-width: 768px) {
-  body {
-    padding: 2rem;
-  }
-
-  .main-container {
-    max-width: 600px;
-    padding: 2rem;
-  }
-
   h1 {
     font-size: 2.5rem;
   }
@@ -1511,21 +1754,22 @@ button:hover {
 
 /* ===== MOBILE-FIRST NAVIGATION STYLES ===== */
 
-/* Bottom Navigation Bar */
+/* Bottom Navigation Bar - Modern glassmorphism design */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background: var(--card-bg);
+  backdrop-filter: blur(10px);
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 0.5rem var(--sar) calc(0.5rem + var(--sab)) var(--sal);
-  box-shadow: 0 -2px 10px var(--shadow);
+  padding: 0.75rem var(--sar) calc(0.75rem + var(--sab)) var(--sal);
+  box-shadow: 0 -4px 20px var(--shadow);
   z-index: 1000;
-  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .nav-item {
@@ -1570,39 +1814,428 @@ button:hover {
   font-family: "Anton", sans-serif;
 }
 
-/* Floating Action Button */
-.fab-save {
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Menu Modal */
+.menu-modal {
+  display: none;
   position: fixed;
-  bottom: 90px;
-  right: 20px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--card-bg);
-  color: var(--accent-primary);
-  border: 2px solid var(--accent-primary);
-  cursor: pointer;
-  box-shadow: 0 4px 12px var(--shadow);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  animation: fadeIn 0.3s ease;
+}
+
+.menu-modal.active {
   display: flex;
+  align-items: flex-end;
+  padding: 12px;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: row; /* Horizontal layout for compact buttons */
   align-items: center;
-  justify-content: center;
-  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  z-index: 999;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  min-height: 48px; /* Meets accessibility touch target size */
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.fab-save:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(204, 51, 51, 0.5);
-  background: #f5f5f5;
+.action-btn:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
 }
 
-.fab-save:active {
+.action-btn:active {
   transform: scale(0.95);
 }
 
-.fab-save svg {
+/* Primary action button (Save) */
+.action-btn-primary {
+  background: var(--accent-primary);
+  color: #FFFFFF;
+}
+
+.action-btn-primary svg {
+  stroke: #FFFFFF;
+}
+
+.action-btn-primary:hover {
+  background: var(--accent-secondary);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Secondary action buttons (Theme, Bible) */
+.action-btn-secondary {
+  background: var(--input-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.action-btn-secondary svg {
+  stroke: currentColor;
+}
+
+.action-btn-secondary:hover {
+  background: var(--hover-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.action-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.action-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  font-family: "Anton", sans-serif;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Mobile Settings Button (top right) */
+.mobile-settings-btn {
+  position: fixed;
+  top: calc(var(--sat) + 12px); /* Offset from safe area top */
+  right: calc(var(--sar) + 12px); /* Offset from safe area right */
+  width: 48px;
+  height: 48px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px var(--shadow);
+  z-index: 1002; /* Above action bar (1001) */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-settings-btn:hover,
+.mobile-settings-btn:active {
+  background: var(--hover-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: scale(0.95);
+}
+
+.mobile-settings-btn svg {
   width: 24px;
   height: 24px;
+  stroke: currentColor;
+}
+
+/* Mobile styles - show action bar and settings */
+@media (max-width: 768px) {
+  .action-bar {
+    display: block;
+  }
+
+  .mobile-settings-btn {
+    display: flex;
+  }
+
+  /* Hide settings from bottom nav on mobile (it's in top right now) */
+  .bottom-nav .nav-item[href="settings.html"] {
+    display: none;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 380px) {
+  .action-bar-content {
+    gap: 12px;
+    padding: 12px 12px 16px 12px;
+  }
+
+  .action-btn {
+    min-width: 72px;
+    padding: 10px 12px;
+  }
+
+  .action-label {
+    font-size: 0.7rem;
+  }
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Tutorial Overlay */
+.tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tutorial-overlay.active {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 1;
+}
+
+.tutorial-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.tutorial-content {
+  position: relative;
+  width: 100%;
+  padding: 0 20px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom)); /* Above action bar handle */
+  z-index: 1;
+  animation: slideUpFade 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.tutorial-spotlight {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 120px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.tutorial-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.tutorial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tutorial-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-family: 'Anton', sans-serif;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+.tutorial-skip {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.tutorial-skip:hover {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+}
+
+.tutorial-body {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.tutorial-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.tutorial-icon svg {
+  stroke: white;
+  animation: float 2s ease-in-out infinite;
+}
+
+.swipe-animation {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 24px;
+  background: white;
+  border-radius: 2px;
+  opacity: 0.7;
+  animation: swipeUp 2s ease-in-out infinite;
+}
+
+.tutorial-body p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.tutorial-btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Anton', sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.tutorial-btn:hover {
+  background: var(--accent-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+}
+
+.tutorial-btn:active {
+  transform: translateY(0);
+}
+
+/* Tutorial Animations */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes swipeUp {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+  }
+  30% {
+    opacity: 0.7;
+  }
+  60% {
+    opacity: 0.7;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+/* Hide tutorial on desktop */
+@media (min-width: 769px) {
+  .tutorial-overlay {
+    display: none !important;
+  }
 }
 
 /* Menu Modal */
@@ -1761,97 +2394,19 @@ button:hover {
   transition: color 0.3s ease;
 }
 
-.main-header .logo {
-  width: 40px;
-  height: 40px;
-  margin: 0;
-}
-
-/* Hide old header-nav since we're using bottom nav */
-.header-nav {
-  display: none;
-}
-
 /* Hide desktop action buttons on mobile */
 .desktop-actions {
   display: none;
 }
 
 @media (min-width: 768px) {
-  /* ===== DESKTOP HEADER WITH HORIZONTAL NAVIGATION ===== */
-  .main-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 3rem;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-
-  .main-header .logo {
-    width: 60px;
-    height: 60px;
-    margin: 0;
-  }
-
-  .page-title {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    margin: 0;
-  }
-
-  /* Desktop: Show traditional navigation in header with icons */
-  .header-nav {
-    display: flex;
-    gap: 0.75rem;
-  }
-
-  .header-nav .nav-btn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-    border-radius: 8px;
-    transition: all 0.2s;
-    text-decoration: none;
-    color: #cc3333;
-    background: #fff;
-    border: 2px solid #cc3333;
-  }
-
-  .header-nav .nav-btn svg {
-    width: 20px;
-    height: 20px;
-    stroke: currentColor;
-  }
-
-  .header-nav .nav-btn:hover {
-    background: #f5f5f5;
-    border-color: #b22929;
-    color: #b22929;
-  }
-
-  .header-nav .nav-btn.active {
-    background: #cc3333;
-    color: white;
-    border-color: #cc3333;
-  }
-
-  .header-nav .nav-btn.active svg {
-    stroke: white;
+  /* Desktop: Remove body padding to accommodate sidebar layout */
+  body {
+    padding: 0 !important;
   }
 
   /* Desktop: Hide bottom nav completely */
   .bottom-nav {
-    display: none;
-  }
-
-  /* Desktop: Hide FAB, show inline save button instead */
-  .fab-save {
     display: none;
   }
 
@@ -1860,14 +2415,28 @@ button:hover {
     display: none !important;
   }
 
-  /* Desktop: Better container spacing */
+  /* Desktop: Better container spacing (accommodates sidebar) */
   .main-container {
-    padding-top: 120px; /* Account for fixed header on desktop (60px logo + padding) */
+    padding-top: 20px;
     padding-bottom: 3rem;
     max-width: 1600px;
-    margin: 0 auto;
+    margin-left: 240px; /* Sidebar width */
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  /* Adjust for collapsed sidebar on smaller desktops */
+  @media (max-width: 1024px) {
+    .main-container {
+      margin-left: 80px; /* Collapsed sidebar width */
+    }
+
+    .library-section,
+    .calendar-section,
+    .bible-section,
+    .settings-container {
+      margin-left: 80px; /* Collapsed sidebar width */
+    }
   }
 
   /* Desktop: Add action buttons back to form */
@@ -1941,6 +2510,7 @@ button:hover {
   .library-section {
     max-width: 1400px;
     margin: 0 auto;
+    margin-left: 240px; /* Sidebar width */
     padding: 2rem 3rem;
     padding-bottom: 3rem;
   }
@@ -1973,6 +2543,7 @@ button:hover {
   .calendar-section {
     max-width: 1400px;
     margin: 0 auto;
+    margin-left: 240px; /* Sidebar width */
     padding: 2rem 3rem;
   }
 
@@ -1992,6 +2563,7 @@ button:hover {
 
   /* Bible page improvements */
   .bible-section {
+    margin-left: 240px; /* Sidebar width */
     padding: 2rem 3rem;
   }
 
@@ -2003,6 +2575,12 @@ button:hover {
   .bible-content {
     max-width: 900px;
     padding: 2rem 0;
+  }
+
+  /* Settings page improvements */
+  .settings-container {
+    margin-left: 240px; /* Sidebar width */
+    padding: 2rem 3rem;
   }
 
   /* ===== TYPOGRAPHY SCALE & IMPROVED SPACING ===== */
@@ -2248,24 +2826,31 @@ button:hover {
 .builder-actions {
   display: flex;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 32px;
   flex-wrap: wrap;
 }
 
 .builder-actions button {
   flex: 1;
-  min-width: 140px;
+  min-width: 160px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 #start-preaching-btn {
-  background: #cc3333;
-  color: white;
-  border: 2px solid #cc3333;
+  background: var(--accent-primary);
+  color: #FFFFFF;
+  border: 2px solid var(--accent-primary);
+  box-shadow: var(--card-shadow);
 }
 
 #start-preaching-btn:hover {
-  background: #b22929;
-  border-color: #b22929;
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+  color: #FFFFFF;
+  transform: scale(1.02);
 }
 
 /* Notification styles */
@@ -2333,16 +2918,16 @@ button:hover {
   }
 }
 
-/* Auto-save indicator */
+/* Auto-save indicator - Theme-aware */
 .auto-save-indicator {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 8px 16px;
-  background: rgba(114, 47, 55, 0.95);
-  color: white;
-  border-radius: 20px;
+  padding: 10px 20px;
+  background: var(--accent-primary);
+  color: #FFFFFF;
+  border-radius: 24px;
   font-family: "Anton", sans-serif;
   font-size: 0.85rem;
   z-index: 2500;
@@ -2352,6 +2937,8 @@ button:hover {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  box-shadow: 0 4px 16px var(--shadow);
+  backdrop-filter: blur(10px);
 }
 
 .auto-save-indicator.saving {
@@ -2360,7 +2947,7 @@ button:hover {
 
 .auto-save-indicator.saved {
   opacity: 1;
-  background: rgba(76, 175, 80, 0.95);
+  background: #4CAF50;
 }
 
 .auto-save-indicator .spinner {
@@ -2374,30 +2961,33 @@ button:hover {
 
 /* ===== PREACHING MODE STYLES ===== */
 
-/* Preaching mode body */
+/* Preaching mode body - Modern design */
 .preaching-mode-body {
-  background: #faf9f7;
-  color: #2c2c2c;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 /* Dark mode styles */
 .preaching-mode-body.dark-mode {
-  background: #1c1c1e;
-  color: #f5f5f7;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* Preaching header */
+/* Preaching header with glassmorphism */
 .preaching-header {
-  background: #ffffff;
-  border-bottom: 2px solid #e5e5e7;
-  padding: 16px 24px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 20px 32px;
   display: flex;
+  box-shadow: var(--card-shadow);
   justify-content: space-between;
   align-items: center;
   gap: 16px;
@@ -3515,27 +4105,10 @@ button:hover {
     height: 20px;
   }
 
-  /* FAB save - smaller and better positioned */
-  .fab-save {
-    bottom: 80px;
-    right: 16px;
-    width: 48px;
-    height: 48px;
-    z-index: 999;
-  }
-
-  .fab-save svg {
-    width: 20px;
-    height: 20px;
-  }
-
   /* Safe area insets for iPhone notches */
   @supports (padding-bottom: env(safe-area-inset-bottom)) {
-    .fab-save {
-      bottom: calc(80px + env(safe-area-inset-bottom));
-    }
     .bible-toggle-btn {
-      bottom: calc(140px + env(safe-area-inset-bottom));
+      bottom: calc(200px + env(safe-area-inset-bottom));
     }
   }
 
@@ -3611,28 +4184,37 @@ button:hover {
 .settings-section {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px var(--shadow);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+.settings-section:hover {
+  box-shadow: 0 4px 12px var(--shadow);
 }
 
 .settings-section-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .settings-section-header svg {
   color: var(--accent-primary);
   flex-shrink: 0;
+  width: 24px;
+  height: 24px;
 }
 
 .settings-section-header h2 {
-  font-family: "Anton", sans-serif;
-  font-size: 1.5rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.75rem;
   color: var(--text-primary);
   margin: 0;
+  font-weight: 600;
 }
 
 .settings-description {
@@ -3884,6 +4466,7 @@ button:hover {
 @media (max-width: 768px) {
   .settings-container {
     padding: 1rem;
+    padding-top: 160px; /* Account for sticky header */
     padding-bottom: 100px;
   }
 
