@@ -1,0 +1,16 @@
+{
+  "name": "Mount Builder",
+  "short_name": "Mount Builder",
+  "description": "Sermon preparation and delivery app for pastors",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6b46c1",
+  "icons": [
+    {
+      "src": "/next.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
