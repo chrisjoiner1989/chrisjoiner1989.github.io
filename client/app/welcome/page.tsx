@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { PenLine, BookOpen, Library, Calendar, ArrowRight } from 'lucide-react'
+import { BrandMark } from '@/components/ui/BrandMark'
 
 const FEATURES = [
   { icon: PenLine, title: 'Sermon Builder', desc: 'Build structured sermons with outlines, scripture, and templates' },
@@ -25,11 +26,8 @@ export default function WelcomePage() {
     >
       <div className="max-w-sm w-full space-y-8">
         <div className="text-center">
-          <div
-            className="w-20 h-20 rounded-3xl mx-auto mb-4 flex items-center justify-center text-4xl shadow-lg"
-            style={{ background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))' }}
-          >
-            ✝
+          <div className="flex justify-center mb-4">
+            <BrandMark size="xl" />
           </div>
           <h1 className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>Mount Builder</h1>
           <p className="mt-2 text-sm" style={{ color: 'var(--text-muted)' }}>

@@ -3,113 +3,238 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f4ede4" />
-  <title>Mount Builder — Coming Soon</title>
-  <meta name="description" content="A quieter way to write sermons. Mount Builder is coming soon." />
+  <meta name="theme-color" content="#0a0a0f" />
+  <title>Mount Builder — The pastor's writing room</title>
+  <meta name="description" content="A focused writing room for pastors. Outline, scripture, calendar, and preaching mode — all in one place. Coming soon." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Mount Builder" />
-  <meta property="og:description" content="A quieter way to write sermons. Coming soon." />
+  <meta property="og:title" content="Mount Builder — Coming Soon" />
+  <meta property="og:description" content="A focused writing room for pastors. Coming soon." />
   <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
     rel="stylesheet"
   />
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- Animated background orbs -->
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb--violet"></span>
+    <span class="orb orb--gold"></span>
+    <span class="orb orb--blue"></span>
+  </div>
+
+  <!-- Subtle grid overlay -->
+  <div class="bg-grid" aria-hidden="true"></div>
+
   <main class="page">
-    <header class="brand">
-      <span class="brand__mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 20l5-13 4 9 3-6 6 10z" />
-        </svg>
+
+    <!-- ─── Nav ─── -->
+    <header class="nav">
+      <a class="brand" href="#">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 20l5-13 4 9 3-6 6 10z" />
+          </svg>
+        </span>
+        <span class="brand__name">Mount Builder</span>
+      </a>
+      <span class="nav__badge">
+        <span class="nav__badge-dot" aria-hidden="true"></span>
+        Coming Soon
       </span>
-      <span class="brand__name">Mount Builder</span>
     </header>
 
+    <!-- ─── Hero ─── -->
     <section class="hero">
-      <p class="eyebrow">Coming Soon</p>
+      <p class="hero__eyebrow">For pastors who actually write</p>
 
       <h1 class="hero__title">
-        A quieter way to write&nbsp;sermons.
+        The writing room
+        <span class="hero__title-accent">built for Sundays.</span>
       </h1>
 
-      <p class="hero__verse">
-        <em>&ldquo;For where two or three gather in my name,
-        there am I with them.&rdquo;</em>
-        <span class="hero__verse-ref">— Matthew 18:20</span>
-      </p>
-
       <p class="hero__lede">
-        Mount Builder is a focused workspace for pastors —
-        sermon outlines, scripture lookup, calendar planning,
-        and a distraction-free preaching mode.
+        Mount Builder is the focused workspace for sermon prep —
+        outlines, scripture lookup, calendar planning, and a
+        distraction-free preaching mode. <strong>One app. No tabs.</strong>
       </p>
 
-      <form class="notify" id="notify-form" novalidate>
-        <label for="notify-email" class="visually-hidden">Email address</label>
-        <input
-          type="email"
-          id="notify-email"
-          name="email"
-          placeholder="you@example.com"
-          autocomplete="email"
-          required
-        />
-        <button type="submit" class="notify__btn">Notify me</button>
+      <form class="cta" id="notify-form" novalidate>
+        <div class="cta__field">
+          <label for="notify-email" class="visually-hidden">Email address</label>
+          <input
+            type="email"
+            id="notify-email"
+            name="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required
+          />
+          <button type="submit" class="cta__btn">
+            <span>Get early access</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+        <p class="cta__hint" id="notify-hint">
+          Be first in. No spam, ever.
+        </p>
       </form>
-      <p class="notify__hint" id="notify-hint">
-        We&rsquo;ll email you the moment it&rsquo;s ready. No spam.
-      </p>
+
+      <ul class="hero__proof">
+        <li><strong>7</strong> translations</li>
+        <li><strong>∞</strong> sermons</li>
+        <li><strong>0</strong> distractions</li>
+      </ul>
     </section>
 
-    <ul class="features" aria-label="What's coming">
-      <li>
-        <span class="features__icon" aria-hidden="true">✎</span>
-        <h3>Sermon Builder</h3>
-        <p>Outline by section. Pull scripture inline. Autosave that just works.</p>
-      </li>
-      <li>
-        <span class="features__icon" aria-hidden="true">☷</span>
-        <h3>Bible Reader</h3>
-        <p>Seven translations, distraction-free reading, highlights that travel with you.</p>
-      </li>
-      <li>
-        <span class="features__icon" aria-hidden="true">▤</span>
-        <h3>Calendar</h3>
-        <p>Plan a series. Drag a sermon to next Sunday. Export to Google or Apple.</p>
-      </li>
-    </ul>
+    <!-- ─── Feature mosaic ─── -->
+    <section class="features" aria-label="What's coming">
+      <article class="card card--lg">
+        <div class="card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+        </div>
+        <h3 class="card__title">Sermon Builder</h3>
+        <p class="card__body">
+          Outline by section. Pull scripture inline. Autosave that just works —
+          your words are safe even when the wifi isn't.
+        </p>
+        <div class="card__visual">
+          <div class="mock mock--builder" aria-hidden="true">
+            <div class="mock__line mock__line--w70"></div>
+            <div class="mock__line mock__line--w50"></div>
+            <div class="mock__line mock__line--w90"></div>
+            <div class="mock__line mock__line--w60"></div>
+          </div>
+        </div>
+      </article>
 
+      <article class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <h3 class="card__title">Bible Reader</h3>
+        <p class="card__body">
+          Seven translations. Highlights that travel with you. Reads like a book.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <h3 class="card__title">Series Calendar</h3>
+        <p class="card__body">
+          Plan a series. Drag a sermon to next Sunday. Export to anywhere.
+        </p>
+      </article>
+
+      <article class="card card--accent">
+        <div class="card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="6 3 20 12 6 21 6 3"/>
+          </svg>
+        </div>
+        <h3 class="card__title">Preaching Mode</h3>
+        <p class="card__body">
+          Step on stage. Big text. Live timer. Nothing else.
+          The notes you wrote — exactly when you need them.
+        </p>
+      </article>
+    </section>
+
+    <!-- ─── Scripture quote band ─── -->
+    <section class="quote">
+      <p class="quote__text">
+        <em>&ldquo;Preach the word; be ready in season and out of season.&rdquo;</em>
+      </p>
+      <p class="quote__ref">2 Timothy 4:2</p>
+    </section>
+
+    <!-- ─── Bottom CTA ─── -->
+    <section class="cta-band">
+      <h2 class="cta-band__title">
+        Built by a pastor.<br />For pastors.
+      </h2>
+      <p class="cta-band__text">
+        Join the early access list and help shape what comes next.
+      </p>
+      <a href="#notify-form" class="cta-band__btn" onclick="document.getElementById('notify-email').focus();return false;">
+        Get early access
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- ─── Footer ─── -->
     <footer class="foot">
-      <p>&copy; <span id="year"></span> Mount Builder. Made with care.</p>
+      <div class="foot__brand">
+        <span class="brand__mark brand__mark--sm" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 20l5-13 4 9 3-6 6 10z" />
+          </svg>
+        </span>
+        <span>Mount Builder</span>
+      </div>
+      <p>&copy; <span id="year"></span> Mount Builder · Made with care</p>
     </footer>
   </main>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    /* ─── Notify form ─── */
     const form = document.getElementById('notify-form');
     const hint = document.getElementById('notify-hint');
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const input = form.querySelector('input[type="email"]');
+      const btn   = form.querySelector('button');
       if (!input.value || !input.checkValidity()) {
         hint.textContent = 'Please enter a valid email address.';
-        hint.classList.add('notify__hint--error');
+        hint.dataset.state = 'error';
         return;
       }
-      hint.textContent = "Thank you. We'll be in touch when Mount Builder is ready.";
-      hint.classList.remove('notify__hint--error');
-      hint.classList.add('notify__hint--success');
-      form.querySelector('button').disabled = true;
+      hint.textContent = "You're on the list. We'll be in touch soon.";
+      hint.dataset.state = 'success';
       input.disabled = true;
+      btn.disabled = true;
+      btn.querySelector('span').textContent = 'You\'re in';
     });
+
+    /* ─── Scroll-reveal cards ─── */
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-revealed');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.card, .quote, .cta-band').forEach((el) => io.observe(el));
+    } else {
+      document.querySelectorAll('.card, .quote, .cta-band').forEach((el) => el.classList.add('is-revealed'));
+    }
   </script>
 </body>
 </html>

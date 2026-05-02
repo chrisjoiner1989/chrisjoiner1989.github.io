@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, BookOpen, Library, Calendar, Settings, PenLine } from 'lucide-react'
+import { BrandMark } from '@/components/ui/BrandMark'
 
 const PRIMARY_ITEMS = [
   { href: '/', label: 'Home', icon: Home },
@@ -64,19 +65,8 @@ export function SideNav() {
     >
       {/* Brand */}
       <div className="px-4 h-14 flex items-center border-b" style={{ borderColor: 'var(--border-subtle)' }}>
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-[15px] font-semibold tracking-tight"
-          style={{ color: 'var(--text-primary)' }}
-        >
-          <span
-            className="inline-flex items-center justify-center w-6 h-6 rounded-[var(--radius-md)] text-white text-xs font-bold"
-            style={{ backgroundColor: 'var(--accent-primary)' }}
-            aria-hidden
-          >
-            M
-          </span>
-          Mount Builder
+        <Link href="/" aria-label="Mount Builder — home">
+          <BrandMark size="md" withWordmark />
         </Link>
       </div>
 
